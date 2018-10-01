@@ -287,7 +287,7 @@ class MySceneGraph {
         }
 
         var fromIndex = newNodeNames.indexOf("from");
-        var position = [];
+        this.position = [];
         if (fromIndex != -1) {
 
             var x = this.reader.getFloat(grandChildren[fromIndex], 'x');
@@ -296,24 +296,24 @@ class MySceneGraph {
 
             if (!(x != null && !isNaN(x))) {
                 x = 25;
-                return "unable to parse x-coordinate of the position, assuming x = 25";
+                return "unable to parse x-coordinate of the position, assuming x = 25'";
             } else
-                position.push(x);
+                this.position.push(x);
 
             if (!(y != null && !isNaN(y))) {
                 y = 25;
-                return "unable to parse y-coordinate of the position, assuming y = 25";
-            }else
-                position.push(y);
+                return "unable to parse y-coordinate of the position, assuming y = 25'";
+            } else
+                this.position.push(y);
 
-            if (!(z != null && !isNaN(z))){
-                return "unable to parse z-coordinate of the position, assuming z = 25";
-            }else
-                position.push(z);
-        } else this.onXMLMinorError("position undefined");
+            if (!(z != null && !isNaN(z))) {
+                return "unable to parse z-coordinate of the position, assuming z = 25'";
+            } else
+                this.position.push(z);
+        } else this.onXMLMinorError("position undefined'");
 
         var targetIndex = newNodeNames.indexOf("to");
-        var target = [];
+        this.target = [];
         if (targetIndex != -1) {
 
             x = this.reader.getFloat(grandChildren[targetIndex], 'x');
@@ -322,21 +322,21 @@ class MySceneGraph {
 
             if (!(x != null && !isNaN(x))) {
                 x = 25;
-                return "unable to parse x-coordinate of the target, assuming x = 25";
+                return "unable to parse x-coordinate of the target, assuming x = 25'";
             } else
-                position.push(x);
+                this.target.push(x);
 
             if (!(y != null && !isNaN(y))) {
                 y = 25;
-                return "unable to parse y-coordinate of the target, assuming y = 25";
-            }else
-                position.push(y);
+                return "unable to parse y-coordinate of the target, assuming y = 25'";
+            } else
+                this.target.push(y);
 
-            if (!(z != null && !isNaN(z))){
-                return "unable to parse z-coordinate of the target, assuming z = 25";
-            }else
-                position.push(z);
-        } else this.onXMLMinorError("target undefined");
+            if (!(z != null && !isNaN(z))) {
+                return "unable to parse z-coordinate of the target, assuming z = 25'";
+            } else
+                this.target.push(z);
+        } else this.onXMLMinorError("target undefined'");
 
         // Retrieves the ortho.
         var orthoIndex = nodeNames.indexOf("ortho");
@@ -344,7 +344,7 @@ class MySceneGraph {
 
             this.orthoId = this.reader.getString(children[orthoIndex], 'id');
             if (this.perspectiveId == null) {
-                this.onXMLMinorError("no ID defined for ortho");
+                this.onXMLMinorError("no ID defined for ortho'");
             }
 
             this.near = this.reader.getFloat(children[orthoIndex], 'near');
@@ -366,7 +366,7 @@ class MySceneGraph {
                 this.onXMLMinorError("unable to parse value for rigth plane; assuming 'rigth = 5'");
                 this.onXMLMinorError("unable to parse value for top plane; assuming 'top = 5'");
                 this.onXMLMinorError("unable to parse value for bottom plane; assuming 'bottom = 5'");
-            } else if (isNaN(this.near) || isNaN(this.far) || isNaN(this.left)  || isNan(this.rigth) == null || isNan(this.top) == null || isNan(this.bottom) == null) {
+            } else if (isNaN(this.near) || isNaN(this.far) || isNaN(this.left) || isNan(this.rigth) == null || isNan(this.top) == null || isNan(this.bottom) == null) {
                 this.near = 0.1;
                 this.far = 500;
                 this.left = 5;
@@ -382,13 +382,110 @@ class MySceneGraph {
             } else if (this.near <= 0) {
                 this.near = 0.1;
                 this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0.1'");
-               }
+            }
 
             if (this.near >= this.far)
                 return "'near' must be smaller than 'far'";
         }
 
         this.log("Parsed views");
+
+        return null;
+
+    }
+
+    /**
+     * Parses the <ambient> block.
+     */
+    parseViews(ambientNode) {
+
+        var children = ambientNode.children;
+
+        var nodeNames = [];
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+
+        // Retrieves the ambient.
+        var ambientIndex = nodeNames.indexOf("ambient");
+        this.ambient = [];
+        if (ambientIndex != -1) {
+
+            var r = this.reader.getFloat(children[ambientIndex], 'r');
+            var g = this.reader.getFloat(children[ambientIndex], 'g');
+            var b = this.reader.getFloat(children[ambientIndex], 'b');
+            var a = this.reader.getFloat(children[ambientIndex], 'a');
+            if (this.r == null || this.g == null || this.b == null || this.a == null) {
+                this.r = 1;
+                this.g = 1;
+                this.b = 1;
+                this.a = 1;
+                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
+                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
+                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
+                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
+            }
+            if (!(r >= 0 && r <= 1))
+                return "unable to parse r component"
+            else
+                ambient.push(r);
+            if (!(g >= 0 && g <= 1))
+                return "unable to parse g component"
+            else
+                ambient.push(g);
+            if (!(b >= 0 && b <= 1))
+                return "unable to parse b component"
+            else
+                ambient.push(b);
+            if (!(a >= 0 && a <= 1))
+                return "unable to parse a component"
+            else
+                ambient.push(a);
+
+        }
+        else
+            this.onXMLMinorError("ambient undefined");
+
+        // Retrieves the background.
+        var backgroundIndex = nodeNames.indexOf("background");
+        this.background = [];
+        if (backgroundIndex != -1) {
+
+            var r = this.reader.getFloat(children[backgroundIndex], 'r');
+            var g = this.reader.getFloat(children[backgroundIndex], 'g');
+            var b = this.reader.getFloat(children[backgroundIndex], 'b');
+            var a = this.reader.getFloat(children[backgroundIndex], 'a');
+            if (this.r == null || this.g == null || this.b == null || this.a == null) {
+                this.r = 1;
+                this.g = 1;
+                this.b = 1;
+                this.a = 1;
+                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
+                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
+                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
+                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
+            }
+            if (!(r >= 0 && r <= 1))
+                return "unable to parse r component"
+            else
+                background.push(r);
+            if (!(g >= 0 && g <= 1))
+                return "unable to parse g component"
+            else
+                background.push(g);
+            if (!(b >= 0 && b <= 1))
+                return "unable to parse b component"
+            else
+                background.push(b);
+            if (!(a >= 0 && a <= 1))
+                return "unable to parse a component"
+            else
+                background.push(a);
+
+        }
+        else
+            this.onXMLMinorError("background undefined");
+
+        this.log("Parsed ambient");
 
         return null;
 
