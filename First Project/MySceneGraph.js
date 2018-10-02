@@ -949,6 +949,214 @@ class MySceneGraph {
 
     }
 
+    /**
+    * Parses the <materials> block.
+    */
+    parseMaterials(materialsNode) {
+
+        this.materials = [];
+
+        var children = materialsNode.children;
+
+        var nodeNames = [];
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+
+        // Retrieves the materials.
+        var materialsIndex = nodeNames.indexOf("material");
+        if (materialsIndex != -1) {
+
+            this.materialsId = this.reader.getString(children[materialsIndex], 'id');
+            if (this.materialsId == null) {
+                this.onXMLMinorError("no ID defined for materials");
+            }
+
+            for (var j = 0; j < this.materials.length; j++)
+                if (this.materials[j] == materialsID)
+                    this.onXMLMinorError("materials ID must be different");
+            this.materials.push(this.materialsId);
+
+            this.shininess = this.reader.getFloat(children[materialsIndex], 'file');
+            if (this.shininess == null || this.shininess < 0 || this.shininess > 1 || !isNaN(this.shininess)) {
+                this.onXMLMinorError("no valid shininess value");
+            }
+        }
+
+        var grandChildren = [];
+        var newNodeNames = [];
+
+        grandChildren = children[materialsIndex].children;
+
+        for (var j = 0; j < grandChildren.length; j++) {
+            newNodeNames.push(grandChildren[j].nodeName);
+        }
+
+        // Retrieves the emission.
+        var emissionIndex = newNodeNames.indexOf("emission");
+        this.materialEmission = [];
+        if (emissionIndex != -1) {
+
+            var r = this.reader.getFloat(grandChildren[emissionIndex], 'r');
+            var g = this.reader.getFloat(grandChildren[emissionIndex], 'g');
+            var b = this.reader.getFloat(grandChildren[emissionIndex], 'b');
+            var a = this.reader.getFloat(grandChildren[emissionIndex], 'a');
+            if (this.r == null || this.g == null || this.b == null || this.a == null) {
+                this.r = 1;
+                this.g = 1;
+                this.b = 1;
+                this.a = 1;
+                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
+                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
+                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
+                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
+            }
+            if (!(r >= 0 && r <= 1))
+                return "unable to parse r component"
+            else
+                materialemission.push(r);
+            if (!(g >= 0 && g <= 1))
+                return "unable to parse g component"
+            else
+                materialemission.push(g);
+            if (!(b >= 0 && b <= 1))
+                return "unable to parse b component"
+            else
+                materialemission.push(b);
+            if (!(a >= 0 && a <= 1))
+                return "unable to parse a component"
+            else
+                materialemission.push(a);
+
+        }
+        else
+            this.onXMLMinorError("material's emission undefined'");
+
+        // Retrieves the ambient.
+        var ambientIndex = newNodeNames.indexOf("ambient");
+        this.materialAmbient = [];
+        if (ambientIndex != -1) {
+
+            var r = this.reader.getFloat(grandChildren[ambientIndex], 'r');
+            var g = this.reader.getFloat(grandChildren[ambientIndex], 'g');
+            var b = this.reader.getFloat(grandChildren[ambientIndex], 'b');
+            var a = this.reader.getFloat(grandChildren[ambientIndex], 'a');
+            if (this.r == null || this.g == null || this.b == null || this.a == null) {
+                this.r = 1;
+                this.g = 1;
+                this.b = 1;
+                this.a = 1;
+                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
+                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
+                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
+                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
+            }
+            if (!(r >= 0 && r <= 1))
+                return "unable to parse r component"
+            else
+                materialAmbient.push(r);
+            if (!(g >= 0 && g <= 1))
+                return "unable to parse g component"
+            else
+                materialAmbient.push(g);
+            if (!(b >= 0 && b <= 1))
+                return "unable to parse b component"
+            else
+                materialAmbient.push(b);
+            if (!(a >= 0 && a <= 1))
+                return "unable to parse a component"
+            else
+                materialAmbient.push(a);
+
+        }
+        else
+            this.onXMLMinorError("material's ambient undefined'");
+
+        // Retrieves the diffuse.
+        var diffuseIndex = newNodeNames.indexOf("diffuse");
+        this.materialDiffuse = [];
+        if (diffuseIndex != -1) {
+
+            var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
+            var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
+            var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
+            var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
+            if (this.r == null || this.g == null || this.b == null || this.a == null) {
+                this.r = 1;
+                this.g = 1;
+                this.b = 1;
+                this.a = 1;
+                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
+                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
+                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
+                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
+            }
+            if (!(r >= 0 && r <= 1))
+                return "unable to parse r component"
+            else
+                materialDiffuse.push(r);
+            if (!(g >= 0 && g <= 1))
+                return "unable to parse g component"
+            else
+                materialDiffuse.push(g);
+            if (!(b >= 0 && b <= 1))
+                return "unable to parse b component"
+            else
+                materialDiffuse.push(b);
+            if (!(a >= 0 && a <= 1))
+                return "unable to parse a component"
+            else
+                materialDiffuse.push(a);
+
+        }
+        else
+            this.onXMLMinorError("material's diffuse undefined'");
+
+        // Retrieves the specular.
+        var specularIndex = newNodeNames.indexOf("specular");
+        this.materialSpecular = [];
+        if (specularIndex != -1) {
+
+            var r = this.reader.getFloat(grandChildren[specularIndex], 'r');
+            var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
+            var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
+            var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
+            if (this.r == null || this.g == null || this.b == null || this.a == null) {
+                this.r = 1;
+                this.g = 1;
+                this.b = 1;
+                this.a = 1;
+                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
+                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
+                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
+                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
+            }
+            if (!(r >= 0 && r <= 1))
+                return "unable to parse r component"
+            else
+                materialSpecular.push(r);
+            if (!(g >= 0 && g <= 1))
+                return "unable to parse g component"
+            else
+                materialSpecular.push(g);
+            if (!(b >= 0 && b <= 1))
+                return "unable to parse b component"
+            else
+                materialSpecular.push(b);
+            if (!(a >= 0 && a <= 1))
+                return "unable to parse a component"
+            else
+                materialSpecular.push(a);
+
+        }
+        else
+            this.onXMLMinorError("material's specular undefined'");
+
+        this.log("Parsed materials");
+
+        return null;
+
+    }
+
     /*
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
