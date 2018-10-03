@@ -1033,7 +1033,117 @@ class MySceneGraph {
 
         return -1;
     }
+  /**
+    * Parses the <transformations> block.
+    */
+   parseTransformations(transformationsNode) {
 
+    this.transformations = [];
+
+    var children = transformationsNode.children;
+
+    var nodeNames = [];
+    for (var i = 0; i < children.length; i++)
+        nodeNames.push(children[i].nodeName);
+
+    // Retrieves the transformations.
+    var transformationsIndex = nodeNames.indexOf("transformations");
+    if (transformationsIndex != -1) {
+
+        this.transformationsId = this.reader.getString(children[transformationsIndex], 'id');
+        if (this.transformationsId == null) {
+            this.onXMLMinorError("no ID defined for transformations");
+        }
+
+        for (var j = 0; j < this.transformations.length; j++)
+            if (this.transformations[j] == transformationsID)
+                this.onXMLMinorError("transformations ID must be different");
+        this.transformations.push(this.transformationsId);
+
+
+    var grandChildren = [];
+    var newNodeNames = [];
+
+    grandChildren = children[transformationsIndex].children;
+
+    for (var j = 0; j < grandChildren.length; j++) {
+        newNodeNames.push(grandChildren[j].nodeName);
+    }
+
+    // Retrieves the translate.
+    var translateIndex = newNodeNames.indexOf("translate");
+    this.translateV= [];
+    if (translateIndex != -1) {
+    var x = this.reader.getFloat(grandChildren[translateIndex], 'x');
+    var y = this.reader.getFloat(grandChildren[translateIndex], 'y');
+    var z = this.reader.getFloat(grandChildren[translateIndex], 'z');
+
+    if (!(x != null && !isNaN(x))) {
+        x = 25;
+        return "unable to parse x-coordinate of the position, assuming x = 25'";
+    } else
+        this.translateV.push(x);
+
+    if (!(y != null && !isNaN(y))) {
+        y = 25;
+        return "unable to parse y-coordinate of the position, assuming y = 25'";
+    } else
+        this.translateV.push(y);
+
+    if (!(z != null && !isNaN(z))) {
+        return "unable to parse z-coordinate of the position, assuming z = 25'";
+    } else
+        this.translateV.push(z);
+
+}  else this.onXMLMinorError("translate undefined'");
+   
+ // Retrieves the rotate.
+ var rotateIndex = newNodeNames.indexOf("rotate");
+ this.rotateV= [];
+ if (rotateIndex != -1) {
+
+    var axis = this.reader.getFloat(grandChildren[rotateIndex], 'axis');
+    var angle = this.reader.getChar(grandChildren[rotateIndex], 'angle');
+     if (this.angle < 0) {
+         this.onXMLMinorError("no angle defined for spot");
+     }
+}  else this.onXMLMinorError("rotate undefined'");
+
+ 
+        // Retrieves the scale.
+        var scaleIndex = newNodeNames.indexOf("scale");
+        this.scaleV= [];
+        if (scaleIndex != -1) {
+        var x = this.reader.getFloat(grandChildren[scaleIndex], 'x');
+        var y = this.reader.getFloat(grandChildren[scaleIndex], 'y');
+        var z = this.reader.getFloat(grandChildren[scaleIndex], 'z');
+    
+        if (!(x != null && !isNaN(x))) {
+            x = 25;
+            return "unable to parse x-coordinate of the position, assuming x = 25'";
+        } else
+            this.scaleV.push(x);
+    
+        if (!(y != null && !isNaN(y))) {
+            y = 25;
+            return "unable to parse y-coordinate of the position, assuming y = 25'";
+        } else
+            this.scaleV.push(y);
+    
+        if (!(z != null && !isNaN(z))) {
+            return "unable to parse z-coordinate of the position, assuming z = 25'";
+        } else
+            this.scaleV.push(z);
+    
+    } 
+        else this.onXMLMinorError("scale undefined'");
+
+    this.log("Parsed transformations");
+
+   
+} else this.onXMLMinorError("transformations undefined'");
+return null;
+}
     /*
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
