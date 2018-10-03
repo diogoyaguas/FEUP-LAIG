@@ -27,7 +27,7 @@ class MySceneGraph {
 
         this.nodes = [];
 
-        this.idRoot = null;                    // The id of the root element.
+        this.idRoot = null; // The id of the root element.
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
@@ -239,8 +239,27 @@ class MySceneGraph {
         for (var i = 0; i < children.length; i++)
             nodeNames.push(children[i].nodeName);
 
+
+        for (i = 0; i < children.length; i++) {
+            if (nodeName[i] == "perspective") {
+                error = this.parsePerspective(children[i], children);
+                if (error != null)
+                    return error;
+            } else if (nodeName[i] == "ortho") {
+                error = this.parseOrtho(children[i], children);
+                if (error != null)
+                    return error;
+            } else return "Inapropriate tag name in views";
+        }
+
+        this.log("Parsed views");
+
+        return null;
+    }
+
+    parsePerspective(perspectiveIndex, children) {
+
         // Retrieves the perspective.
-        var perspectiveIndex = nodeNames.indexOf("perspective");
         if (perspectiveIndex != -1) {
 
             this.perspectiveId = this.reader.getString(children[perspectiveIndex], 'id');
@@ -274,72 +293,82 @@ class MySceneGraph {
 
             if (this.near >= this.far)
                 return "'near' must be smaller than 'far'";
+
+            var grandChildren = [];
+            var newNodeNames = [];
+
+            grandChildren = children[perspectiveIndex].children;
+            // Specifications for the current position and target.
+
+            for (var j = 0; j < grandChildren.length; j++) {
+                newNodeNames.push(grandChildren[j].nodeName);
+            }
+
+            var fromIndex = newNodeNames.indexOf("from");
+            this.position = [];
+            if (fromIndex != -1) {
+
+                var x = this.reader.getFloat(grandChildren[fromIndex], 'x');
+                var y = this.reader.getFloat(grandChildren[fromIndex], 'y');
+                var z = this.reader.getFloat(grandChildren[fromIndex], 'z');
+
+                if (!(x != null && !isNaN(x))) {
+                    x = 25;
+                    return "unable to parse x-coordinate of the position, assuming x = 25'";
+                } else
+                    this.position.push(x);
+
+                if (!(y != null && !isNaN(y))) {
+                    y = 25;
+                    return "unable to parse y-coordinate of the position, assuming y = 25'";
+                } else
+                    this.position.push(y);
+
+                if (!(z != null && !isNaN(z))) {
+                    return "unable to parse z-coordinate of the position, assuming z = 25'";
+                } else
+                    this.position.push(z);
+            } else this.onXMLMinorError("position undefined'");
+
+            var targetIndex = newNodeNames.indexOf("to");
+            this.target = [];
+            if (targetIndex != -1) {
+
+                x = this.reader.getFloat(grandChildren[targetIndex], 'x');
+                y = this.reader.getFloat(grandChildren[targetIndex], 'y');
+                z = this.reader.getFloat(grandChildren[targetIndex], 'z');
+
+                if (!(x != null && !isNaN(x))) {
+                    x = 25;
+                    return "unable to parse x-coordinate of the target, assuming x = 25'";
+                } else
+                    this.target.push(x);
+
+                if (!(y != null && !isNaN(y))) {
+                    y = 25;
+                    return "unable to parse y-coordinate of the target, assuming y = 25'";
+                } else
+                    this.target.push(y);
+
+                if (!(z != null && !isNaN(z))) {
+                    return "unable to parse z-coordinate of the target, assuming z = 25'";
+                } else
+                    this.target.push(z);
+            } else this.onXMLMinorError("target undefined'");
+
+            this.log("Parsed perspective");
+
+            return null;
+
         }
 
-        var grandChildren = [];
-        var newNodeNames = [];
+        return -1;
 
-        grandChildren = children[perspectiveIndex].children;
-        // Specifications for the current position and target.
+    }
 
-        for (var j = 0; j < grandChildren.length; j++) {
-            newNodeNames.push(grandChildren[j].nodeName);
-        }
-
-        var fromIndex = newNodeNames.indexOf("from");
-        this.position = [];
-        if (fromIndex != -1) {
-
-            var x = this.reader.getFloat(grandChildren[fromIndex], 'x');
-            var y = this.reader.getFloat(grandChildren[fromIndex], 'y');
-            var z = this.reader.getFloat(grandChildren[fromIndex], 'z');
-
-            if (!(x != null && !isNaN(x))) {
-                x = 25;
-                return "unable to parse x-coordinate of the position, assuming x = 25'";
-            } else
-                this.position.push(x);
-
-            if (!(y != null && !isNaN(y))) {
-                y = 25;
-                return "unable to parse y-coordinate of the position, assuming y = 25'";
-            } else
-                this.position.push(y);
-
-            if (!(z != null && !isNaN(z))) {
-                return "unable to parse z-coordinate of the position, assuming z = 25'";
-            } else
-                this.position.push(z);
-        } else this.onXMLMinorError("position undefined'");
-
-        var targetIndex = newNodeNames.indexOf("to");
-        this.target = [];
-        if (targetIndex != -1) {
-
-            x = this.reader.getFloat(grandChildren[targetIndex], 'x');
-            y = this.reader.getFloat(grandChildren[targetIndex], 'y');
-            z = this.reader.getFloat(grandChildren[targetIndex], 'z');
-
-            if (!(x != null && !isNaN(x))) {
-                x = 25;
-                return "unable to parse x-coordinate of the target, assuming x = 25'";
-            } else
-                this.target.push(x);
-
-            if (!(y != null && !isNaN(y))) {
-                y = 25;
-                return "unable to parse y-coordinate of the target, assuming y = 25'";
-            } else
-                this.target.push(y);
-
-            if (!(z != null && !isNaN(z))) {
-                return "unable to parse z-coordinate of the target, assuming z = 25'";
-            } else
-                this.target.push(z);
-        } else this.onXMLMinorError("target undefined'");
+    parseOrtho(orthoIndex, children) {
 
         // Retrieves the ortho.
-        var orthoIndex = nodeNames.indexOf("ortho");
         if (orthoIndex != -1) {
 
             this.orthoId = this.reader.getString(children[orthoIndex], 'id');
@@ -386,12 +415,13 @@ class MySceneGraph {
 
             if (this.near >= this.far)
                 return "'near' must be smaller than 'far'";
+
+            this.log("Parsed ortho");
+
+            return null;
         }
 
-        this.log("Parsed views");
-
-        return null;
-
+        return -1;
     }
 
     /**
@@ -404,6 +434,26 @@ class MySceneGraph {
         var nodeNames = [];
         for (var i = 0; i < children.length; i++)
             nodeNames.push(children[i].nodeName);
+
+        for (i = 0; i < children.length; i++) {
+            if (nodeName[i] == "ambient") {
+                error = this.parseAmbient(ambientIndex, children);
+                if (error != null)
+                    return error;
+            } else if (nodeName[i] == "background") {
+                error = this.parseBackground(children[i], children);
+                if (error != null)
+                    return error;
+            } else return "Inapropriate tag name in views";
+        }
+
+        this.log("Parsed ambient");
+
+        return null;
+
+    }
+
+    parseAmbient(ambientIndex, children) {
 
         // Retrieves the ambient.
         var ambientIndex = nodeNames.indexOf("ambient");
@@ -441,12 +491,18 @@ class MySceneGraph {
             else
                 ambient.push(a);
 
+            this.log("Parsed ambient");
+
+            return null;
+
         }
-        else
-            this.onXMLMinorError("ambient undefined");
+
+        return -1;
+    }
+
+    parseBackground(backgroundIndex, children) {
 
         // Retrieves the background.
-        var backgroundIndex = nodeNames.indexOf("background");
         this.background = [];
         if (backgroundIndex != -1) {
 
@@ -481,14 +537,13 @@ class MySceneGraph {
             else
                 background.push(a);
 
+            this.log("Parsed background");
+
+            return null;
+
         }
-        else
-            this.onXMLMinorError("background undefined");
 
-        this.log("Parsed ambient");
-
-        return null;
-
+        return -1;
     }
 
     /**
@@ -497,14 +552,32 @@ class MySceneGraph {
     parseLigths(ligthsNode) {
 
         var children = ligthsNode.children;
-        var ligths = [];
 
         var nodeNames = [];
         for (var i = 0; i < children.length; i++)
             nodeNames.push(children[i].nodeName);
 
+        for (i = 0; i < children.length; i++) {
+            if (nodeNames == "omni") {
+                error = this.parseOmni(children[i]);
+                if (error != null)
+                    return error;
+            } else if (nodeNames == "spot") {
+                error = this.parseSpot(children[i]);
+                if (error != null)
+                    return error;
+            } else return "Inapropriate tag name in views";
+
+        }
+
+        this.log("Parsed ligths");
+
+        return null;
+    }
+
+    parseOmni(omniIndex, children) {
+
         // Retrieves the omni.
-        var omniIndex = nodeNames.indexOf("omni");
         if (omniIndex != -1) {
 
             this.omniId = this.reader.getString(children[omniIndex], 'id');
@@ -527,166 +600,171 @@ class MySceneGraph {
 
             grandChildren = children[omniIndex].children;
 
-            for (var j = 0; j < grandChildren.length; j++) {
-                newNodeNames.push(grandChildren[j].nodeName);
+            for (i = 0; i < grandChildren.length; i++) {
+                if (newNodeNames[i] == "location") {
+                    error = this.parseLocation(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "ambient") {
+                    error = this.parseAmbient(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "diffuse") {
+                    error = this.parseDiffuse(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "specular") {
+                    error = this.parseSpecular(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else return "Inapropriate tag name in views";
             }
-            // Retrieves the target.
-            var locationIndex = newNodeNames.indexOf("location");
-            this.location = [];
-            if (locationIndex != -1) {
 
-                var x = this.reader.getFloat(grandChildren[locationIndex], 'x');
-                var y = this.reader.getFloat(grandChildren[locationIndex], 'y');
-                var z = this.reader.getFloat(grandChildren[locationIndex], 'z');
-                var w = this.reader.getFloat(grandChildren[locationIndex], 'w');
+            this.log("Parsed omni");
 
-                if (!(x != null && !isNaN(x))) {
-                    x = 25;
-                    return "unable to parse x-coordinate of the position, assuming x = 25'";
-                } else
-                    this.location.push(x);
+            return null;
+        }
 
-                if (!(y != null && !isNaN(y))) {
-                    y = 25;
-                    return "unable to parse y-coordinate of the position, assuming y = 25'";
-                } else
-                    this.location.push(y);
+        return -1;
 
-                if (!(z != null && !isNaN(z))) {
-                    return "unable to parse z-coordinate of the position, assuming z = 25'";
-                } else
-                    this.location.push(z);
-                if (!(w != null && !isNaN(w))) {
-                    w = 25;
-                    return "unable to parse homogeneous-coordinate of the position, assuming w = 25'";
-                } else
-                    this.location.push(w);
-            } else this.onXMLMinorError("location undefined'");
+    }
 
-            // Retrieves the ambient.
-            var ambientIndex = newNodeNames.indexOf("ambient");
-            this.ligthAmbient = [];
-            if (ambientIndex != -1) {
+    parseLocation(locationIndex, grandChildren) {
 
-                var r = this.reader.getFloat(grandChildren[ambientIndex], 'r');
-                var g = this.reader.getFloat(grandChildren[ambientIndex], 'g');
-                var b = this.reader.getFloat(grandChildren[ambientIndex], 'b');
-                var a = this.reader.getFloat(grandChildren[ambientIndex], 'a');
-                if (this.r == null || this.g == null || this.b == null || this.a == null) {
-                    this.r = 1;
-                    this.g = 1;
-                    this.b = 1;
-                    this.a = 1;
-                    this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
-                    this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
-                    this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
-                    this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
-                }
-                if (!(r >= 0 && r <= 1))
-                    return "unable to parse r component"
-                else
-                    ligthAmbient.push(r);
-                if (!(g >= 0 && g <= 1))
-                    return "unable to parse g component"
-                else
-                    ligthAmbient.push(g);
-                if (!(b >= 0 && b <= 1))
-                    return "unable to parse b component"
-                else
-                    ligthAmbient.push(b);
-                if (!(a >= 0 && a <= 1))
-                    return "unable to parse a component"
-                else
-                    ligthAmbient.push(a);
+        // Retrieves the location.
+        this.location = [];
+        if (locationIndex != -1) {
 
+            var x = this.reader.getFloat(grandChildren[locationIndex], 'x');
+            var y = this.reader.getFloat(grandChildren[locationIndex], 'y');
+            var z = this.reader.getFloat(grandChildren[locationIndex], 'z');
+            var w = this.reader.getFloat(grandChildren[locationIndex], 'w');
+
+            if (!(x != null && !isNaN(x))) {
+                x = 25;
+                return "unable to parse x-coordinate of the position, assuming x = 25'";
+            } else
+                this.location.push(x);
+
+            if (!(y != null && !isNaN(y))) {
+                y = 25;
+                return "unable to parse y-coordinate of the position, assuming y = 25'";
+            } else
+                this.location.push(y);
+
+            if (!(z != null && !isNaN(z))) {
+                return "unable to parse z-coordinate of the position, assuming z = 25'";
+            } else
+                this.location.push(z);
+            if (!(w != null && !isNaN(w))) {
+                w = 25;
+                return "unable to parse homogeneous-coordinate of the position, assuming w = 25'";
+            } else
+                this.location.push(w);
+
+            this.log("Parsed location");
+
+            return null;
+        }
+
+        return -1;
+    }
+
+    parseDiffuse(diffuseIndex, grandChildren) {
+
+        // Retrieves the diffuse.
+        this.diffuse = [];
+        if (diffuseIndex != -1) {
+
+            var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
+            var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
+            var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
+            var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
+            if (this.r == null || this.g == null || this.b == null || this.a == null) {
+                this.r = 1;
+                this.g = 1;
+                this.b = 1;
+                this.a = 1;
+                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
+                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
+                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
+                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
             }
+            if (!(r >= 0 && r <= 1))
+                return "unable to parse r component"
             else
-                this.onXMLMinorError("ligth's ambient undefined'");
-
-            // Retrieves the diffuse.
-            var diffuseIndex = newNodeNames.indexOf("diffuse");
-            this.ligthDiffuse = [];
-            if (diffuseIndex != -1) {
-
-                var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
-                var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
-                var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
-                var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
-                if (this.r == null || this.g == null || this.b == null || this.a == null) {
-                    this.r = 1;
-                    this.g = 1;
-                    this.b = 1;
-                    this.a = 1;
-                    this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
-                    this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
-                    this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
-                    this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
-                }
-                if (!(r >= 0 && r <= 1))
-                    return "unable to parse r component"
-                else
-                    ligthDiffuse.push(r);
-                if (!(g >= 0 && g <= 1))
-                    return "unable to parse g component"
-                else
-                    ligthDiffuse.push(g);
-                if (!(b >= 0 && b <= 1))
-                    return "unable to parse b component"
-                else
-                    ligthDiffuse.push(b);
-                if (!(a >= 0 && a <= 1))
-                    return "unable to parse a component"
-                else
-                    ligthDiffuse.push(a);
-
-            }
+                diffuse.push(r);
+            if (!(g >= 0 && g <= 1))
+                return "unable to parse g component"
             else
-                this.onXMLMinorError("ligth's diffuse undefined'");
-
-            // Retrieves the specular.
-            var specularIndex = newNodeNames.indexOf("specular");
-            this.ligthSpecular = [];
-            if (specularIndex != -1) {
-
-                var r = this.reader.getFloat(grandChildren[specularIndex], 'r');
-                var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
-                var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
-                var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
-                if (this.r == null || this.g == null || this.b == null || this.a == null) {
-                    this.r = 1;
-                    this.g = 1;
-                    this.b = 1;
-                    this.a = 1;
-                    this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
-                    this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
-                    this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
-                    this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
-                }
-                if (!(r >= 0 && r <= 1))
-                    return "unable to parse r component"
-                else
-                    ligthSpecular.push(r);
-                if (!(g >= 0 && g <= 1))
-                    return "unable to parse g component"
-                else
-                    ligthSpecular.push(g);
-                if (!(b >= 0 && b <= 1))
-                    return "unable to parse b component"
-                else
-                    ligthSpecular.push(b);
-                if (!(a >= 0 && a <= 1))
-                    return "unable to parse a component"
-                else
-                    ligthSpecular.push(a);
-
-            }
+                diffuse.push(g);
+            if (!(b >= 0 && b <= 1))
+                return "unable to parse b component"
             else
-                this.onXMLMinorError("ligth's specular undefined'");
+                diffuse.push(b);
+            if (!(a >= 0 && a <= 1))
+                return "unable to parse a component"
+            else
+                diffuse.push(a);
+
+            this.log("Parsed diffuse");
+
+            return null;
 
         }
 
+        return -1;
+    }
+
+    parseSpecular(specularIndex, grandChildren) {
+
+        // Retrieves the specular.
+        this.specular = [];
+        if (specularIndex != -1) {
+
+            var r = this.reader.getFloat(grandChildren[specularIndex], 'r');
+            var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
+            var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
+            var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
+            if (this.r == null || this.g == null || this.b == null || this.a == null) {
+                this.r = 1;
+                this.g = 1;
+                this.b = 1;
+                this.a = 1;
+                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
+                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
+                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
+                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
+            }
+            if (!(r >= 0 && r <= 1))
+                return "unable to parse r component"
+            else
+                specular.push(r);
+            if (!(g >= 0 && g <= 1))
+                return "unable to parse g component"
+            else
+                specular.push(g);
+            if (!(b >= 0 && b <= 1))
+                return "unable to parse b component"
+            else
+                specular.push(b);
+            if (!(a >= 0 && a <= 1))
+                return "unable to parse a component"
+            else
+                specular.push(a);
+
+            this.log("Parsed specular");
+
+            return null;
+
+        }
+
+        return -1;
+    }
+
+    parseSpot(spotIndex, children) {
+
         // Retrieves the spot.
-        var spotIndex = nodeNames.indexOf("spot");
         if (spotIndex != -1) {
 
             this.spotId = this.reader.getString(children[spotIndex], 'id');
@@ -713,7 +791,8 @@ class MySceneGraph {
                 this.onXMLMinorError("no angle defined for spot");
             }
 
-            newNodeNames = [];
+            var grandChildren = [];
+            var newNodeNames = [];
 
             grandChildren = children[omniIndex].children;
 
@@ -721,193 +800,75 @@ class MySceneGraph {
                 newNodeNames.push(grandChildren[j].nodeName);
             }
 
-            // Retrieves the target.
-            var locationIndex = newNodeNames.indexOf("location");
-            this.location = [];
-            if (locationIndex != -1) {
+            for (i = 0; i < grandChildren.length; i++) {
 
-                var x = this.reader.getFloat(grandChildren[locationIndex], 'x');
-                var y = this.reader.getFloat(grandChildren[locationIndex], 'y');
-                var z = this.reader.getFloat(grandChildren[locationIndex], 'z');
-                var w = this.reader.getFloat(grandChildren[locationIndex], 'w');
-
-                if (!(x != null && !isNaN(x))) {
-                    x = 25;
-                    return "unable to parse x-coordinate of the position, assuming x = 25'";
-                } else
-                    this.location.push(x);
-
-                if (!(y != null && !isNaN(y))) {
-                    y = 25;
-                    return "unable to parse y-coordinate of the position, assuming y = 25'";
-                } else
-                    this.location.push(y);
-
-                if (!(z != null && !isNaN(z))) {
-                    return "unable to parse z-coordinate of the position, assuming z = 25'";
-                } else
-                    this.location.push(z);
-                if (!(w != null && !isNaN(w))) {
-                    w = 25;
-                    return "unable to parse homogeneous-coordinate of the position, assuming w = 25'";
-                } else
-                    this.location.push(w);
-            } else this.onXMLMinorError("location undefined'");
-
-            // Retrieves the target.
-            var targetIndex = newNodeNames.indexOf("target");
-            this.ligthTarget = [];
-            if (targetIndex != -1) {
-
-                var x = this.reader.getFloat(grandChildren[targetIndex], 'x');
-                var y = this.reader.getFloat(grandChildren[targetIndex], 'y');
-                var z = this.reader.getFloat(grandChildren[targetIndex], 'z');
-
-                if (!(x != null && !isNaN(x))) {
-                    x = 25;
-                    return "unable to parse x-coordinate of the position, assuming x = 25'";
-                } else
-                    this.ligthTarget.push(x);
-
-                if (!(y != null && !isNaN(y))) {
-                    y = 25;
-                    return "unable to parse y-coordinate of the position, assuming y = 25'";
-                } else
-                    this.ligthTarget.push(y);
-
-                if (!(z != null && !isNaN(z))) {
-                    return "unable to parse z-coordinate of the position, assuming z = 25'";
-                } else
-                    this.ligthTarget.push(z);
-
-            } else this.onXMLMinorError("target undefined'");
-
-            // Retrieves the ambient.
-            var ambientIndex = newNodeNames.indexOf("ambient");
-            this.ligthAmbient = [];
-            if (ambientIndex != -1) {
-
-                var r = this.reader.getFloat(grandChildren[ambientIndex], 'r');
-                var g = this.reader.getFloat(grandChildren[ambientIndex], 'g');
-                var b = this.reader.getFloat(grandChildren[ambientIndex], 'b');
-                var a = this.reader.getFloat(grandChildren[ambientIndex], 'a');
-                if (this.r == null || this.g == null || this.b == null || this.a == null) {
-                    this.r = 1;
-                    this.g = 1;
-                    this.b = 1;
-                    this.a = 1;
-                    this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
-                    this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
-                    this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
-                    this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
-                }
-                if (!(r >= 0 && r <= 1))
-                    return "unable to parse r component"
-                else
-                    ligthAmbient.push(r);
-                if (!(g >= 0 && g <= 1))
-                    return "unable to parse g component"
-                else
-                    ligthAmbient.push(g);
-                if (!(b >= 0 && b <= 1))
-                    return "unable to parse b component"
-                else
-                    ligthAmbient.push(b);
-                if (!(a >= 0 && a <= 1))
-                    return "unable to parse a component"
-                else
-                    ligthAmbient.push(a);
+                if (newNodeNames[i] == "location") {
+                    error = this.parseOmni(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "target") {
+                    error = this.parseTarget(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "ambient") {
+                    error = this.parseAmbient(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "diffuse") {
+                    error = this.parseDiffuse(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "specular") {
+                    error = this.parseSpecular(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else return "Inapropriate tag name in views";
 
             }
-            else
-                this.onXMLMinorError("ligth's ambient undefined'");
 
-            // Retrieves the diffuse.
-            var diffuseIndex = newNodeNames.indexOf("diffuse");
-            this.ligthDiffuse = [];
-            if (diffuseIndex != -1) {
+            this.log("Parsed spot");
 
-                var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
-                var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
-                var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
-                var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
-                if (this.r == null || this.g == null || this.b == null || this.a == null) {
-                    this.r = 1;
-                    this.g = 1;
-                    this.b = 1;
-                    this.a = 1;
-                    this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
-                    this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
-                    this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
-                    this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
-                }
-                if (!(r >= 0 && r <= 1))
-                    return "unable to parse r component"
-                else
-                    ligthDiffuse.push(r);
-                if (!(g >= 0 && g <= 1))
-                    return "unable to parse g component"
-                else
-                    ligthDiffuse.push(g);
-                if (!(b >= 0 && b <= 1))
-                    return "unable to parse b component"
-                else
-                    ligthDiffuse.push(b);
-                if (!(a >= 0 && a <= 1))
-                    return "unable to parse a component"
-                else
-                    ligthDiffuse.push(a);
+            return null;
+        }
 
-            }
-            else
-                this.onXMLMinorError("ligth's diffuse undefined'");
+        return -1;
 
-            // Retrieves the specular.
-            var specularIndex = newNodeNames.indexOf("specular");
-            this.ligthSpecular = [];
-            if (specularIndex != -1) {
+    }
 
-                var r = this.reader.getFloat(grandChildren[specularIndex], 'r');
-                var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
-                var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
-                var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
-                if (this.r == null || this.g == null || this.b == null || this.a == null) {
-                    this.r = 1;
-                    this.g = 1;
-                    this.b = 1;
-                    this.a = 1;
-                    this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
-                    this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
-                    this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
-                    this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
-                }
-                if (!(r >= 0 && r <= 1))
-                    return "unable to parse r component"
-                else
-                    ligthSpecular.push(r);
-                if (!(g >= 0 && g <= 1))
-                    return "unable to parse g component"
-                else
-                    ligthSpecular.push(g);
-                if (!(b >= 0 && b <= 1))
-                    return "unable to parse b component"
-                else
-                    ligthSpecular.push(b);
-                if (!(a >= 0 && a <= 1))
-                    return "unable to parse a component"
-                else
-                    ligthSpecular.push(a);
+    parseTarget(targetIndex, grandChildren) {
 
-            }
-            else
-                this.onXMLMinorError("ligth's specular undefined'");
+        // Retrieves the target.
+        this.ligthTarget = [];
+        if (targetIndex != -1) {
+
+            var x = this.reader.getFloat(grandChildren[targetIndex], 'x');
+            var y = this.reader.getFloat(grandChildren[targetIndex], 'y');
+            var z = this.reader.getFloat(grandChildren[targetIndex], 'z');
+
+            if (!(x != null && !isNaN(x))) {
+                x = 25;
+                return "unable to parse x-coordinate of the position, assuming x = 25'";
+            } else
+                this.ligthTarget.push(x);
+
+            if (!(y != null && !isNaN(y))) {
+                y = 25;
+                return "unable to parse y-coordinate of the position, assuming y = 25'";
+            } else
+                this.ligthTarget.push(y);
+
+            if (!(z != null && !isNaN(z))) {
+                return "unable to parse z-coordinate of the position, assuming z = 25'";
+            } else
+                this.ligthTarget.push(z);
+
+            this.log("Parsed target");
+
+            return null;
 
         }
 
-        this.log("Parsed ligths");
-
         return null;
-
     }
 
     /**
@@ -923,24 +884,28 @@ class MySceneGraph {
         for (var i = 0; i < children.length; i++)
             nodeNames.push(children[i].nodeName);
 
-        // Retrieves the textures.
-        var texturesIndex = nodeNames.indexOf("textures");
-        if (texturesIndex != -1) {
+        for (i = 0; i < children.length; i++) {
 
-            this.texturesId = this.reader.getString(children[texturesIndex], 'id');
-            if (this.texturesId == null) {
-                this.onXMLMinorError("no ID defined for textures");
+            // Retrieves the textures.
+            var texturesIndex = nodeNames.indexOf("textures");
+            if (texturesIndex != -1) {
+
+                this.texturesId = this.reader.getString(children[texturesIndex], 'id');
+                if (this.texturesId == null) {
+                    this.onXMLMinorError("no ID defined for textures");
+                }
+
+                for (var j = 0; j < this.textures.length; j++)
+                    if (this.textures[j] == textureID)
+                        this.onXMLMinorError("texture ID must be different");
+                this.textures.push(this.texturesId);
+
+                this.texturesFile = this.reader.getString(children[texturesIndex], 'file');
+                if (this.texturesFile == null) {
+                    this.onXMLMinorError("no File found");
+                }
             }
 
-            for (var j = 0; j < this.textures.length; j++)
-                if (this.textures[j] == textureID)
-                    this.onXMLMinorError("texture ID must be different");
-            this.textures.push(this.texturesId);
-
-            this.texturesFile = this.reader.getString(children[texturesIndex], 'file');
-            if (this.texturesFile == null) {
-                this.onXMLMinorError("no File found");
-            }
         }
 
         this.log("Parsed texture");
@@ -950,8 +915,8 @@ class MySceneGraph {
     }
 
     /**
-    * Parses the <materials> block.
-    */
+     * Parses the <materials> block.
+     */
     parseMaterials(materialsNode) {
 
         this.materials = [];
@@ -962,37 +927,70 @@ class MySceneGraph {
         for (var i = 0; i < children.length; i++)
             nodeNames.push(children[i].nodeName);
 
-        // Retrieves the materials.
-        var materialsIndex = nodeNames.indexOf("material");
-        if (materialsIndex != -1) {
+        for (i = 0; i < children.length; i++) {
 
-            this.materialsId = this.reader.getString(children[materialsIndex], 'id');
-            if (this.materialsId == null) {
-                this.onXMLMinorError("no ID defined for materials");
+            // Retrieves the materials.
+            var materialsIndex = nodeNames.indexOf("material");
+            if (materialsIndex != -1) {
+
+                this.materialsId = this.reader.getString(children[materialsIndex], 'id');
+                if (this.materialsId == null) {
+                    this.onXMLMinorError("no ID defined for materials");
+                }
+
+                for (var j = 0; j < this.materials.length; j++)
+                    if (this.materials[j] == materialsID)
+                        this.onXMLMinorError("materials ID must be different");
+                this.materials.push(this.materialsId);
+
+                this.shininess = this.reader.getFloat(children[materialsIndex], 'file');
+                if (this.shininess == null || this.shininess < 0 || this.shininess > 1 || !isNaN(this.shininess)) {
+                    this.onXMLMinorError("no valid shininess value");
+                }
             }
 
-            for (var j = 0; j < this.materials.length; j++)
-                if (this.materials[j] == materialsID)
-                    this.onXMLMinorError("materials ID must be different");
-            this.materials.push(this.materialsId);
+            var grandChildren = [];
+            var newNodeNames = [];
 
-            this.shininess = this.reader.getFloat(children[materialsIndex], 'file');
-            if (this.shininess == null || this.shininess < 0 || this.shininess > 1 || !isNaN(this.shininess)) {
-                this.onXMLMinorError("no valid shininess value");
+            grandChildren = children[materialsIndex].children;
+
+            for (var j = 0; j < grandChildren.length; j++) {
+                newNodeNames.push(grandChildren[j].nodeName);
             }
+
+            for (i = 0; i < grandChildren.length; i++) {
+
+                if (newNodeNames[i] == "emission") {
+                    error = this.parseEmission(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "ambient") {
+                    error = this.parseAmbient(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "diffuse") {
+                    error = this.parseDiffuse(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else if (newNodeNames[i] == "specular") {
+                    error = this.parseSpecular(grandChildren[i]);
+                    if (error != null)
+                        return error;
+                } else return "Inapropriate tag name in views";
+
+            }
+
         }
 
-        var grandChildren = [];
-        var newNodeNames = [];
+        this.log("Parsed materials");
 
-        grandChildren = children[materialsIndex].children;
+        return null;
 
-        for (var j = 0; j < grandChildren.length; j++) {
-            newNodeNames.push(grandChildren[j].nodeName);
-        }
+    }
+
+    parseEmission(emissionIndex, grandChildren) {
 
         // Retrieves the emission.
-        var emissionIndex = newNodeNames.indexOf("emission");
         this.materialEmission = [];
         if (emissionIndex != -1) {
 
@@ -1027,134 +1025,13 @@ class MySceneGraph {
             else
                 materialemission.push(a);
 
-        }
-        else
-            this.onXMLMinorError("material's emission undefined'");
+            this.log("Parsed emission");
 
-        // Retrieves the ambient.
-        var ambientIndex = newNodeNames.indexOf("ambient");
-        this.materialAmbient = [];
-        if (ambientIndex != -1) {
-
-            var r = this.reader.getFloat(grandChildren[ambientIndex], 'r');
-            var g = this.reader.getFloat(grandChildren[ambientIndex], 'g');
-            var b = this.reader.getFloat(grandChildren[ambientIndex], 'b');
-            var a = this.reader.getFloat(grandChildren[ambientIndex], 'a');
-            if (this.r == null || this.g == null || this.b == null || this.a == null) {
-                this.r = 1;
-                this.g = 1;
-                this.b = 1;
-                this.a = 1;
-                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
-                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
-                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
-                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
-            }
-            if (!(r >= 0 && r <= 1))
-                return "unable to parse r component"
-            else
-                materialAmbient.push(r);
-            if (!(g >= 0 && g <= 1))
-                return "unable to parse g component"
-            else
-                materialAmbient.push(g);
-            if (!(b >= 0 && b <= 1))
-                return "unable to parse b component"
-            else
-                materialAmbient.push(b);
-            if (!(a >= 0 && a <= 1))
-                return "unable to parse a component"
-            else
-                materialAmbient.push(a);
+            return null;
 
         }
-        else
-            this.onXMLMinorError("material's ambient undefined'");
 
-        // Retrieves the diffuse.
-        var diffuseIndex = newNodeNames.indexOf("diffuse");
-        this.materialDiffuse = [];
-        if (diffuseIndex != -1) {
-
-            var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
-            var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
-            var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
-            var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
-            if (this.r == null || this.g == null || this.b == null || this.a == null) {
-                this.r = 1;
-                this.g = 1;
-                this.b = 1;
-                this.a = 1;
-                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
-                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
-                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
-                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
-            }
-            if (!(r >= 0 && r <= 1))
-                return "unable to parse r component"
-            else
-                materialDiffuse.push(r);
-            if (!(g >= 0 && g <= 1))
-                return "unable to parse g component"
-            else
-                materialDiffuse.push(g);
-            if (!(b >= 0 && b <= 1))
-                return "unable to parse b component"
-            else
-                materialDiffuse.push(b);
-            if (!(a >= 0 && a <= 1))
-                return "unable to parse a component"
-            else
-                materialDiffuse.push(a);
-
-        }
-        else
-            this.onXMLMinorError("material's diffuse undefined'");
-
-        // Retrieves the specular.
-        var specularIndex = newNodeNames.indexOf("specular");
-        this.materialSpecular = [];
-        if (specularIndex != -1) {
-
-            var r = this.reader.getFloat(grandChildren[specularIndex], 'r');
-            var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
-            var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
-            var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
-            if (this.r == null || this.g == null || this.b == null || this.a == null) {
-                this.r = 1;
-                this.g = 1;
-                this.b = 1;
-                this.a = 1;
-                this.onXMLMinorError("unable to parse r component; assuming 'r = 1'");
-                this.onXMLMinorError("unable to parse g component assuming 'g = 1'");
-                this.onXMLMinorError("unable to parse b component; assuming 'b = 1'");
-                this.onXMLMinorError("unable to parse a component; assuming 'a = 1'");
-            }
-            if (!(r >= 0 && r <= 1))
-                return "unable to parse r component"
-            else
-                materialSpecular.push(r);
-            if (!(g >= 0 && g <= 1))
-                return "unable to parse g component"
-            else
-                materialSpecular.push(g);
-            if (!(b >= 0 && b <= 1))
-                return "unable to parse b component"
-            else
-                materialSpecular.push(b);
-            if (!(a >= 0 && a <= 1))
-                return "unable to parse a component"
-            else
-                materialSpecular.push(a);
-
-        }
-        else
-            this.onXMLMinorError("material's specular undefined'");
-
-        this.log("Parsed materials");
-
-        return null;
-
+        return -1;
     }
 
     /*
