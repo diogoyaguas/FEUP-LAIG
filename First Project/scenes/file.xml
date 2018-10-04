@@ -1,43 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Os comentarios devem ter espacos no inicio e no fim, a -->
-<!-- separar dos hifens -->
-<!-- Nao devem ser usados caracteres especiais (p.ex. acentos) -->
-<!-- Todas as tags e atributos sao obrigatorios, exceto onde for -->
-<!-- referido o contrario -->
-<!-- Na descricao abaixo, os simbolos utilizados tem o seguinte significado: -->
-<!-- ii: integer value -->
-<!-- ff: float value -->
-<!-- ss: string value -->
-<!-- cc: character "x" or "y" or "z" -->
-<!-- tt: "0" or "1" with Boolean significance -->
+
 <yas>
-    <!-- deve definir-se um objeto para raiz da arvore, assim -->
-    <!-- como o comprimento dos tres eixos (cilindros) -->
-    <scene root="ss" axis_length="ff" />
-    <views default="ss">
-        <!-- tem de existir, pelo menos, uma vista de -->
-        <!-- entre as seguintes (perspective ou ortho) -->
-        <perspective id="ss" near="ff" far="ff" angle="ff">
-            <from x="ff" y="ff" z="ff" />
-            <to x="ff" y="ff" z="ff" />
+    <scene root="root" axis_length="3.0" />
+    <views default="view">
+        <perspective id="perspective_01" near="0.1" far="500" angle="45">
+            <from x="0" y="0" z="0" />
+            <to x="25" y="25" z="25" />
         </perspective>
-        <ortho id="ss" near="ff" far="ff" left="ff" right="ff" top="ff" bottom="ff" />
+        <ortho id="ortho_01" near="0.1" far="500" left="5" right="5" top="5" bottom="5" />
     </views>
     <ambient>
-        <ambient r="ff" g="ff" b="ff" a="ff" />
-        <background r="ff" g="ff" b="ff" a="ff" />
+        <ambient r="0.1" g="0.1" b="0.1" a="0.1" />
+        <background r="0" g="0" b="0" a="0" />
     </ambient>
     <lights>
-        <!-- Deve existir um ou mais blocos "omni" ou "spot" -->
-        <!-- Os identificadores "id" nao podem ser repetidos -->
-        <omni id="ss" enabled="tt">
+        <omni id="omni_01" enabled="1">
             <location x="ff" y="ff" z="ff" w="ff" />
             <ambient r="ff" g="ff" b="ff" a="ff" />
             <diffuse r="ff" g="ff" b="ff" a="ff" />
             <specular r="ff" g="ff" b="ff" a="ff" />
         </omni>
-        <spot id="ss" enabled="tt" angle="ff" exponent="ff">
-            <!-- atencao, "target" e' diferente de "direction" -->
+        <spot id="spot_01" enabled="0" angle="90" exponent="1">
             <location x="ff" y="ff" z="ff" w="ff" />
             <target x="ff" y="ff" z="ff" />
             <ambient r="ff" g="ff" b="ff" a="ff" />
@@ -46,13 +29,9 @@
         </spot>
     </lights>
     <textures>
-        <!-- Deve existir um ou mais blocos "texture" -->
-        <!-- Os identificadores "id" nao podem ser repetidos -->
         <texture id="ss" file="ss" />
     </textures>
     <materials>
-        <!-- Deve existir um ou mais blocos "material" -->
-        <!-- Os identificadores "id" nao podem ser repetidos -->
         <material id="ss" shininess="ff">
             <emission r="ff" g="ff" b="ff" a="ff" />
             <ambient r="ff" g="ff" b="ff" a="ff" />
@@ -61,12 +40,7 @@
         </material>
     </materials>
     <transformations>
-        <!-- Deve existir um ou mais blocos "transformation" -->
-        <!-- Os identificadores "id" nao podem ser repetidos -->
-        <!-- Os angulos sao expressos em graus -->
         <transformation id="ss">
-            <!-- instrucoes a usar sem limite nem ordem -->
-            <!-- deve existir pelo menos uma transformacao -->
             <translate x="ff" y="ff" z="ff" />
             <rotate axis="cc" angle="ff" />
             <scale x="ff" y="ff" z="ff" />
