@@ -645,7 +645,7 @@ class MySceneGraph {
             this.light[3] = this.diffuse;
             this.light[4] = this.specular;
 
-            this.lights.push(this.light); 
+            this.lights.push(this.light);
 
             this.log("Parsed omni");
 
@@ -1431,6 +1431,7 @@ class MySceneGraph {
 
     }
 
+
     /**
     * Parses the <components> block.
     */
@@ -1469,13 +1470,18 @@ class MySceneGraph {
                 newNodeNames.push(grandChildren[j].nodeName);
             }
 
+            var transformationIndex = newNodeNames.indexOf("transformation");
+            var materialsIndex = newNodeNames.indexOf("materials");
+            var textureIndex = newNodeNames.indexOf("texture");
+            var childrenIndex = newNodeNames.indexOf("children");
+
             // Retrieves the transformation.
             if (transformationIndex != -1) {
 
                 var grandGrandChildren = [];
                 var newNodeName = [];
 
-                grandChildren = grandchildren[componentIndex].children;
+                grandGrandChildren = grandchildren[transformationIndex].children;
 
                 for (var j = 0; j < grandGrandChildren.length; j++) {
                     newNodeName.push(grandGrandChildren[j].nodeName);
@@ -1483,7 +1489,7 @@ class MySceneGraph {
 
 
                 // Retrieves the transformationref (CORRIGIR)
-                var transformationref = newNodeName.indexOf("transformationref");
+                var transformationrefIndex = newNodeName.indexOf("transformationref");
 
 
                 if (transformationrefIndex != -1) {
@@ -1572,12 +1578,115 @@ class MySceneGraph {
 
             } else this.onXMLMinorError("transformations undefined'");
 
-        } else this.onXMLMinorError("omponent undefined'");
+            // Retrieves the materials.
+            if (materialsIndex != -1) {
 
+                var grandGrandChildren = [];
+                var newNodeName = [];
+
+                grandGrandChildren = grandchildren[materialsIndex].children;
+
+                for (var j = 0; j < grandGrandChildren.length; j++) {
+                    newNodeName.push(grandGrandChildren[j].nodeName);
+                }
+
+
+                // Retrieves the material  (CORRIGIR)
+                var materialIndex = nodeNames.indexOf("material");
+
+                if (materialfIndex != -1) {
+                    this.materialId = this.reader.getString(children[materialIndex], 'id');
+                    if (this.materialId == null) {
+                        this.onXMLMinorError("no ID defined for material");
+                    }
+
+                    for (var j = 0; j < this.material.length; j++)
+                        if (this.material[j] == materialID)
+                            this.onXMLMinorError("material ID must be different");
+                    this.material.push(this.materialId);
+
+                }
+
+            } else this.onXMLMinorError("materials undefined'");
+
+            // Retrieves the texture.
+            if (textureIndex != -1) {
+
+
+                this.textureId = this.reader.getString(grandChildren[textureIndex], 'id');
+                if (this.textureId == null) {
+                    this.onXMLMinorError("no ID defined for texture");
+                }
+
+                for (var j = 0; j < this.texture.length; j++)
+                    if (this.texture[j] == textureId)
+                        this.onXMLMinorError("texture ID must be different");
+                this.texture.push(this.textureId);
+
+                this.length_s = this.reader.getFloat(children[textureIndex], 'length_s');
+                if (this.length_s == null || this.length_s < 0 || this.length_s > 1 || !isNaN(this.shininess)) {
+                    this.onXMLMinorError("no valid length_s value");
+                }
+
+                this.length_t = this.reader.getFloat(children[textureIndex], 'length_s');
+                if (this.length_t == null || this.length_t < 0 || this.length_t > 1 || !isNaN(this.shininess)) {
+                    this.onXMLMinorError("no valid length_t value");
+                }
+
+            } else this.onXMLMinorError("texture undefined'");
+
+
+            // Retrieves the children.
+            if (childrenIndex != -1) {
+
+                var grandGrandChildren = [];
+                var newNodeName = [];
+
+                grandGrandChildren = grandchildren[childrenIndex].children;
+
+                for (var j = 0; j < grandGrandChildren.length; j++) {
+                    newNodeName.push(grandGrandChildren[j].nodeName);
+                }
+
+
+                // Retrieves the componentref 
+                var componentrefIndex = newNodeName.indexOf("componentref");
+
+                if (componentrefIndex != -1) {
+                    this.componentrefId = this.reader.getString(children[componentrefIndex], 'id');
+                    if (this.componentrefId == null) {
+                        this.onXMLMinorError("no ID defined for componentref");
+                    }
+
+                    for (var j = 0; j < this.componentref.length; j++)
+                        if (this.componentref[j] == componentrefId)
+                            this.onXMLMinorError("componentref ID must be different");
+                    this.componentref.push(this.componentrefId);
+
+                }
+
+                // Retrieves the primitiveref 
+                var primitiverefIndex = newNodeName.indexOf("primitiveref");
+
+                if (primitiverefIndex != -1) {
+                    this.primitiverefId = this.reader.getString(children[primitiverefIndex], 'id');
+                    if (this.primitiverefId == null) {
+                        this.onXMLMinorError("no ID defined for primitiveref");
+                    }
+
+                    for (var j = 0; j < this.primitiveref.length; j++)
+                        if (this.primitiveref[j] == primitiverefId)
+                            this.onXMLMinorError("primitiveref ID must be different");
+                    this.primitiveref.push(this.primitiverefId);
+
+                }
+
+            } else this.onXMLMinorError("children undefined'");
+
+        } else this.onXMLMinorError("component undefined'");
 
         return null;
     }
-
     /*
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
