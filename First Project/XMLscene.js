@@ -83,8 +83,8 @@ class XMLscene extends CGFscene {
      */
     onGraphLoaded() {
 
-        this.camera.near = this.graph.near;
-        this.camera.far = this.graph.far;
+        //this.camera.near = this.graph.near;
+        //this.camera.far = this.graph.far;
         
         this.axis = new CGFaxis(this, this.graph.axisLength);
         this.setGlobalAmbientLight(this.graph.globalAmbient[0], this.graph.globalAmbient[1], this.graph.globalAmbient[2], this.graph.globalAmbient[3]);
@@ -137,8 +137,6 @@ class XMLscene extends CGFscene {
                     i++;
                 }
             }
-
-            this.graph.spheres[0].display();
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();

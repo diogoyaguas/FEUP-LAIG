@@ -1454,7 +1454,7 @@ class MySceneGraph {
             if (this.component[j] == componentID)
                 this.onXMLMinorError("transformations ID must be different");
 
-            this.component.push(this.componentId);
+            this.components.push(this.componentId);
 
             var grandChildren = [];
             var newNodeNames = [];
@@ -1483,9 +1483,8 @@ class MySceneGraph {
                 }
 
 
-                // Retrieves the transformationref (CORRIGIR)
+                // Retrieves the transformationref 
                 var transformationrefIndex = newNodeName.indexOf("transformationref");
-
 
                 if (transformationrefIndex != -1) {
                     if (this.transformationref == null) {
@@ -1682,7 +1681,7 @@ class MySceneGraph {
 
         return null;
     }
-    
+
     /*
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
