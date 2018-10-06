@@ -34,6 +34,7 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
+
     }
 
     /**
@@ -82,11 +83,11 @@ class XMLscene extends CGFscene {
      */
     onGraphLoaded() {
 
-        //this.camera.near = this.graph.near;
-        //this.camera.far = this.graph.far;
+        this.camera.near = this.graph.near;
+        this.camera.far = this.graph.far;
         
         this.axis = new CGFaxis(this, this.graph.axisLength);
-        this.scene.setGlobalAmbientLight(this.graph.globalAmbient[0], this.graph.globalAmbient[1], this.graph.globalAmbient[2], this.graph.globalAmbient[3]);
+        this.setGlobalAmbientLight(this.graph.globalAmbient[0], this.graph.globalAmbient[1], this.graph.globalAmbient[2], this.graph.globalAmbient[3]);
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
         this.initLights();
@@ -136,6 +137,8 @@ class XMLscene extends CGFscene {
                     i++;
                 }
             }
+
+            this.graph.spheres[0].display();
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
