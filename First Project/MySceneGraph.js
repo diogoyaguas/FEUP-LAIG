@@ -1439,6 +1439,7 @@ class MySceneGraph {
             nodeNames.push(children[i].nodeName);
 
         // Retrieves the component.
+        this.component = [];
         var componentIndex = nodeNames.indexOf("component");
 
         if (componentIndex != -1) {
@@ -1449,16 +1450,16 @@ class MySceneGraph {
                 this.onXMLMinorError("no ID defined for component");
             }
 
-            for (var j = 0; j < this.transformations.length; j++)
-                if (this.transformations[j] == componentId)
-                    this.onXMLMinorError("component ID must be different");
+            for (var j = 0; j < this.component.length; j++)
+            if (this.component[j] == componentID)
+                this.onXMLMinorError("transformations ID must be different");
 
             this.component.push(this.componentId);
 
             var grandChildren = [];
             var newNodeNames = [];
 
-            grandChildren = children[componentIndex].children;
+            this.grandChildren = children[componentIndex].children;
 
             for (var j = 0; j < grandChildren.length; j++) {
                 newNodeNames.push(grandChildren[j].nodeName);
@@ -1475,7 +1476,7 @@ class MySceneGraph {
                 var grandGrandChildren = [];
                 var newNodeName = [];
 
-                grandGrandChildren = grandchildren[transformationIndex].children;
+                grandGrandChildren = grandChildren[componentIndex].children;
 
                 for (var j = 0; j < grandGrandChildren.length; j++) {
                     newNodeName.push(grandGrandChildren[j].nodeName);
