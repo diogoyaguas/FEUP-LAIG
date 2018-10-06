@@ -590,19 +590,20 @@ class MySceneGraph {
     parseOmni(omniIndex, children) {
 
         var error;
+        this.omniLights = [];
 
         // Retrieves the omni.
         if (omniIndex != -1) {
 
             this.omniId = this.reader.getString(children[omniIndex], 'id');
-            for (var j = 0; j < this.lights.length; j++)
-                if (this.lights[j] == this.omniId)
+            for (var j = 0; j < this.omniLights.length; j++)
+                if (this.omniLights[j] == this.omniId)
                     this.onXMLMinorError("id repeated");
             if (this.omniId == null) {
                 this.onXMLMinorError("no ID defined for omni");
             }
 
-            this.lights.push(this.omniId);
+            this.omniLights.push(this.omniId);
 
             this.enabled = this.reader.getBoolean(children[omniIndex], 'enabled');
             if (this.enabled != 0 && this.enabled != 1) {
@@ -637,15 +638,7 @@ class MySceneGraph {
                 } else return "Inapropriate tag name in omni";
             }
 
-            this.light = [];
-
-            this.light[0] = this.omniId;
-            this.light[1] = this.location;
-            this.light[2] = this.ambient;
-            this.light[3] = this.diffuse;
-            this.light[4] = this.specular;
-
-            this.lights.push(this.light);
+            this.lights[this.omniId] = [this.enabled, this.location, this.ambient, this.diffuse, this.specular];
 
             this.log("Parsed omni");
 
@@ -792,18 +785,19 @@ class MySceneGraph {
     parseSpot(spotIndex, children) {
 
         var error;
+        this.spotLights = [];
 
         // Retrieves the spot.
         if (spotIndex != -1) {
 
             this.spotId = this.reader.getString(children[spotIndex], 'id');
-            for (var j = 0; j < this.lights.length; j++)
-                if (this.lights[j] == this.spotId)
+            for (var j = 0; j < this.spotLights.length; j++)
+                if (this.spotLights[j] == this.spotId)
                     this.onXMLMinorError("id repeated");
             if (this.omniId == null) {
                 this.onXMLMinorError("no ID defined for spot");
             }
-            this.lights.push(this.spotId);
+            this.spotLights.push(this.spotId);
 
             this.enabled = this.reader.getFloat(children[spotIndex], 'enabled');
             if (this.enabled != 0 && this.enabled != 1) {
@@ -1687,6 +1681,7 @@ class MySceneGraph {
 
         return null;
     }
+    
     /*
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
