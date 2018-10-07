@@ -92,8 +92,8 @@
     </transformations>
 
     <primitives>
-        <primitive id="rectangle">
-            <rectangle x1="0" y1="0" x2="2" y2="2"/>
+        <primitive id="square">
+            <square side="2"/>
         </primitive>
         <primitive id="triangle">
             <triangle x1="0" y1="0" z1="-1" x2="0" y2="1" z2="0" x3="0" y3="0" z3="1"/>
@@ -185,7 +185,7 @@
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -201,7 +201,7 @@
             </materials>
             <texture id="tex-somersby" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -216,7 +216,7 @@
             </materials>
             <texture id="tex-stone2" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -232,7 +232,7 @@
             </materials>
             <texture id="tex-stone2" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -247,7 +247,7 @@
             </materials>
             <texture id="tex-stone2" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -263,7 +263,7 @@
             </materials>
             <texture id="tex-stone2" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -291,7 +291,7 @@
             </materials>
             <texture id="tex-stone" length_s="5.0" length_t="5.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -305,7 +305,7 @@
             </materials>
             <texture id="tex-wood" length_s="10.0" length_t="10.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -319,7 +319,7 @@
             </materials>
             <texture id="tex-stone2" length_s="10.0" length_t="10.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -351,7 +351,7 @@
             </materials>
             <texture id="tex-window" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -366,7 +366,7 @@
             </materials>
             <texture id="tex-window" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -381,7 +381,7 @@
             </materials>
             <texture id="tex-window" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -396,7 +396,7 @@
             </materials>
             <texture id="tex-window" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
@@ -411,7 +411,7 @@
             </materials>
             <texture id="tex-window" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="rectangle"/>
+                <primitiveref id="square"/>
             </children>
         </component>
 
