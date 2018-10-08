@@ -128,10 +128,8 @@
             <children>
                 <componentref id="walls"/>
                 <componentref id="floor"/>
-
                 <componentref id="sets"/>
                 <componentref id="window"/>
-
                 <componentref id="awning"/>
                 <componentref id="ball"/>
                 <componentref id="umbrella"/>

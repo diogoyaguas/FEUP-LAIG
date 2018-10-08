@@ -1100,20 +1100,19 @@ class MySceneGraph {
     parseTransformations(transformationsNode) {
 
         this.transformations = [];
-        var error;
 
         var children = transformationsNode.children;
         var nodeNames = [];
 
-        for (var i = 0; i < children.length; i++)
-            nodeNames.push(children[i].nodeName);
-
         // Retrieves the transformations.
-        var transformationsIndex = nodeNames.indexOf("transformation");
-
-        if (transformationsIndex != -1) {
-
-            this.transformationsId = this.reader.getString(children[transformationsIndex], 'id');
+        for(var j = 0; j < children.length; j++) {
+            if(children[j].nodeName != "transformation")
+            {
+                this.onXMLMinorError("unknown tag <" + children[j].nodeName + ">");
+                continue;
+            }
+ 
+            this.transformationsId = this.reader.getString(children[j], 'id');
 
             if (this.transformationsId == null) {
                 this.onXMLMinorError("no ID defined for transformations");
@@ -1122,37 +1121,68 @@ class MySceneGraph {
             if (this.transformations[this.transformationsId] != null)
                 this.onXMLMinorError("transformations ID must be different");
 
-            var grandChildren = [];
-            var newNodeNames = [];
+            this.transformations[transformationID] = mat4.create();
 
-            grandChildren = children[transformationsIndex].children;
-
-            for (var j = 0; j < grandChildren.length; j++) {
-                newNodeNames.push(grandChildren[j].nodeName);
-            }
+            grandChildren = children[i].children;
 
             for (var i = 0; i < grandChildren.length; i++) {
 
-                if (newNodeNames[i] == "translate") {
-                    error = this.parseTranslate(i, grandChildren);
-                    if (error != null)
-                        return error;
-                } else if (newNodeNames[i] == "rotate") {
-                    error = this.parseRotate(i, grandChildren);
-                    if (error != null)
-                        return error;
-                } else if (newNodeNames[i] == "scale") {
-                    error = this.parseScale(i, grandChildren);
-                    if (error != null)
-                        return error;
-                } else return "Inapropriate tag name in transformations";
+                switch (grandChildren[i].nodeName) {
+                    case "translate":
+                        xyz = this.getXYZ(grandChildren[i]);
+
+                        if (typeof xyz == "string")
+                            return transformationErrorTag + xyz;
+                        else
+                            mat4.translate(this.transformations[transformationID], this.transformations[transformationID],
+                                xyz);
+
+                        break;
+
+                    case "scale":
+                        xyz = this.getXYZ(grandChildren[i]);
+
+                        if (typeof xyz == "string")
+                            return transformationErrorTag + xyz;
+                        else
+                            mat4.scale(this.transformations[transformationID], this.transformations[transformationID],
+                                xyz);
+
+                        break;
+
+                    case "rotate":
+
+                        var axis = this.reader.getString(grandChildren[i], "axis"),
+                            angle = this.reader.getFloat(grandChildren[i], "angle");
+                        var vec = vec3.create();
+
+                        switch (axis) {
+                            case "x":
+                                vec3.set(vec, 1, 0, 0);
+                                break;
+
+                            case "y":
+                                vec3.set(vec, 0, 1, 0);
+                                break;
+
+                            case "z":
+                                vec3.set(vec, 0, 0, 1);
+                                break;
+
+                            default:
+                                this.log("Error in axis");
+                        }
+
+                        if (axis == null || angle == null)
+                            return transformationErrorTag + "Rotation not properly defined";
+
+                        mat4.rotate(this.transformations[transformationID], this.transformations[transformationID],
+                            angle * DEGREE_TO_RAD, vec);
+
+                        break;
+                }
 
             }
-
-            this.transformations[this.transformationsId] = [this.translateV, this.rotateV, this.scaleV];
-            this.translateV = [];
-            this.rotateV = [];
-            this.scaleV = [];
 
             this.log("Parsed transformation");
 
@@ -1162,117 +1192,6 @@ class MySceneGraph {
 
         return null;
 
-    }
-
-    /**
-    * Parses the <translate> component
-    */
-    parseTranslate(translateIndex, grandChildren) {
-
-        // Retrieves the translate.
-        this.translateV = [];
-
-        if (translateIndex != -1) {
-
-            this.x = this.reader.getFloat(grandChildren[translateIndex], 'x');
-            this.y = this.reader.getFloat(grandChildren[translateIndex], 'y');
-            this.z = this.reader.getFloat(grandChildren[translateIndex], 'z');
-
-            if (!(this.x != null || !isNaN(this.x))) {
-                this.x = 25;
-                return "unable to parse x-coordinate of the position, assuming x = 25'";
-            } else
-                this.translateV[0] = this.x;
-            if (!(this.y != null || !isNaN(this.y))) {
-                this.y = 25;
-                return "unable to parse y-coordinate of the position, assuming y = 25'";
-            } else
-                this.translateV[1] = this.y;
-            if (!(this.z != null || !isNaN(this.z))) {
-                return "unable to parse z-coordinate of the position, assuming z = 25'";
-            } else
-                this.translateV[2] = this.z;
-
-            this.translateV.type = "translate";
-            this.log("Parsed translate");
-
-            return null;
-
-        } else this.onXMLMinorError("translate undefined'");
-
-        return -1;
-
-    }
-
-    /**
-    * Parses the <rotate> component
-    */
-    parseRotate(rotateIndex, grandChildren) {
-
-        // Retrieves the rotate.
-        this.rotateV = [];
-
-        if (rotateIndex != -1) {
-
-            this.axis = this.reader.getString(grandChildren[rotateIndex], 'axis');
-            this.angle = this.reader.getFloat(grandChildren[rotateIndex], 'angle');
-
-            if (this.axis != 'x' && this.axis != 'y' && this.axis != 'z') {
-                this.onXMLMinorError("invalid axis for rotation");
-            }
-
-            this.rotateV.type = "rotate";
-
-            this.log("Parsed rotate");
-
-            return null;
-
-        } else this.onXMLMinorError("rotate undefined'");
-
-        return -1;
-
-    }
-
-    /**
-    * Parses the <scale> component
-    */
-    parseScale(scaleIndex, grandChildren) {
-
-        // Retrieves the scale.
-        this.scaleV = [];
-
-        if (scaleIndex != -1) {
-
-            this.x = this.reader.getFloat(grandChildren[scaleIndex], 'x');
-            this.y = this.reader.getFloat(grandChildren[scaleIndex], 'y');
-            this.z = this.reader.getFloat(grandChildren[scaleIndex], 'z');
-
-            if (!(this.x != null || !isNaN(this.x))) {
-                this.x = 25;
-                return "unable to parse x-coordinate of the position, assuming x = 25'";
-            } else
-                this.scaleV[0] = this.x;
-
-            if (!(this.y != null || !isNaN(this.y))) {
-                this.y = 25;
-                return "unable to parse y-coordinate of the position, assuming y = 25'";
-            } else
-                this.scaleV[1] = this.y;
-
-            if (!(this.z != null || !isNaN(this.z))) {
-                return "unable to parse z-coordinate of the position, assuming z = 25'";
-            } else
-                this.scaleV[2] = this.z;
-
-            this.scaleV.type = "scale";
-
-            this.log("Parsed scale");
-
-            return null;
-
-        } else this.onXMLMinorError("scale undefined'");
-
-        return -1;
     }
 
     /**
@@ -1385,7 +1304,7 @@ class MySceneGraph {
             }
 
             this.rectangle = new MyRectangle(this.scene, this.x1, this.y1, this.x2, this.y2);
-            this.primitives[](this.rectangle);
+            this.primitives(this.rectangle);
 
             this.log("Parsed rectangle");
 
