@@ -60,21 +60,21 @@
     </lights>
 
     <textures>
-        <texture id="tex-trunk" file="images/trunk.jpg"/>
-        <texture id="tex-stone" file="images/stone.jpg"/>
-        <texture id="tex-pink" file="images/pink.png"/>
-        <texture id="tex-window" file="images/window.jpg"/>
-        <texture id="tex-wood" file="images/wood.jpg"/>
-        <texture id="tex-stone2" file="images/seamless-stone.jpg"/>
-        <texture id="tex-pine" file="images/pine.jpg"/>
-        <texture id="tex-green" file="images/green.jpg"/>
-        <texture id="tex-somersby" file="images/somersby.jpg"/>
-        <texture id="tex-red" file="images/red.jpg"/>
-        <texture id="tex-superbock" file="images/superbock.jpg"/>
-        <texture id="tex-metal" file="images/metal.jpg"/>
-        <texture id="tex-dark-grey" file="images/dark-grey.jpg"/>
-        <texture id="tex-rocks" file="images/rocks.jpg"/>
-        <texture id="tex-bank" file="images/bank.jpg"/>
+        <texture id="tex-trunk" file="scenes/images/trunk.jpg"/>
+        <texture id="tex-stone" file="scenes/images/stone.jpg"/>
+        <texture id="tex-pink" file="scenes/images/pink.png"/>
+        <texture id="tex-window" file="scenes/images/window.jpg"/>
+        <texture id="tex-wood" file="scenes/images/wood.jpg"/>
+        <texture id="tex-stone2" file="scenes/images/seamless-stone.jpg"/>
+        <texture id="tex-pine" file="scenes/images/pine.jpg"/>
+        <texture id="tex-green" file="scenes/images/green.jpg"/>
+        <texture id="tex-somersby" file="scenes/images/somersby.jpg"/>
+        <texture id="tex-red" file="scenes/images/red.jpg"/>
+        <texture id="tex-superbock" file="scenes/images/superbock.jpg"/>
+        <texture id="tex-metal" file="scenes/images/metal.jpg"/>
+        <texture id="tex-dark-grey" file="scenes/images/dark-grey.jpg"/>
+        <texture id="tex-rocks" file="scenes/images/rocks.jpg"/>
+        <texture id="tex-bank" file="scenes/images/bank.jpg"/>
     </textures>
 
     <materials>
@@ -108,9 +108,6 @@
         </primitive>
         <primitive id="torus">
             <torus inner="1" outer="2" slices="32" loops="1"/>
-        </primitive>
-        <primitive id="cube">
-            <cube side="1"/>
         </primitive>
         <primitive id="cone">
             <cylinder base="3" top="1" height="5" slices="150" stacks="150"/>
@@ -633,7 +630,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -647,7 +644,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -661,7 +658,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -675,7 +672,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -689,7 +686,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -719,7 +716,7 @@ v
             </materials>
             <texture id="tex-metal" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -733,7 +730,7 @@ v
             </materials>
             <texture id="tex-metal" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -747,7 +744,7 @@ v
             </materials>
             <texture id="tex-metal" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -761,7 +758,7 @@ v
             </materials>
             <texture id="tex-metal" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -775,7 +772,7 @@ v
             </materials>
             <texture id="tex-superbock" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -934,7 +931,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -948,7 +945,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -962,7 +959,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -976,7 +973,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -990,7 +987,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1004,7 +1001,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1109,7 +1106,7 @@ v
             </materials>
             <texture id="tex-metal" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1123,7 +1120,7 @@ v
             </materials>
             <texture id="tex-metal" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1137,7 +1134,7 @@ v
             </materials>
             <texture id="tex-metal" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1151,7 +1148,7 @@ v
             </materials>
             <texture id="tex-metal" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1165,7 +1162,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1179,7 +1176,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1193,7 +1190,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1207,7 +1204,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1221,7 +1218,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -1235,7 +1232,7 @@ v
             </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
-                <primitiveref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 

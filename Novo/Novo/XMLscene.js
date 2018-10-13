@@ -178,6 +178,7 @@ class XMLscene extends CGFscene {
     }
 
     initMaterials() {
+        
         var materials = this.graph.materials;
 
         for (var id in materials) {
@@ -200,19 +201,6 @@ class XMLscene extends CGFscene {
         }
 
     }
-
-    initPrimitives() {
-        var primitives = this.graph.primitives;
-
-        this.primitives = {};
-
-        for (const id in primitives.elements) {
-            const prim = primitives.elements[id];
-
-            this.primitives[id] = drawPrimitive(this, prim);
-        }
-    }
-
 
     /**
      * Displays the scene.
