@@ -24,6 +24,7 @@ class MyNode
     {
        build.scene.pushMatrix();
            build.scene.multMatrix(this.transformations);
+           this.materials.apply;
            build.display();
        build.scene.popMatrix();
     }

@@ -5,53 +5,55 @@
 class MyTorus extends CGFobject {
 	constructor(scene, inner, outer, slices, loops) {
 		super(scene);
-		this.p1 = [x0, y0, z0];
-		this.p2 = [x1, y1, z1];
-		this.p3 = [x2, y2, z2];
+		
+		var torusRadius = (outer - inner) / 2;
+
+		this.r = torusRadius;
+		this.R = inner + torusRadius;
+		this.slices = slices;
+		this.stacks = loops;
 
 		this.initBuffers();
 	};
 
 	initBuffers() {
-		this.vertices = [
-			this.p1[0], this.p1[1], this.p1[2],
-			this.p2[0], this.p2[1], this.p2[2],
-			this.p3[0], this.p3[1], this.p3[2]
-		];
+		this.vertices = [];
+		this.indices = [];
+		this.normals = [];
+		this.texCoords = [];
 
-		// defines the normals
-		this.normals = [
-			0, 0, 1,
-			0, 0, 1,
-			0, 0, 1
-		];
+		for (var stack = 0; stack <= this.stacks; stack++) {
+			var theta = stack * 2 * Math.PI / this.stacks;
+			var sinTheta = Math.sin(theta);
+			var cosTheta = Math.cos(theta);
 
-		// defines the indices
-		this.indices = [
-			0,
-			1,
-			2
-		];
+			for (var slice = 0; slice <= this.slices; slice++) {
+				var phi = slice * 2 * Math.PI / this.slices;
+				var sinPhi = Math.sin(phi);
+				var cosPhi = Math.cos(phi);
 
-		// defines the texture coordinates
-		var a = Math.sqrt((this.p3[0] - this.p2[0]) * (this.p3[0] - this.p2[0]) +
-			(this.p3[1] - this.p2[1]) * (this.p3[1] - this.p2[1]) +
-			(this.p3[2] - this.p2[2]) * (this.p3[2] - this.p2[2]));
-		var b = Math.sqrt((this.p1[0] - this.p3[0]) * (this.p1[0] - this.p3[0]) +
-			(this.p1[1] - this.p3[1]) * (this.p1[1] - this.p3[1]) +
-			(this.p1[2] - this.p3[2]) * (this.p1[2] - this.p3[2]));
-		var c = Math.sqrt((this.p2[0] - this.p1[0]) * (this.p2[0] - this.p1[0]) +
-			(this.p2[1] - this.p1[1]) * (this.p2[1] - this.p1[1]) +
-			(this.p2[2] - this.p1[2]) * (this.p2[2] - this.p1[2]));
+				var x = (this.R + (this.r * cosTheta)) * cosPhi;
+				var y = (this.R + (this.r * cosTheta)) * sinPhi
+				var z = this.r * sinTheta;
+				var s = 1 - (stack / this.stacks);
+				var t = 1 - (slice / this.slices);
 
-		var beta = Math.acos((a * a - b * b + c * c) / (2 * a * c));
+				this.vertices.push(x, y, z);
+				this.normals.push(x, y, z);
+				this.texCoords.push(s, t);
+			}
+		}
 
-		this.unslicedTextCoords = [
-			0, 0,
-			c, 0,
-			c - a * (a * a - b * b + c * c) / (2 * a * c), -a * Math.sin(beta)
-		];
-		this.texCoords = this.unslicedTextCoords.slice();
+		for (var stack = 0; stack < this.stacks; stack++) {
+			for (var slice = 0; slice < this.slices; slice++) {
+				var first = (stack * (this.slices + 1)) + slice;
+				var second = first + this.slices + 1;
+
+				this.indices.push(first, second + 1, second);
+				this.indices.push(first, first + 1, second + 1);
+			}
+		}
+
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();

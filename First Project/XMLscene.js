@@ -1,5 +1,3 @@
-var DEGREE_TO_RAD = Math.PI / 180;
-
 /**
  * XMLscene class, representing the scene that is to be rendered.
  */
@@ -13,6 +11,9 @@ class XMLscene extends CGFscene {
 
         this.interface = myinterface;
         this.lightValues = {};
+        this.views = {};
+        this.textures = {};
+        this.materials = {};
     }
 
     /**
@@ -24,7 +25,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
 
-        this.initCameras();
+        this.initDefaults();
 
         this.enableTextures(true);
 
@@ -34,15 +35,91 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-
     }
 
     /**
-     * Initializes the scene cameras.
+     * Initializes the scene's default camera, lights and axis.
      */
-    initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    initDefaults() {
+
+        this.axis = new CGFaxis(this);
+
+        this.camera = new CGFcamera(0.4, 0.1, 500,
+            vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
+
+    /* Handler called when the graph is finally loaded. 
+     * As loading is asynchronous, this may be called already after the application has started the run loop
+     */
+    onGraphLoaded() {
+        this.initAxis();
+
+        this.initViews();
+
+        this.initAmbient();
+
+        this.initLights();
+
+        this.initMaterials();
+
+        this.interface.addLightsGroup(this.graph.lights);
+        this.interface.addViewsGroup(this.views);
+
+        this.sceneInited = true;
+    }
+
+    /**
+     * Initializes the scene axis with the values read from the XML file.
+     */
+    initAxis() {
+
+        this.axis = new CGFaxis(this, this.graph.axisLength);
+    }
+
+    /**
+     * Initializes the scene views with the values read from the XML file.
+     */
+    initViews() {
+
+        var views = this.graph.views;
+
+        // Reads the views from the scene graph.
+        for (var id in views) {
+            var view = views[id];
+
+            if (view.type == "perspective") {
+                var position = vec3.fromValues(view[3][0], view[3][1], view[3][2]);
+                var target = vec3.fromValues(view[4][0], view[4][1], view[4][2]);
+                var fov = (Math.PI / 180) * (view[2]), near = view[0], far = view[1];
+
+                this.views[id] = new CGFcamera(fov, near, far, position, target);
+            } else if (view.type == "ortho") {
+                var position = vec3.fromValues(view[6][0], view[6][1], view[6][2]);
+                var target = vec3.fromValues(view[7][0], view[7][1], view[7][2]);
+                var up = vec3.fromValues(0, 1, 0);
+                var near = view[0], far = view[1], left = view[2], rigth = view[3], top = view[4], bottom = view[5];
+                this.views[id] = new CGFcameraOrtho(left, rigth, bottom, top, near, far, position, target, up)
+            }
+        }
+
+        this.camera = this.views[this.graph.default];
+        this.interface.setActiveCamera(this.camera);
+    }
+
+    selectView(id) {
+        this.camera = this.views[id];
+        this.interface.setActiveCamera(this.camera);
+    }
+
+    /**
+    * Initializes the scene ambient with the values read from the XML file.
+    */
+    initAmbient() {
+
+        this.setGlobalAmbientLight(this.graph.globalAmbient[0], this.graph.globalAmbient[1], this.graph.globalAmbient[2], this.graph.globalAmbient[3]);
+        this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+    }
+
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -64,6 +141,16 @@ class XMLscene extends CGFscene {
                 this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
                 this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
 
+                if (light.type === "spot") {
+                    var target = light[5];
+                    var angle = light[6];
+                    var exponent = light[7];
+
+                    this.lights[i].setSpotCutOff(angle);
+                    this.lights[i].setSpotExponent(exponent);
+                    this.lights[i].setSpotDirection(target[0] - light[1][0], target[1] - light[1][1], target[3] - light[1][2]);
+                }
+
                 this.lights[i].setVisible(true);
                 if (light[0])
                     this.lights[i].enable();
@@ -75,29 +162,33 @@ class XMLscene extends CGFscene {
                 i++;
             }
         }
+
     }
 
+    initMaterials() {
 
-    /* Handler called when the graph is finally loaded. 
-     * As loading is asynchronous, this may be called already after the application has started the run loop
-     */
-    onGraphLoaded() {
+        var materials = this.graph.materials;
 
-        //this.camera.near = this.graph.near;
-        //this.camera.far = this.graph.far;
-        
-        this.axis = new CGFaxis(this, this.graph.axisLength);
-        this.setGlobalAmbientLight(this.graph.globalAmbient[0], this.graph.globalAmbient[1], this.graph.globalAmbient[2], this.graph.globalAmbient[3]);
-        this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+        for (var id in materials) {
+            var material = materials[id];
 
-        this.initLights();
+            var shininess = material[0];
+            var emission = material[1];
+            var ambient = material[2];
+            var diffuse = material[3];
+            var specular = material[4];
 
-        // Adds lights group.
-        this.interface.addLightsGroup(this.graph.lights);
+            this.materials[id] = new CGFappearance(this);
 
-        this.sceneInited = true;
+            this.materials[id].setShininess(shininess);
+            this.materials[id].setEmission(emission[0], emission[1], emission[2], emission[3]);
+            this.materials[id].setAmbient(ambient[0], ambient[1], ambient[2], ambient[3]);
+            this.materials[id].setDiffuse(diffuse[0], diffuse[1], diffuse[2], diffuse[3]);
+            this.materials[id].setSpecular(specular[0], specular[1], specular[2], specular[3]);
+
+        }
+
     }
-
 
     /**
      * Displays the scene.
