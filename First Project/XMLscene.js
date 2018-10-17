@@ -1,3 +1,5 @@
+var DEGREE_TO_RAD = Math.PI / 180;
+
 /**
  * XMLscene class, representing the scene that is to be rendered.
  */
@@ -12,8 +14,6 @@ class XMLscene extends CGFscene {
         this.interface = myinterface;
         this.lightValues = {};
         this.views = {};
-        this.textures = {};
-        this.materials = {};
     }
 
     /**
@@ -52,15 +52,11 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+
         this.initAxis();
-
         this.initViews();
-
         this.initAmbient();
-
         this.initLights();
-
-        this.initMaterials();
 
         this.interface.addLightsGroup(this.graph.lights);
         this.interface.addViewsGroup(this.views);
@@ -88,12 +84,14 @@ class XMLscene extends CGFscene {
             var view = views[id];
 
             if (view.type == "perspective") {
+
                 var position = vec3.fromValues(view[3][0], view[3][1], view[3][2]);
                 var target = vec3.fromValues(view[4][0], view[4][1], view[4][2]);
-                var fov = (Math.PI / 180) * (view[2]), near = view[0], far = view[1];
-
+                var fov = DEGREE_TO_RAD * (view[2]), near = view[0], far = view[1];
                 this.views[id] = new CGFcamera(fov, near, far, position, target);
+
             } else if (view.type == "ortho") {
+
                 var position = vec3.fromValues(view[6][0], view[6][1], view[6][2]);
                 var target = vec3.fromValues(view[7][0], view[7][1], view[7][2]);
                 var up = vec3.fromValues(0, 1, 0);
@@ -161,31 +159,6 @@ class XMLscene extends CGFscene {
 
                 i++;
             }
-        }
-
-    }
-
-    initMaterials() {
-
-        var materials = this.graph.materials;
-
-        for (var id in materials) {
-            var material = materials[id];
-
-            var shininess = material[0];
-            var emission = material[1];
-            var ambient = material[2];
-            var diffuse = material[3];
-            var specular = material[4];
-
-            this.materials[id] = new CGFappearance(this);
-
-            this.materials[id].setShininess(shininess);
-            this.materials[id].setEmission(emission[0], emission[1], emission[2], emission[3]);
-            this.materials[id].setAmbient(ambient[0], ambient[1], ambient[2], ambient[3]);
-            this.materials[id].setDiffuse(diffuse[0], diffuse[1], diffuse[2], diffuse[3]);
-            this.materials[id].setSpecular(specular[0], specular[1], specular[2], specular[3]);
-
         }
 
     }

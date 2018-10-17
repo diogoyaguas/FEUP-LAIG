@@ -46,15 +46,44 @@ class MyTriangle extends CGFobject {
 
 		var beta = Math.acos((a * a - b * b + c * c) / (2 * a * c));
 
-		this.unslicedTextCoords = [
+		this.texCoords = [
 			0, 0,
 			c, 0,
 			c - a * (a * a - b * b + c * c) / (2 * a * c), -a * Math.sin(beta)
 		];
-		this.texCoords = this.unslicedTextCoords.slice();
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	};
+
+	setSAndT(s, t) {
+
+		this.a = Math.sqrt(math.pow(p1[0] - p3[0], 2) +
+			math.pow(this.p1[1] - this.p3[1], 2) +
+			math.pow(this.p1[2] - this.p3[2], 2));
+
+		this.b = Math.sqrt(math.pow(p2[0] - p1[0], 2) +
+			math.pow(this.p2[1] - this.p1[1], 2) +
+			math.pow(this.p2[2] - this.p1[2], 2));
+
+		this.c = Math.sqrt(math.pow(p3[0] - p2[0], 2) +
+			math.pow(this.p3[1] - this.p2[1], 2) +
+			math.pow(this.p3[2] - this.p2[2], 2));
+
+		this.cosBeta = (math.pow(this.a, 2) - math.pow(this.b, 2) + math.pow(this.c, 2)) / (2 * this.a * this.c);
+
+		this.beta = Math.acos(this.cosBeta);
+
+		this.texCoords = [
+
+			(this.c - this.a * Math.cos(beta)) / s,
+			1 - (this.a * Math.sin(beta)) / t,
+			0, 1 / t, this.c / s,
+			1 / t
+
+		];
+
+		this.updateTexCoordsGLBuffers();
+	}
 
 };

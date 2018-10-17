@@ -18,6 +18,8 @@ class MyInterface extends CGFinterface {
 
         this.gui = new dat.GUI();
 
+        this.initKeys();
+
         return true;
     }
 
@@ -48,4 +50,26 @@ class MyInterface extends CGFinterface {
 
         group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
     }
+
+    initKeys() {
+        this.scene.gui = this;
+        this.processKeyboard = function () { };
+        this.activeKeys = {};
+    }
+
+    processKeyDown(event) {
+        this.activeKeys[event.code] = true;
+    };
+
+    processKeyUp(event) {
+        if (event.code === "KeyM") {
+            this.scene.graph.counter++;
+        }
+        this.activeKeys[event.code] = false;
+    };
+
+    isKeyPressed(keyCode) {
+        return this.activeKeys[keyCode] || false;
+    }
+
 }
