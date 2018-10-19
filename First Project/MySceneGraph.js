@@ -15,9 +15,9 @@ var COMPONENTS_INDEX = 8;
  * MySceneGraph class, representing the scene graph.
  */
 class MySceneGraph {
-	/**
-	 * @constructor
-	 */
+    /**
+     * @constructor
+     */
     constructor(filename, scene) {
         this.loadedOk = null;
 
@@ -38,17 +38,17 @@ class MySceneGraph {
         // File reading 
         this.reader = new CGFXMLreader();
 
-		/*
-		 * Read the contents of the xml file, and refer to this class for loading and error handlers.
-		 * After the file is read, the reader calls onXMLReady on this object.
-		 * If any error occurs, the reader calls onXMLError on this object, with an error message
-		 */
+        /*
+         * Read the contents of the xml file, and refer to this class for loading and error handlers.
+         * After the file is read, the reader calls onXMLReady on this object.
+         * If any error occurs, the reader calls onXMLError on this object, with an error message
+         */
         this.reader.open('scenes/' + filename, this);
     }
 
-	/*
-	 * Callback to be executed after successful reading
-	 */
+    /*
+     * Callback to be executed after successful reading
+     */
     onXMLReady() {
 
         this.log("XML Loading finished.");
@@ -68,10 +68,10 @@ class MySceneGraph {
         this.scene.onGraphLoaded();
     }
 
-	/**
-	 * Parses the XML file, processing each block.
-	 * @param {XML root element} rootElement
-	 */
+    /**
+     * Parses the XML file, processing each block.
+     * @param {XML root element} rootElement
+     */
     parseXMLFile(rootElement) {
         if (rootElement.nodeName != "yas")
             return "root tag <yas> missing";
@@ -199,10 +199,10 @@ class MySceneGraph {
         }
     }
 
-	/**
-	 * Parses the <scene> block.
-	 * @param {Scene Node} sceneNode
-	 */
+    /**
+     * Parses the <scene> block.
+     * @param {Scene Node} sceneNode
+     */
     parseScene(sceneNode) {
 
         this.idRoot = this.reader.getString(sceneNode, 'root');
@@ -223,10 +223,10 @@ class MySceneGraph {
 
     }
 
-	/**
-	 * Parses the <views> block.
-	 * @param {Views Node} viewsNode
-	 */
+    /**
+     * Parses the <views> block.
+     * @param {Views Node} viewsNode
+     */
     parseViews(viewsNode) {
 
         this.views = [];
@@ -261,11 +261,11 @@ class MySceneGraph {
         return null;
     }
 
-	/**
-	 * Parses the <perspective> block.
-	 *  @param {Perpective index} perspectiveIndex
-	 *  @param {Children of Views} children
-	 */
+    /**
+     * Parses the <perspective> block.
+     *  @param {Perpective index} perspectiveIndex
+     *  @param {Children of Views} children
+     */
     parsePerspective(perspectiveIndex, children) {
 
         // Retrieves the perspective.
@@ -337,11 +337,11 @@ class MySceneGraph {
 
     }
 
-	/**
-	 * Parses the <ortho> block.
-	 *  @param {Ortho index} orthoIndex
-	 *  @param {Children of Views} children
-	 */
+    /**
+     * Parses the <ortho> block.
+     *  @param {Ortho index} orthoIndex
+     *  @param {Children of Views} children
+     */
     parseOrtho(orthoIndex, children) {
 
         // Retrieves the ortho.
@@ -420,10 +420,10 @@ class MySceneGraph {
         return -1;
     }
 
-	/**
-	 * Parses the <ambient> block.
-	 *  @param {Ambient Node} ambientNode
-	 */
+    /**
+     * Parses the <ambient> block.
+     *  @param {Ambient Node} ambientNode
+     */
     parseAmbientNode(ambientNode) {
 
         var children = ambientNode.children;
@@ -452,10 +452,10 @@ class MySceneGraph {
 
     }
 
-	/**
-	 * Parses the <lights> block.
-	 *  @param {Lights Node} lightsNode
-	 */
+    /**
+     * Parses the <lights> block.
+     *  @param {Lights Node} lightsNode
+     */
     parseLights(lightsNode) {
 
         this.lights = [];
@@ -486,11 +486,11 @@ class MySceneGraph {
         return null;
     }
 
-	/**
-	 * Parses the <omni> block
-	 *  @param {Omni index} OmniIndex
-	 *  @param {Children of Lights} children
-	 */
+    /**
+     * Parses the <omni> block
+     *  @param {Omni index} OmniIndex
+     *  @param {Children of Lights} children
+     */
     parseOmni(omniIndex, children) {
 
         var error;
@@ -556,11 +556,11 @@ class MySceneGraph {
 
     }
 
-	/**
-	 * Parses the <spot> block
-	 *  @param {Spot index} spotIndex
-	 *  @param {Children of Lights} children
-	 */
+    /**
+     * Parses the <spot> block
+     *  @param {Spot index} spotIndex
+     *  @param {Children of Lights} children
+     */
     parseSpot(spotIndex, children) {
 
         var error;
@@ -647,11 +647,11 @@ class MySceneGraph {
 
     }
 
-	/**
-	 * Parses the <location> component
-	 *  @param {Location index} locationIndex
-	 *  @param {Children of Omni and Spot} children
-	 */
+    /**
+     * Parses the <location> component
+     *  @param {Location index} locationIndex
+     *  @param {Children of Omni and Spot} children
+     */
     parseLocation(locationIndex, grandChildren) {
 
         // Retrieves the location.
@@ -673,10 +673,10 @@ class MySceneGraph {
         return -1;
     }
 
-	/**
-	 * Parses the <textures> block.
-	 * @param {Textures Node} texturesNode
-	 */
+    /**
+     * Parses the <textures> block.
+     * @param {Textures Node} texturesNode
+     */
     parseTextures(texturesNode) {
 
         var children = texturesNode.children;
@@ -713,10 +713,10 @@ class MySceneGraph {
         this.log("Parsed textures");
     }
 
-	/**
-	 * Parses the <materials> block.
-	 * @param {Materials Node} materialsNode
-	 */
+    /**
+     * Parses the <materials> block.
+     * @param {Materials Node} materialsNode
+     */
     parseMaterials(materialsNode) {
 
         this.materials = [];
@@ -784,7 +784,6 @@ class MySceneGraph {
             this.materials[materialsId].setSpecular(this.specular[0], this.specular[1], this.specular[2], this.specular[3]);
 
             this.log("Parsed material");
-
 
         }
 
@@ -892,6 +891,7 @@ class MySceneGraph {
      */
     parsePrimitives(primitivesNode) {
         var children = primitivesNode.children;
+        this.primitives = [];
 
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "primitive") {
@@ -963,6 +963,7 @@ class MySceneGraph {
         }
 
         this.nodes[primitiveID] = new MyNode(build, primitiveID);
+        this.primitives[primitiveID] = new MyNode(build, primitiveID);
 
     }
     /**
@@ -982,8 +983,8 @@ class MySceneGraph {
 
             componentID = this.reader.getString(children[i], "id");
 
-            if (this.nodes[componentID] != null)
-                this.onXMLMinorError("ID must be unique for each transformation (conflict: ID = " + componentID + ")");
+            if (this.nodes[componentID] != null && this.primitives[componentID] == null)
+                this.onXMLMinorError("ID must be unique for each component (conflict: ID = " + componentID + ")");
             else
                 this.nodes[componentID] = new MyNode(null, componentID);
         }
@@ -1011,17 +1012,17 @@ class MySceneGraph {
      */
     parseComponent(componentBlock) {
         var children = componentBlock.children;
-        var i, nodeNames = [],
-            index;
+        var nodeNames = [];
+
         var tranformationMatrix, materialList = [],
             textureSpecs = [],
             childrenList = [];
         var componentID = this.reader.getString(componentBlock, "id");
 
-        for (i = 0; i < children.length; i++)
+        for (var i = 0; i < children.length; i++)
             nodeNames.push(children[i].nodeName);
 
-        index = nodeNames.indexOf("transformation");
+        var index = nodeNames.indexOf("transformation");
 
         if (index == null)
             return "No transformation tag present in component " + componentID;
@@ -1224,8 +1225,12 @@ class MySceneGraph {
                 textureSpecs[0] = this.textures[textureID];
         }
 
-        textureSpecs[1] = this.reader.getFloat(componentTextureTag, "length_s");
-        textureSpecs[2] = this.reader.getFloat(componentTextureTag, "length_t");
+        if (textureID != "none") {
+
+            textureSpecs[1] = this.reader.getFloat(componentTextureTag, "length_s");
+            textureSpecs[2] = this.reader.getFloat(componentTextureTag, "length_t");
+
+        }
 
         this.nodes[componentID].texture = textureSpecs;
 
@@ -1233,7 +1238,7 @@ class MySceneGraph {
 
     /**
      * Returns the XYZ values from a tag
-     * @param {the tag containing the XYZ values} tag
+     * @param {Tag containing the XYZ values} tag
      */
     parseXYZ(tag) {
 
@@ -1248,14 +1253,12 @@ class MySceneGraph {
             xyz[1] = 0.5;
             xyz[2] = 0.5;
             onXMLMinorError("XYZ values not properly defined, assuming values = 0.5");
-        }
-        else if (isNaN(xyz[0]) || isNaN(xyz[1]) || isNaN(xyz[2])) {
+        } else if (isNaN(xyz[0]) || isNaN(xyz[1]) || isNaN(xyz[2])) {
             xyz[0] = 0.5;
             xyz[1] = 0.5;
             xyz[2] = 0.5;
             onXMLMinorError("XYZ values not properly defined, assuming values = 0.5");
-        }
-        else
+        } else
             return xyz;
     }
 
@@ -1263,7 +1266,6 @@ class MySceneGraph {
     /**
      * Retrieves RGBA components from a generic tag
      * @param {Tag containing RGBA components} tag
-     * @param {Object ID} ID
      */
     parseRGBA(tag) {
 
@@ -1338,7 +1340,7 @@ class MySceneGraph {
      */
     displayScene() {
 
-        this.displayGraph(this.idRoot, this.nodes[this.idRoot].texture[0], this.nodes[this.idRoot].materials);
+        this.displayGraph(this.idRoot, this.nodes[this.idRoot].texture[0], this.nodes[this.idRoot].materials, this.nodes[this.idRoot].texture[1], this.nodes[this.idRoot].texture[0]);
     }
 
     /**
@@ -1347,7 +1349,7 @@ class MySceneGraph {
      * @param {Texture associated} textureInit
      * @param {Material associated} materialInit
      */
-    displayGraph(nodeID, textureInit, materialInit) {
+    displayGraph(nodeID, textureInit, materialInit, length_s, length_t) {
         var texture, material = materialInit;
         var node;
 
@@ -1392,21 +1394,36 @@ class MySceneGraph {
             }
         }
 
-        material.apply();
+        if (material != null) {
+
+            material.apply();
+
+        }
+
+        if (node.build != null) {
+
+            node.build.texture = node.texture;
+        }
 
         if (node.transformations != null) {
             this.scene.multMatrix(node.transformations);
         }
 
         for (var i = 0; i < node.children.length; i++) {
-            this.displayGraph(node.children[i], texture, material);
+
+            if (node.texture.length == 0) {
+
+                this.displayGraph(node.children[i], texture, material, length_s, length_t);
+
+            } else this.displayGraph(node.children[i], texture, material, node.texture[1], node.texture[2]);
+
         }
 
         if (node.build != null) {
 
             if ((node.build instanceof MyRectangle || node.build instanceof MyTriangle) && node.texture != null) {
 
-                node.build.setSAndT(1, 1);
+                node.build.setSAndT(length_s, length_t);
             }
 
             node.build.display();
