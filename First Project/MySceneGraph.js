@@ -1411,11 +1411,14 @@ class MySceneGraph {
 
         for (var i = 0; i < node.children.length; i++) {
 
-            if (node.texture.length == 0) {
+            if (node.texture.length > 0) {
 
-                this.displayGraph(node.children[i], texture, material, length_s, length_t);
+                length_s = node.texture[1];
+                length_t = node.texture[2];
 
-            } else this.displayGraph(node.children[i], texture, material, node.texture[1], node.texture[2]);
+            }
+
+            this.displayGraph(node.children[i], texture, material, length_s, length_t);
 
         }
 

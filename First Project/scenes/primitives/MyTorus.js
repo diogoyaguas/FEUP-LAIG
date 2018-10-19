@@ -5,11 +5,9 @@
 class MyTorus extends CGFobject {
 	constructor(scene, inner, outer, slices, loops) {
 		super(scene);
-		
-		var torusRadius = (outer - inner) / 2;
 
-		this.r = torusRadius;
-		this.R = inner + torusRadius;
+		this.r = inner
+		this.R = outer
 		this.slices = slices;
 		this.stacks = loops;
 
@@ -40,7 +38,7 @@ class MyTorus extends CGFobject {
 
 				this.vertices.push(x, y, z);
 				this.normals.push(x, y, z);
-				this.texCoords.push(s, t);
+				this.texCoords.push(t, s);
 			}
 		}
 
