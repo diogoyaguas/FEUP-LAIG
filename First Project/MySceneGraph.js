@@ -736,7 +736,7 @@ class MySceneGraph {
                 this.onXMLError("materials' ID must be different");
 
             var shininess = this.reader.getFloat(children[j], 'shininess');
-            if (shininess == null || shininess <= 0 || isNaN(shininess)) {
+            if (shininess == null || shininess < 0 || isNaN(shininess)) {
                 this.shininess = 10.0
                 this.onXMLMinorError("no valid shininess value, assuming shininess = 10");
             }
@@ -1225,7 +1225,7 @@ class MySceneGraph {
                 textureSpecs[0] = this.textures[textureID];
         }
 
-        if (textureID != "none") {
+        if (textureID != "none" && this.reader.hasAttribute(componentTextureTag, "length_s") && this.reader.hasAttribute(componentTextureTag, "length_t")) {
 
             textureSpecs[1] = this.reader.getFloat(componentTextureTag, "length_s");
             textureSpecs[2] = this.reader.getFloat(componentTextureTag, "length_t");
@@ -1376,8 +1376,16 @@ class MySceneGraph {
         }
 
         if (node.texture.length != 0) {
+
             switch (node.texture[0]) {
                 case "inherit":
+                    if (textureInit == "none") {
+
+                        texture = textureInit;
+                        material.setTexture(null);
+                        break;
+                    }
+
                     texture = textureInit;
                     material.setTexture(texture);
                     break;
@@ -1394,8 +1402,10 @@ class MySceneGraph {
             }
         }
 
-        if (material != null) {
 
+
+        if (material != null) {
+            
             material.apply();
 
         }
@@ -1411,7 +1421,7 @@ class MySceneGraph {
 
         for (var i = 0; i < node.children.length; i++) {
 
-            if (node.texture.length > 0) {
+            if (node.texture.length == 3) {
 
                 length_s = node.texture[1];
                 length_t = node.texture[2];

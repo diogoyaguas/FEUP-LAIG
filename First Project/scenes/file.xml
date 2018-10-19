@@ -116,7 +116,6 @@
 
     <transformations>
         <transformation id="show-0">
-            <translate x="0" y="0" z="0"/>
             <rotate axis="x" angle="-90"/>
         </transformation>
     </transformations>
@@ -126,7 +125,7 @@
             <triangle x1="0" y1="0" z1="-1" x2="0" y2="1" z2="0" x3="0" y3="0" z3="1"/>
         </primitive>
         <primitive id="rectangle">
-            <rectangle x1="0" y1="1" x2="1" y2="0" />
+            <rectangle x1="0" y1="0" x2="1" y2="1" />
         </primitive>
         <primitive id="cylinder">
             <cylinder base="1" top="1" height="1" stacks="1" slices="64"/>
@@ -149,7 +148,7 @@
             <materials>
                 <material id="mat-1"/>
             </materials>
-            <texture id="none" length_s="1.0" length_t="1.0"/>
+            <texture id="none"/>
             <children>
                 <componentref id="floors"/>
                 <componentref id="walls"/>
@@ -164,7 +163,7 @@
             <materials>
                 <material id="mat-2"/>
             </materials>
-            <texture id="none" length_s="1.0" length_t="1.0"/>
+            <texture id="none"/>
             <children>
                 <componentref id="exterior-floor"/>
                 <componentref id="inside-floor"/>
@@ -243,7 +242,7 @@
             <materials>
                 <material id="mat-4"/>
             </materials>
-            <texture id="none" length_s="1.0" length_t="1.0"/>
+            <texture id="none"/>
             <children>
                 <componentref id="pink-wall"/>
                 <componentref id="somersby-wall"/>
@@ -260,7 +259,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1.0" length_t="1.0"/>
+            <texture id="none"/>
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -290,7 +289,7 @@
             <materials>
                 <material id="mat-5"/>
             </materials>
-            <texture id="none" length_s="1.0" length_t="1.0"/>
+            <texture id="none"/>
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -304,7 +303,7 @@
             <materials>
                 <material id="mat-5"/>
             </materials>
-            <texture id="none" length_s="1.0" length_t="1.0"/>
+            <texture id="none"/>
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -441,7 +440,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1.0" length_t="1.0"/>
+            <texture id="none"/>
             <children>
                 <componentref id="side-1"/>
                 <componentref id="side-2"/>
