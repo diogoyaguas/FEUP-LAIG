@@ -27,7 +27,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
 
         myInterface.setActiveCamera(myScene.camera);
 
-        var filename = getUrlVars()['file'] || "file.xml";
+        var filename = getUrlVars()['file'] || "yas2.xml";
 
         // create and load graph, and associate it to scene. 
         // Check console for loading errors

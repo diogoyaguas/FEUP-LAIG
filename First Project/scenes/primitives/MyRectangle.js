@@ -37,10 +37,11 @@ class MyRectangle extends CGFobject {
 
         // defines the texture coordinates
         this.texCoords = [
-            0, (this.y1 - this.y2),
-            (this.x2 - this.x1), (this.y1 - this.y2),
             0, 0,
             (this.x2 - this.x1), 0,
+            0, (this.y1 - this.y2),
+            (this.x2 - this.x1), (this.y1 - this.y2),
+
         ];
 
         this.primitiveType = this.scene.gl.TRIANGLES;
@@ -53,12 +54,10 @@ class MyRectangle extends CGFobject {
         var h = this.y2 - this.y1;
 
         this.texCoords = [
-            
-            0, 0,
-            c / s, 0,
             0, h / t,
             c / s, h / t,
-
+            0, 0,
+            c / s, 0,
         ];
 
         this.updateTexCoordsGLBuffers();
