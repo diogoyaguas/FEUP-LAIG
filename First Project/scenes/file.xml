@@ -157,6 +157,10 @@
                 <componentref id="sets"/>
                 <componentref id="ball"/>
                 <componentref id="umbrella"/>
+<<<<<<< Updated upstream
+=======
+                <componentref id="awning"/>
+>>>>>>> Stashed changes
             </children>
         </component>
 
@@ -1031,7 +1035,7 @@
 
         <component id="chair4">
             <transformation>
-                <rotate axis="y" angle="-90" />
+                <rotate axis="y" angle="270" />
                 <translate x="1.7" y="-0.5" z="-3" />
             </transformation>
             <materials>
@@ -1045,7 +1049,7 @@
 
         <component id="chair5">
             <transformation>
-                <rotate axis="y" angle="-90" />
+                <rotate axis="y" angle="270" />
                 <translate x="3.7" y="-0.5" z="-3" />
             </transformation>
             <materials>
@@ -1304,7 +1308,7 @@
 
         <component id="ball">
             <transformation>
-                <translate x="15.2" y="0.91" z="1"/>
+                <translate x="15.2" y="0.81" z="1"/>
                 <scale x="0.4" y="0.4" z="0.4"/>
             </transformation>
             <materials>
@@ -1417,5 +1421,95 @@
                 <primitiveref id="cone"/>
             </children>
         </component>
+
+
+        <component id="awning">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex-dark-grey" length_s="1.0" length_t="1.0"/>
+            <children>
+                <componentref id="post1"/>
+                <componentref id="post2"/>
+                <componentref id="post3"/>
+                <componentref id="post4"/>
+                <componentref id="cover1"/>
+            </children>
+        </component>
+
+        <component id="post1">
+            <transformation>
+                <translate x="21" y="5" z="4.2" />
+                <scale x="0.2" y="4.8" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="post2">
+            <transformation>
+                <translate x="21" y="5" z="17" />
+                <scale x="0.2" y="4.8" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="post3">
+            <transformation>
+                <translate x="34" y="5" z="4.2" />
+                <scale x="0.2" y="4.8" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="post4">
+            <transformation>
+                <translate x="34" y="5" z="7" />
+                <scale x="0.2" y="4.8" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="cover1">
+            <transformation>
+                <scale x="1" y="6" z="4" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="triangle"/>
+            </children>
+        </component>
+
+        
+
+
     </components>
 </yas>
