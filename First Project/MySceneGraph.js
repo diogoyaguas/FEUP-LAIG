@@ -27,6 +27,7 @@ class MySceneGraph {
 
         this.nodes = [];
         this.counter = 0;
+        this.different = false;
 
         this.idRoot = null; // The id of the root element.
 
@@ -1450,13 +1451,14 @@ class MySceneGraph {
 
             if ((node.build instanceof MyRectangle || node.build instanceof MyTriangle) && node.texture != null) {
 
-                //node.build.setSAndT(length_s, length_t);
+                if(!this.different)
+                node.build.setSAndT(length_s, length_t);
             }
 
             node.build.display();
         }
 
-
+        this.different = true;
 
         this.scene.popMatrix();
     }
