@@ -67,7 +67,7 @@
     <textures>
         <texture id="tex-stone" file="scenes/images/stone.jpg"/>
         <texture id="tex-pink" file="scenes/images/pink.png"/>
-        <texture id="tex-window" file="scenes/images/window.jpg"/>
+        <texture id="tex-window" file="scenes/images/window.png"/>
         <texture id="tex-wood" file="scenes/images/wood.jpg"/>
         <texture id="tex-stone2" file="scenes/images/seamless-stone.jpg"/>
         <texture id="tex-pine" file="scenes/images/pine.jpg"/>
@@ -79,7 +79,6 @@
         <texture id="tex-dark-grey" file="scenes/images/dark-grey.jpg"/>
         <texture id="tex-grey-floor" file="scenes/images/grey-floor.png"/>
         <texture id="tex-sp" file="scenes/images/sb-wall.jpg"/>
-        <texture id="tex-trunk" file="scenes/images/trunk.jpg" />
     </textures>
 
     <materials>
@@ -157,10 +156,7 @@
                 <componentref id="sets"/>
                 <componentref id="ball"/>
                 <componentref id="umbrella"/>
-<<<<<<< Updated upstream
-=======
                 <componentref id="awning"/>
->>>>>>> Stashed changes
             </children>
         </component>
 
