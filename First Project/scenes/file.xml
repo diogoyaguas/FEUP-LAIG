@@ -152,7 +152,7 @@
             <children>
                 <componentref id="floors"/>
                 <componentref id="walls"/>
-                <componentref id="windows"/>
+                <componentref id="exterior-windows"/>
                 <componentref id="sets"/>
                 <componentref id="ball"/>
                 <componentref id="umbrella"/>
@@ -169,7 +169,6 @@
             <texture id="none"/>
             <children>
                 <componentref id="exterior-floor"/>
-                <componentref id="inside-floor"/>
                 <componentref id="deck"/>
                 <componentref id="hall"/>
             </children>
@@ -188,22 +187,6 @@
             <texture id="tex-stone" length_s="1.0" length_t="1.0"/>
             <children>
                 <primitiveref id="cube"/>
-            </children>
-        </component>
-
-        <component id="inside-floor">
-            <transformation>
-                <rotate axis="x" angle="-90"/>
-                <scale x="20.5" y="20" z="1" />
-                <translate x="0" y="0" z="0" />
-            </transformation>
-            <materials>
-                <material id="inherit"/>
-                <material id="mat-3"/>
-            </materials>
-            <texture id="tex-grey-floor" length_s="1.0" length_t="1.0"/>
-            <children>
-                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -249,9 +232,6 @@
             <children>
                 <componentref id="pink-wall"/>
                 <componentref id="somersby-wall"/>
-                <componentref id="inside-wall-1"/>
-                <componentref id="inside-wall-2"/>
-                <componentref id="inside-wall-3"/>
             </children>
         </component>
 
@@ -280,77 +260,6 @@
             <texture id="tex-somersby" length_s="1.0" length_t="1.0"/>
             <children>
                 <primitiveref id="rectangle"/>
-            </children>
-        </component>
-
-        <component id="inside-wall-1">
-            <transformation>
-                <rotate axis="y" angle="180"/>
-                <scale x="35" y="10" z="1" />
-                <translate x="-1" y="0" z="0" />
-            </transformation>
-            <materials>
-                <material id="mat-5"/>
-            </materials>
-            <texture id="none"/>
-            <children>
-                <primitiveref id="rectangle"/>
-            </children>
-        </component>
-
-        <component id="inside-wall-2">
-            <transformation>
-                <scale x="20.5" y="10" z="1" />
-                <translate x="0" y="0" z="-20" />
-            </transformation>
-            <materials>
-                <material id="mat-5"/>
-            </materials>
-            <texture id="none"/>
-            <children>
-                <primitiveref id="rectangle"/>
-            </children>
-        </component>
-
-        <component id="inside-wall-3">
-            <transformation>
-                <rotate axis="y" angle="90"/>
-                <scale x="20" y="10" z="1" />
-                <translate x="0" y="0" z="0" />
-            </transformation>
-            <materials>
-                <material id="mat-1"/>
-            </materials>
-            <texture id="tex-sp" length_s="1.0" length_t="1.0"/>
-            <children>
-                <primitiveref id="rectangle"/>
-            </children>
-        </component>
-
-        <component id="windows">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="mat-1"/>
-            </materials>
-            <texture id="tex-window" length_s="1.0" length_t="1.0"/>
-            <children>
-                <componentref id="exterior-windows"/>
-                <componentref id="inside-windows"/>
-            </children>
-        </component>
-
-        <component id="inside-windows">
-            <transformation>
-                <rotate axis="y" angle="180"/>
-                <translate x="-34.3" y="0" z="0" />
-            </transformation>
-            <materials>
-                <material id="mat-1"/>
-            </materials>
-            <texture id="tex-window" length_s="1.0" length_t="1.0"/>
-            <children>
-                <componentref id="exterior-windows"/>
             </children>
         </component>
 
@@ -456,8 +365,8 @@
 
         <component id="side-1">            <!--TRAS-->
             <transformation>
-                <rotate axis="y" angle="-90"/>
-                <translate x="0" y="0" z="-1" />
+                <rotate axis="y" angle="90"/>
+                <translate x="-1" y="0" z="1" />
             </transformation>
             <materials>
                 <material id="inherit"/>
@@ -665,7 +574,6 @@
                 <primitiveref id="cube"/>
             </children>
         </component>
-
 
         <component id="table-leg4">
             <transformation>
@@ -1432,6 +1340,10 @@
                 <componentref id="post3"/>
                 <componentref id="post4"/>
                 <componentref id="cover1"/>
+                <componentref id="cover2"/>
+                <componentref id="cover3"/>
+                <componentref id="cover4"/>
+                <componentref id="top"/>
             </children>
         </component>
 
@@ -1479,7 +1391,7 @@
 
         <component id="post4">
             <transformation>
-                <translate x="34" y="5" z="7" />
+                <translate x="34" y="5" z="17" />
                 <scale x="0.2" y="4.8" z="0.2" />
             </transformation>
             <materials>
@@ -1493,19 +1405,82 @@
 
         <component id="cover1">
             <transformation>
-                <scale x="1" y="6" z="4" />
+                <translate x="34.2" y="9.3" z="11" />
+                <rotate axis="z" angle="60"/>
+                <scale x="9" y="8.2" z="7" />
             </transformation>
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="inherit" length_s="1.0" length_t="1.0"/>
+            <texture id="tex-dark-grey" length_s="1.0" length_t="1.0"/>
             <children>
                 <primitiveref id="triangle"/>
             </children>
         </component>
 
-        
+        <component id="cover2">
+            <transformation>
+                <translate x="20" y="9.3" z="11" />
+                <rotate axis="z" angle="-60"/>
+                <rotate axis="y" angle="180"/>
+                <scale x="9" y="8.2" z="7" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex-dark-grey" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="triangle"/>
+            </children>
+        </component>
 
+        <component id="cover3">
+            <transformation>
+                <translate x="27" y="9.3" z="4.1" />
+                <rotate axis="y" angle="90"/>
+                <rotate axis="z" angle="60"/>
+              <scale x="8.2" y="8.2" z="7.1" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex-dark-grey" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="triangle"/>
+            </children>
+        </component>
+
+        <component id="cover4">
+            <transformation>
+                <translate x="27.1" y="9.3" z="18" />
+                <rotate axis="y" angle="90"/>
+                <rotate axis="z" angle="-60"/>
+                <rotate axis="y" angle="180"/>
+              <scale x="8.2" y="8.2" z="7.1" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex-dark-grey" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="triangle"/>
+            </children>
+        </component>
+
+          <component id="top">
+            <transformation>
+                <rotate axis="x" angle="90"/>
+                <scale x="1" y="1" z="1" />
+                 <translate x="27.1" y="10" z="18" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex-dark-grey" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="torus"/>
+            </children>
+        </component>
 
     </components>
 </yas>

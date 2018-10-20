@@ -1361,13 +1361,10 @@ class MySceneGraph {
         var texture, material = materialInit;
         var node;
 
-
-
         if (nodeID != null)
             node = this.nodes[nodeID];
         else
             this.log("Error in node ID");
-
 
         this.scene.pushMatrix();
 
@@ -1412,8 +1409,6 @@ class MySceneGraph {
             }
         }
 
-
-
         if (material != null) {
 
             material.apply();
@@ -1455,7 +1450,7 @@ class MySceneGraph {
 
             if ((node.build instanceof MyRectangle || node.build instanceof MyTriangle) && node.texture != null) {
 
-                node.build.setSAndT(length_s, length_t);
+                //node.build.setSAndT(length_s, length_t);
             }
 
             node.build.display();
