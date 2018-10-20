@@ -831,9 +831,6 @@ class MySceneGraph {
                         mat4.translate(this.transformations[this.transformationsId], this.transformations[this.transformationsId],
                             xyz);
 
-                        if (this.transformationsId == "trf_lift_y")
-                            console.log(this.transformations[this.transformationsId]);
-
                         break;
 
                     case "scale":
@@ -965,6 +962,7 @@ class MySceneGraph {
         }
 
         this.nodes[primitiveID] = new MyNode(build, primitiveID);
+        this.nodes[primitiveID].read = false;
 
     }
     /**
@@ -1058,6 +1056,8 @@ class MySceneGraph {
 
         if (typeof (childrenList = this.parseComponentChildren(children[index], componentID)) == "string")
             return childrenList;
+
+        this.nodes[componentID].read = false;
     }
 
     /**
@@ -1346,6 +1346,9 @@ class MySceneGraph {
     displayScene() {
 
         this.displayGraph(this.idRoot, this.nodes[this.idRoot].texture[0], this.nodes[this.idRoot].materials, this.nodes[this.idRoot].texture[1], this.nodes[this.idRoot].texture[0]);
+        for (var keys in this.nodes) {
+            this.nodes[keys].read = false;
+        }
     }
 
     /**
@@ -1358,10 +1361,13 @@ class MySceneGraph {
         var texture, material = materialInit;
         var node;
 
+
+
         if (nodeID != null)
             node = this.nodes[nodeID];
         else
             this.log("Error in node ID");
+
 
         this.scene.pushMatrix();
 
@@ -1425,6 +1431,9 @@ class MySceneGraph {
 
         for (var i = 0; i < node.children.length; i++) {
 
+            var name = node.children[i];
+            var comp = name + "-comp";
+
             if (node.texture.length == 3) {
 
                 length_s = node.texture[1];
@@ -1432,7 +1441,13 @@ class MySceneGraph {
 
             }
 
-            this.displayGraph(node.children[i], texture, material, length_s, length_t);
+            if (this.nodes[comp] != null && this.nodes[name].read == false) {
+                this.nodes[name].read = true;
+                name = comp;
+
+            }
+
+            this.displayGraph(name, texture, material, length_s, length_t);
 
         }
 
@@ -1445,6 +1460,8 @@ class MySceneGraph {
 
             node.build.display();
         }
+
+
 
         this.scene.popMatrix();
     }

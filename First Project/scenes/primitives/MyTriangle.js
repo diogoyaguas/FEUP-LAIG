@@ -58,28 +58,17 @@ class MyTriangle extends CGFobject {
 
 	setSAndT(s, t) {
 
-		this.a = Math.sqrt(Math.pow(this.p1[0] - this.p3[0], 2) +
-			Math.pow(this.p1[1] - this.p3[1], 2) +
-			Math.pow(this.p1[2] - this.p3[2], 2));
+		var a = vec3.dist(this.p1, this.p3);
+		var b = vec3.dist(this.p1, this.p2);
+		var c = vec3.dist(this.p2, this.p3);
 
-		this.b = Math.sqrt(Math.pow(this.p2[0] - this.p1[0], 2) +
-			Math.pow(this.p2[1] - this.p1[1], 2) +
-			Math.pow(this.p2[2] - this.p1[2], 2));
-
-		this.c = Math.sqrt(Math.pow(this.p3[0] - this.p2[0], 2) +
-			Math.pow(this.p3[1] - this.p2[1], 2) +
-			Math.pow(this.p3[2] - this.p2[2], 2));
-
-		this.cosBeta = (Math.pow(this.a, 2) - Math.pow(this.b, 2) + Math.pow(this.c, 2)) / (2 * this.a * this.c);
-
-		this.beta = Math.acos(this.cosBeta);
+		var B = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2)) / (2 * a * c));
 
 		this.texCoords = [
 
-			(this.c - this.a * Math.cos(this.beta)) / s,
-			1 - (this.a * Math.sin(this.beta)) / t,
-			0, 1 / t, this.c / s,
-			1 / t
+			(c - a * Math.cos(B)) / s, 1 - (a * Math.sin(B)) / t,
+			0, 1,
+			c / s, 1,
 
 		];
 
