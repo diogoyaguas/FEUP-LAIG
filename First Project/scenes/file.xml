@@ -777,7 +777,7 @@
 
         <component id="chair">
             <transformation>
-                <translate x="0" y="0.5" z="0" />
+                <translate x="0" y="0.2" z="0" />
                 <scale x="1" y="1.5" z="1"/>
             </transformation>
             <materials>
@@ -796,8 +796,8 @@
 
         <component id="chair-leg1">
             <transformation>
-                <translate x="0" y="0.5" z="0" />
-                <scale x="0.1" y="0.5" z="0.1" />
+                <translate x="0" y="0.6" z="0" />
+                <scale x="0.1" y="0.4" z="0.1" />
             </transformation>
             <materials>
                 <material id="inherit"/>
@@ -810,8 +810,8 @@
 
         <component id="chair-leg2">
             <transformation>
-                <translate x="0" y="0.5" z="1" />
-                <scale x="0.1" y="0.5" z="0.1" />
+                <translate x="0" y="0.6" z="1" />
+                <scale x="0.1" y="0.4" z="0.1" />
             </transformation>
             <materials>
                 <material id="inherit"/>
@@ -824,8 +824,8 @@
 
         <component id="chair-leg3">
             <transformation>
-                <translate x="1" y="0.5" z="0" />
-                <scale x="0.1" y="0.5" z="0.1" />
+                <translate x="1" y="0.6" z="0" />
+               <scale x="0.1" y="0.4" z="0.1" />
             </transformation>
             <materials>
                 <material id="inherit"/>
@@ -838,8 +838,8 @@
 
         <component id="chair-leg4">
             <transformation>
-                <translate x="1" y="0.5" z="1" />
-                <scale x="0.1" y="0.5" z="0.1" />
+                <translate x="1" y="0.6" z="1" />
+          <scale x="0.1" y="0.4" z="0.1" />
             </transformation>
             <materials>
                 <material id="inherit"/>
@@ -852,7 +852,7 @@
 
         <component id="chair-seat">
             <transformation>
-                <translate x="0" y="1.5" z="0" />
+                <translate x="0" y="1.3" z="0" />
                 <scale x="0.6" y="0.1" z="0.6" />
             </transformation>
             <materials>
@@ -866,7 +866,7 @@
 
         <component id="chair-back">
             <transformation>
-                <translate x="0" y="1.5" z="0" />
+                <translate x="0" y="1.3" z="0" />
                 <scale x="0.6" y="0.6" z="0.05" />
             </transformation>
             <materials>
@@ -1436,7 +1436,7 @@
 
         <component id="cover3">
             <transformation>
-                <translate x="27" y="9.3" z="4.1" />
+                <translate x="27.1" y="9.3" z="4" />
                 <rotate axis="y" angle="90"/>
                 <rotate axis="z" angle="60"/>
               <scale x="8.2" y="8.2" z="7.1" />
