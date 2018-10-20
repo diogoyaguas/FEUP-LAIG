@@ -134,7 +134,7 @@
             <sphere radius="1" stacks="32" slices="64"/>
         </primitive>
         <primitive id="torus">
-            <torus inner="1" outer="2" slices="32" loops="1"/>
+            <torus inner="1" outer="5" slices="20" loops="10" />
         </primitive>
         <primitive id="cone">
             <cylinder base="3" top="1" height="5" slices="150" stacks="150"/>
@@ -1469,14 +1469,12 @@
 
           <component id="top">
             <transformation>
-                <rotate axis="x" angle="90"/>
-                <scale x="1" y="1" z="1" />
-                 <translate x="27.1" y="10" z="18" />
+
             </transformation>
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="tex-dark-grey" length_s="1.0" length_t="1.0"/>
+            <texture id="tex-red" length_s="1.0" length_t="1.0"/>
             <children>
                 <primitiveref id="torus"/>
             </children>
