@@ -831,6 +831,9 @@ class MySceneGraph {
                         mat4.translate(this.transformations[this.transformationsId], this.transformations[this.transformationsId],
                             xyz);
 
+                        if (this.transformationsId == "trf_lift_y")
+                            console.log(this.transformations[this.transformationsId]);
+
                         break;
 
                     case "scale":
@@ -891,7 +894,6 @@ class MySceneGraph {
      */
     parsePrimitives(primitivesNode) {
         var children = primitivesNode.children;
-        this.primitives = [];
 
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "primitive") {
@@ -963,7 +965,6 @@ class MySceneGraph {
         }
 
         this.nodes[primitiveID] = new MyNode(build, primitiveID);
-        this.primitives[primitiveID] = new MyNode(build, primitiveID);
 
     }
     /**
@@ -983,10 +984,11 @@ class MySceneGraph {
 
             componentID = this.reader.getString(children[i], "id");
 
-            if (this.nodes[componentID] != null && this.primitives[componentID] == null)
-                this.onXMLMinorError("ID must be unique for each component (conflict: ID = " + componentID + ")");
-            else
-                this.nodes[componentID] = new MyNode(null, componentID);
+            if (this.nodes[componentID] != null) {
+                this.onXMLMinorError("ID must be unique for each component/primitive (conflict: ID = " + componentID + "), adding -comp to Id");
+                componentID = componentID + "-comp";
+            }
+            this.nodes[componentID] = new MyNode(null, componentID);
         }
 
         if (this.nodes[this.idRoot] == null)
@@ -1018,6 +1020,9 @@ class MySceneGraph {
             textureSpecs = [],
             childrenList = [];
         var componentID = this.reader.getString(componentBlock, "id");
+        if (this.nodes[(componentID + "-comp")] != null) {
+            componentID = componentID + "-comp";
+        }
 
         for (var i = 0; i < children.length; i++)
             nodeNames.push(children[i].nodeName);
@@ -1380,12 +1385,10 @@ class MySceneGraph {
             switch (node.texture[0]) {
                 case "inherit":
                     if (textureInit == "none") {
-
                         texture = textureInit;
                         material.setTexture(null);
                         break;
                     }
-
                     texture = textureInit;
                     material.setTexture(texture);
                     break;
@@ -1398,6 +1401,7 @@ class MySceneGraph {
                 default:
                     texture = node.texture[0];
                     material.setTexture(texture);
+
                     break;
             }
         }
@@ -1405,7 +1409,7 @@ class MySceneGraph {
 
 
         if (material != null) {
-            
+
             material.apply();
 
         }
