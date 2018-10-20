@@ -3,8 +3,8 @@
 
     <views default="perspective-0">
         <perspective id="perspective-0" near="0.5" far="500" angle="20">
-           <from x="-30" y="3" z="5"/>
-            <to x="10.0" y="5.0" z="5.0"/>          
+            <from x="-30" y="3" z="5"/>
+            <to x="10.0" y="5.0" z="5.0"/>
         </perspective>
         <perspective id="perspective-1" near="0.5" far="500" angle="60">
             <from x="22.5" y="5" z="-17.5"/>
@@ -15,7 +15,7 @@
             <to x="10.0" y="4.0" z="5.0"/>
         </perspective>
         <perspective id="perspective-3" near="0.5" far="500" angle="60">
-           <from x="-25.0" y="18.0" z="20"/>
+            <from x="-25.0" y="18.0" z="20"/>
             <to x="60.0" y="-25.0" z="-20.0"/>
         </perspective>
         <ortho id="ortho-1" near="0.5" far="500" left="-5" right="5" top="2.5" bottom="-2.5">
@@ -79,6 +79,7 @@
         <texture id="tex-dark-grey" file="scenes/images/dark-grey.jpg"/>
         <texture id="tex-grey-floor" file="scenes/images/grey-floor.png"/>
         <texture id="tex-sp" file="scenes/images/sb-wall.jpg"/>
+        <texture id="tex-trunk" file="scenes/images/trunk.jpg" />
     </textures>
 
     <materials>
@@ -154,8 +155,8 @@
                 <componentref id="walls"/>
                 <componentref id="windows"/>
                 <componentref id="sets"/>
-                 <componentref id="ball"/>
-<componentref id="umbrella"/>
+                <componentref id="ball"/>
+                <componentref id="umbrella"/>
             </children>
         </component>
 
@@ -535,20 +536,6 @@
             </children>
         </component>
 
-        <component id="set">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="inherit"/>
-            </materials>
-            <texture id="none" length_s="1.0" length_t="1.0"/>
-            <children>
-                <componentref id="chairs"/>
-                <componentref id="wtable"/>
-            </children>
-        </component>
-
-
         <component id="sets">
             <transformation>
             </transformation>
@@ -759,7 +746,7 @@
             </materials>
             <texture id="none" length_s="1.0" length_t="1.0"/>
             <children>
-                 <componentref id="red-chairs"/>
+                <componentref id="red-chairs"/>
                 <componentref id="rtable"/>
             </children>
         </component>
@@ -773,7 +760,7 @@
             </materials>
             <texture id="none" length_s="1.0" length_t="1.0"/>
             <children>
-                 <componentref id="red-chairs"/>
+                <componentref id="red-chairs"/>
                 <componentref id="rtable"/>
             </children>
         </component>
@@ -787,14 +774,14 @@
             </materials>
             <texture id="none" length_s="1.0" length_t="1.0"/>
             <children>
-                 <componentref id="red-chairs"/>
+                <componentref id="red-chairs"/>
                 <componentref id="rtable"/>
             </children>
         </component>
 
         <component id="rtable">
             <transformation>
-             <translate x="0" y="1" z="1.1" />
+                <translate x="0" y="1" z="1.1" />
             </transformation>
             <materials>
                 <material id="inherit"/>
@@ -882,7 +869,7 @@
 
         <component id="chair">
             <transformation>
-            <translate x="0" y="0.5" z="0" />
+                <translate x="0" y="0.5" z="0" />
                 <scale x="1" y="1.5" z="1"/>
             </transformation>
             <materials>
@@ -1121,7 +1108,7 @@
 
         <component id="red-chair-leg2">
             <transformation>
-                 <translate x="0" y="0.5" z="1" />
+                <translate x="0" y="0.5" z="1" />
                 <scale x="0.05" y="0.5" z="0.05" />
             </transformation>
             <materials>
@@ -1135,7 +1122,7 @@
 
         <component id="red-chair-leg3">
             <transformation>
-                 <translate x="1" y="0.5" z="0" />
+                <translate x="1" y="0.5" z="0" />
                 <scale x="0.05" y="0.5" z="0.05" />
             </transformation>
             <materials>
@@ -1149,7 +1136,7 @@
 
         <component id="red-chair-leg4">
             <transformation>
-                 <translate x="1" y="0.5" z="1" />
+                <translate x="1" y="0.5" z="1" />
                 <scale x="0.05" y="0.5" z="0.05" />
             </transformation>
             <materials>
@@ -1163,7 +1150,7 @@
 
         <component id="red-chair-seat">
             <transformation>
-                    <translate x="0" y="1.5" z="0" />
+                <translate x="0" y="1.5" z="0" />
                 <scale x="0.6" y="0.05" z="0.55" />
             </transformation>
             <materials>
@@ -1233,7 +1220,7 @@
 
         <component id="red-chair-arm4">
             <transformation>
-               <translate x="1" y="1.55" z="1" />
+                <translate x="1" y="1.55" z="1" />
                 <scale x="0.05" y="0.25" z="0.05" />
             </transformation>
             <materials>
@@ -1245,7 +1232,7 @@
             </children>
         </component>
 
- <component id="red-chairs">
+        <component id="red-chairs">
             <transformation>
             </transformation>
             <materials>
@@ -1300,7 +1287,7 @@
                 <componentref id="red-chair"/>
             </children>
         </component>
-     
+
         <component id="red-chair4">
             <transformation>
                 <rotate axis="y" angle="-180" />
@@ -1315,7 +1302,7 @@
             </children>
         </component>
 
-          <component id="ball">
+        <component id="ball">
             <transformation>
                 <translate x="15.2" y="0.91" z="1"/>
                 <scale x="0.4" y="0.4" z="0.4"/>
@@ -1335,22 +1322,22 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="tex-trunk" length_s="1.0" length_t="1.0"/>
+            <texture id="none" length_s="1.0" length_t="1.0"/>
             <children>
                 <componentref id="umbrella1"/>
                 <componentref id="umbrella2"/>
                 <componentref id="umbrella3"/>
             </children>
         </component>
-  
+
         <component id="umbrella1">
             <transformation>
-             <translate x="5.5" y="0.2" z="9.5"/>
+                <translate x="5.5" y="0.2" z="9.5"/>
             </transformation>
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="tex-trunk" length_s="1" length_t="1"/>
+            <texture id="none" length_s="1" length_t="1"/>
             <children>
                 <componentref id="umbrella-top"/>
                 <componentref id="umbrella-bot"/>
@@ -1365,7 +1352,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="tex-trunk" length_s="1" length_t="1"/>
+            <texture id="none" length_s="1" length_t="1"/>
             <children>
                 <componentref id="umbrella-top"/>
                 <componentref id="umbrella-bot"/>
@@ -1380,17 +1367,17 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="tex-trunk" length_s="1" length_t="1"/>
+            <texture id="none" length_s="1" length_t="1"/>
             <children>
                 <componentref id="umbrella-top"/>
                 <componentref id="umbrella-bot"/>
                 <componentref id="umbrella-arm"/>
             </children>
         </component>
-      
-          <component id="umbrella-top">
+
+        <component id="umbrella-top">
             <transformation>
-               <rotate axis="x" angle="-90"/>
+                <rotate axis="x" angle="-90"/>
                 <translate x="0" y="0" z="3.4"/>
                 <scale x="0.8" y="0.8" z="0.2"/>
             </transformation>
@@ -1425,7 +1412,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="tex-rocks" length_s="1" length_t="1"/>
+            <texture id="tex-metal" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="cone"/>
             </children>
