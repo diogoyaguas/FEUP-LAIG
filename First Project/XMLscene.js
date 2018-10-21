@@ -107,6 +107,7 @@ class XMLscene extends CGFscene {
     selectView(id) {
         this.camera = this.views[id];
         this.interface.setActiveCamera(this.camera);
+        
     }
 
     /**
