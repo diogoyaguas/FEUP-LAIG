@@ -67,7 +67,7 @@
     <textures>
         <texture id="tex-stone" file="scenes/images/stone.jpg"/>
         <texture id="tex-pink" file="scenes/images/pink.jpg"/>
-        <texture id="tex-window" file="scenes/images/window.png"/>
+        <texture id="tex-window" file="scenes/images/window.jpg"/>
         <texture id="tex-wood" file="scenes/images/wood.jpg"/>
         <texture id="tex-stone2" file="scenes/images/seamless-stone.jpg"/>
         <texture id="tex-pine" file="scenes/images/pine.jpg"/>
