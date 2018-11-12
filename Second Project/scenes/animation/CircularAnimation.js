@@ -3,10 +3,10 @@
  * @constructor
  */
 class CircularAnimation extends Animation {
-    constructor(scene, id, x, y, z, radius, initialAngle, rotationAngle, time) {
+    constructor(scene, id, center, radius, initialAngle, rotationAngle, time) {
         super(scene, id);
 
-        this.center = [x, y, z];
+        this.center = center;
         this.radius = radius;
         this.initialAngle = initialAngle;
         this.rotationAngle = rotationAngle;

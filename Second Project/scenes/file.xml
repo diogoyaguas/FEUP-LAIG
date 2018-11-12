@@ -115,6 +115,13 @@
         </material>
     </materials>
 
+    <animations>
+        <linear id="linear1" span="30">
+            <controlpoint x="3" y="1" z="4" />
+            <controlpoint x="7" y="1" z="9" />
+        </linear>
+    </animations>
+
     <transformations>
         <transformation id="trans-wc-windows">
             <rotate axis="y" angle="-90"/>
@@ -163,12 +170,12 @@
         </transformation>
         <transformation id="trans-stone-floor">
             <scale x="7.53" y="0.05" z="7" />
-                <translate x="4.65" y="0" z="1.4" />
+            <translate x="4.65" y="0" z="1.4" />
         </transformation>
         <transformation id="trans-exterior-floor">
             <rotate axis="x" angle="-90"/>
-                <scale x="17.5" y="12" z="0.1" />
-                <translate x="0" y="-2" z="0" />
+            <scale x="17.5" y="12" z="0.1" />
+            <translate x="0" y="-2" z="0" />
         </transformation>
     </transformations>
 
@@ -197,6 +204,8 @@
         <component id="scene">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="mat-default"/>
             </materials>
@@ -217,6 +226,8 @@
         <component id="building">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -234,6 +245,8 @@
         <component id="rooftop">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -250,6 +263,8 @@
             <transformation>
                 <transformationref id="trans-building1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -263,6 +278,8 @@
             <transformation>
                 <transformationref id="trans-building2" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -276,6 +293,8 @@
             <transformation>
                 <transformationref id="trans-building3" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -289,6 +308,8 @@
             <transformation>
                 <transformationref id="trans-building4" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -302,6 +323,8 @@
             <transformation>
                 <transformationref id="trans-building5" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -315,6 +338,8 @@
             <transformation>
                 <transformationref id="trans-rooftop1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -327,6 +352,8 @@
             <transformation>
                 <transformationref id="trans-rooftop2" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -340,6 +367,8 @@
             <transformation>
                 <transformationref id="trans-rooftop3" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -353,6 +382,8 @@
             <transformation>
                 <transformationref id="trans-rooftop4" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -365,6 +396,8 @@
         <component id="floors">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="mat-default"/>
             </materials>
@@ -384,6 +417,8 @@
             <transformation>
                 <transformationref id="trans-stone-floor" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -397,6 +432,8 @@
             <transformation>
                 <transformationref id="trans-exterior-floor" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -412,6 +449,8 @@
                 <scale x="15" y="15" z="0.1" />
                 <translate x="0" y="1" z="0" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -427,6 +466,8 @@
                 <scale x="7.8" y="12" z="0.11" />
                 <translate x="2.5" y="-2" z="0.25" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -442,6 +483,8 @@
                 <scale x="17.5" y="1.75" z="0.2" />
                 <translate x="0" y="-2" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -457,6 +500,8 @@
                 <scale x="5.3" y="22.5" z="0.2" />
                 <translate x="9.3" y="0" z="-1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -472,6 +517,8 @@
                 <scale x="30" y="4" z="0.2" />
                 <translate x="0" y="11.25" z="-1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -484,6 +531,8 @@
         <component id="walls">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="mat-default"/>
             </materials>
@@ -500,6 +549,8 @@
                 <scale x="17.5" y="10" z="1" />
                 <translate x="0" y="0" z="-35" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -515,6 +566,8 @@
                 <scale x="10" y="3" z="1" />
                 <translate x="-4.35" y="5.6" z="-27.4" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -527,6 +580,8 @@
         <component id="windows">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="mat-windows"/>
                 <material id="mat-blue"/>
@@ -553,6 +608,8 @@
                 <translate x="-43.3" y="13" z="-27.5" />
                 <scale x="1" y="0.5" z="1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -568,6 +625,8 @@
                 <translate x="9.1" y="13" z="49.5" />
                 <scale x="1" y="0.5" z="1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -581,6 +640,8 @@
             <transformation>
                 <transformationref id="trans-down-windows" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -593,6 +654,8 @@
         <component id="exterior-windows">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -610,6 +673,8 @@
             <transformation>
                 <transformationref id="trans-wc-windows" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -624,6 +689,8 @@
         <component id="corner-windows">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -639,6 +706,8 @@
                 <rotate axis="y" angle="-90"/>
                 <translate x="-49.5" y="0" z="-27.5" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -654,6 +723,8 @@
                 <rotate axis="y" angle="180"/>
                 <translate x="-47.8" y="0" z="15" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -669,6 +740,8 @@
                 <translate x="21" y="1.5" z="10" />
                 <scale x="0.8" y="0.8" z="0.7" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -684,6 +757,8 @@
                 <rotate axis="y" angle="90"/>
                 <translate x="-15" y="0" z="50" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -699,6 +774,8 @@
                 <rotate axis="y" angle="180"/>
                 <translate x="-65" y="0" z="44.85" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -715,6 +792,8 @@
                 <translate x="17.1" y="0" z="0.1" />
                 <scale x="0.5" y="1" z="1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -728,6 +807,8 @@
             <transformation>
                 <translate x="27.4" y="0" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -741,6 +822,8 @@
             <transformation>
                 <translate x="20.55" y="0" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -754,9 +837,11 @@
             <transformation>
                 <translate x="13.7" y="0" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
-            </materials> 
+            </materials>
             <texture id="inherit" length_s="1.0" length_t="1.0"/>
             <children>
                 <componentref id="window-5"/>
@@ -767,6 +852,8 @@
             <transformation>
                 <translate x="6.85" y="0" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -781,6 +868,8 @@
                 <scale x="7" y="7" z="1" />
                 <translate x="0" y="0" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -794,6 +883,8 @@
             <transformation>
                 <scale x="2" y="2" z="2" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -813,6 +904,8 @@
                 <rotate axis="y" angle="90"/>
                 <translate x="-1" y="0" z="1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>s
@@ -826,6 +919,8 @@
             <transformation>
                 <rotate axis="y" angle="-90"/>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -840,6 +935,8 @@
                 <rotate axis="y" angle="180"/>
                 <translate x="-1" y="0" z="0" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -853,6 +950,8 @@
             <transformation>
                 <translate x="0" y="0" z="1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -867,6 +966,8 @@
                 <rotate axis="x" angle="-90"/>
                 <translate x="0" y="-1" z="1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -881,6 +982,8 @@
                 <rotate axis="x" angle="90"/>
                 <translate x="0" y="0" z="0" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -893,6 +996,8 @@
         <component id="sets">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -911,6 +1016,8 @@
             <transformation>
                 <translate x="30" y="-0.5" z="10.5" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -924,6 +1031,8 @@
             <transformation>
                 <translate x="29" y="-0.5" z="4" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -937,6 +1046,8 @@
             <transformation>
                 <translate x="22.5" y="-0.5" z="4.5" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -951,6 +1062,8 @@
                 <rotate axis="y" angle="90" />
                 <translate x="-15.5" y="-0.5" z="20.5" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -965,6 +1078,8 @@
                 <rotate axis="y" angle="90" />
                 <translate x="-22" y="-0.5" z="26.5" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -978,6 +1093,8 @@
             <transformation>
                 <translate x="0" y="0.5" z="1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -995,6 +1112,8 @@
             <transformation>
                 <scale x="0.1" y="1" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1009,6 +1128,8 @@
                 <translate x="0" y="0" z="4" />
                 <scale x="0.1" y="1" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1023,6 +1144,8 @@
                 <translate x="2" y="0" z="0" />
                 <scale x="0.1" y="1" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1037,6 +1160,8 @@
                 <translate x="2" y="0" z="4" />
                 <scale x="0.1" y="1" z="0.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1051,6 +1176,8 @@
                 <translate x="0" y="2" z="0" />
                 <scale x="1.1" y="0.3" z="2.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1063,6 +1190,8 @@
         <component id="set">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1076,6 +1205,8 @@
         <component id="rsets">
             <transformation>
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1097,6 +1228,8 @@
             <transformation>
                 <translate x="2" y="0" z="5" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1111,6 +1244,8 @@
             <transformation>
                 <translate x="3" y="0" z="18" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1125,6 +1260,8 @@
             <transformation>
                 <translate x="15" y="0" z="3.5" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1139,6 +1276,8 @@
             <transformation>
                 <translate x="13.5" y="0" z="17" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1154,6 +1293,8 @@
                 <rotate axis="y" angle="45" />
                 <translate x="1.5" y="0" z="10" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1169,6 +1310,8 @@
                 <rotate axis="y" angle="22" />
                 <translate x="1.5" y="0" z="14" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1184,6 +1327,8 @@
                 <rotate axis="y" angle="64" />
                 <translate x="-7.5" y="0" z="17" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1199,6 +1344,8 @@
                 <rotate axis="y" angle="36" />
                 <translate x="-7" y="0" z="10" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1214,6 +1361,8 @@
                 <rotate axis="y" angle="17" />
                 <translate x="15" y="0" z="24" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1228,6 +1377,8 @@
             <transformation>
                 <translate x="0" y="1" z="1.1" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1246,6 +1397,8 @@
                 <translate x="0" y="0" z="0.1" />
                 <scale x="0.05" y="0.9" z="0.05" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1260,6 +1413,8 @@
                 <translate x="0" y="0" z="2" />
                 <scale x="0.05" y="0.9" z="0.05" />
             </transformation>
+            <animations>
+            </animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1274,6 +1429,7 @@
                 <translate x="2" y="0" z="0.1" />
                 <scale x="0.05" y="0.9" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1288,6 +1444,7 @@
                 <translate x="2" y="0" z="2" />
                 <scale x="0.05" y="0.9" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1302,6 +1459,7 @@
                 <translate x="0" y="0.9" z="0" />
                 <scale x="1.1" y="0.01" z="1.1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1317,6 +1475,7 @@
                 <translate x="0" y="0.2" z="0" />
                 <scale x="1" y="1.5" z="1"/>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1336,6 +1495,7 @@
                 <translate x="0" y="0.6" z="0" />
                 <scale x="0.1" y="0.4" z="0.1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1350,6 +1510,7 @@
                 <translate x="0" y="0.6" z="1" />
                 <scale x="0.1" y="0.4" z="0.1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1364,6 +1525,7 @@
                 <translate x="1" y="0.6" z="0" />
                 <scale x="0.1" y="0.4" z="0.1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1378,6 +1540,7 @@
                 <translate x="1" y="0.6" z="1" />
                 <scale x="0.1" y="0.4" z="0.1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1392,6 +1555,7 @@
                 <translate x="0" y="1.3" z="0" />
                 <scale x="0.6" y="0.1" z="0.6" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1406,6 +1570,7 @@
                 <translate x="0" y="1.3" z="0" />
                 <scale x="0.6" y="0.6" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1418,6 +1583,7 @@
         <component id="chairs">
             <transformation>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1437,6 +1603,7 @@
             <transformation>
                 <translate x="0.5" y="-0.5" z="0.6" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1451,6 +1618,7 @@
                 <rotate axis="y" angle="90" />
                 <translate x="-2.7" y="-0.5" z="-1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1465,6 +1633,7 @@
                 <rotate axis="y" angle="90" />
                 <translate x="-4.7" y="-0.5" z="-1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1479,6 +1648,7 @@
                 <rotate axis="y" angle="270" />
                 <translate x="1.7" y="-0.5" z="-3" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1493,6 +1663,7 @@
                 <rotate axis="y" angle="270" />
                 <translate x="3.7" y="-0.5" z="-3" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1507,6 +1678,7 @@
                 <rotate axis="y" angle="180" />
                 <translate x="-1.5" y="-0.5" z="-5.7" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1519,6 +1691,7 @@
         <component id="red-chair">
             <transformation>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1542,6 +1715,7 @@
                 <translate x="0" y="0.5" z="0" />
                 <scale x="0.05" y="0.5" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1556,6 +1730,7 @@
                 <translate x="0" y="0.5" z="1" />
                 <scale x="0.05" y="0.5" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1570,6 +1745,7 @@
                 <translate x="1" y="0.5" z="0" />
                 <scale x="0.05" y="0.5" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1584,6 +1760,7 @@
                 <translate x="1" y="0.5" z="1" />
                 <scale x="0.05" y="0.5" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1598,6 +1775,7 @@
                 <translate x="0" y="1.5" z="0" />
                 <scale x="0.6" y="0.05" z="0.55" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1612,6 +1790,7 @@
                 <translate x="0" y="1.5" z="0" />
                 <scale x="0.6" y="0.65" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1626,6 +1805,7 @@
                 <translate x="0" y="1.98" z="0" />
                 <scale x="0.05" y="0.05" z="0.55" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1640,6 +1820,7 @@
                 <translate x="1" y="1.98" z="0" />
                 <scale x="0.05" y="0.05" z="0.5" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1654,6 +1835,7 @@
                 <translate x="0" y="1.55" z="1" />
                 <scale x="0.05" y="0.25" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1668,6 +1850,7 @@
                 <translate x="1" y="1.55" z="1" />
                 <scale x="0.05" y="0.25" z="0.05" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1680,6 +1863,7 @@
         <component id="red-chairs">
             <transformation>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1696,6 +1880,7 @@
             <transformation>
                 <translate x="0.5" y="-0.5" z="0.6" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1710,6 +1895,7 @@
                 <rotate axis="y" angle="90" />
                 <translate x="-2.7" y="-0.5" z="-1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1724,6 +1910,7 @@
                 <rotate axis="y" angle="-90" />
                 <translate x="1.7" y="-0.5" z="-3" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1738,6 +1925,7 @@
                 <rotate axis="y" angle="-180" />
                 <translate x="-1.5" y="-0.5" z="-4" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1752,6 +1940,10 @@
                 <translate x="15.2" y="0.81" z="1"/>
                 <scale x="0.4" y="0.4" z="0.4"/>
             </transformation>
+            <animations></animations>
+            <animations>
+                <animationref id="linear1" />
+            </animations>
             <materials>
                 <material id ="inherit"/>
             </materials>
@@ -1764,6 +1956,7 @@
         <component id="umbrella">
             <transformation>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1779,6 +1972,7 @@
             <transformation>
                 <translate x="7" y="0.2" z="10"/>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id ="inherit"/>
             </materials>
@@ -1794,6 +1988,7 @@
             <transformation>
                 <translate x="10" y="0.2" z="20"/>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id ="inherit"/>
             </materials>
@@ -1809,6 +2004,7 @@
             <transformation>
                 <translate x="14" y="0.2" z="10"/>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id ="inherit"/>
             </materials>
@@ -1826,6 +2022,7 @@
                 <translate x="0" y="0" z="3.4"/>
                 <scale x="0.8" y="0.8" z="0.2"/>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id ="inherit"/>
             </materials>
@@ -1840,6 +2037,7 @@
                 <scale x="0.09" y="2" z="0.09"/>
                 <translate x="0" y="1" z="0"/>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id ="inherit"/>
             </materials>
@@ -1854,6 +2052,7 @@
                 <rotate axis="x" angle="-90"/>
                 <scale x="0.36" y="0.36" z="0.05"/>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id ="inherit"/>
             </materials>
@@ -1866,6 +2065,7 @@
         <component id="awning">
             <transformation>
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1888,6 +2088,7 @@
                 <translate x="21" y="4.8" z="4.5" />
                 <scale x="0.2" y="4.8" z="0.2" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1902,6 +2103,7 @@
                 <translate x="21" y="5" z="17" />
                 <scale x="0.2" y="4.8" z="0.2" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1916,6 +2118,7 @@
                 <translate x="33" y="5" z="4.5" />
                 <scale x="0.2" y="4.8" z="0.2" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1930,6 +2133,7 @@
                 <translate x="33" y="5" z="17" />
                 <scale x="0.2" y="4.8" z="0.2" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1945,6 +2149,7 @@
                 <rotate axis="z" angle="60"/>
                 <scale x="9" y="8.2" z="7" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1961,6 +2166,7 @@
                 <rotate axis="y" angle="180"/>
                 <scale x="9" y="8.2" z="7" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1977,6 +2183,7 @@
                 <rotate axis="z" angle="60"/>
                 <scale x="8.2" y="8.2" z="7.1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -1994,6 +2201,7 @@
                 <rotate axis="y" angle="180"/>
                 <scale x="8.2" y="8.2" z="7.1" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -2009,6 +2217,7 @@
                 <scale x="0.1" y="0.1" z="0.1" />
                 <translate x="270" y="110" z="-132" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="inherit"/>
             </materials>
