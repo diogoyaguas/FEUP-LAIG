@@ -35,6 +35,7 @@ class LinearAnimation extends Animation {
         if (actualTime > this.time) {
             actualTime = this.time;
             this.ended = true;
+            return;
         }
 
         this.currentDistance = this.speed * actualTime;
@@ -70,7 +71,7 @@ class LinearAnimation extends Animation {
         xyz[1] = (p2[1] - p1[1]) * incrementMovement + p1[1];
         xyz[2] = (p2[2] - p1[2]) * incrementMovement + p1[2];
 
-        mat4.translate(transformationMatrix, transformationMatrix, xyz);
-        mat4.rotate(transformationMatrix, transformationMatrix, rotationAngle * radToDegree, this.axis);
+        mat4.translate(this.transformationMatrix, this.transformationMatrix, xyz);
+        mat4.rotate(this.transformationMatrix, this.transformationMatrix, rotationAngle * radToDegree, this.axis);
     }
 }

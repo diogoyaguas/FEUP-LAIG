@@ -30,19 +30,19 @@ class CircularAnimation extends Animation {
 
         var currentAngle = this.initialAngle + this.speed * this.movementTime;
         var radToDegree = 180 / Math.PI; 
-        var xyz;
+        var xyz = [];
 
         xyz[0] = this.center[0];
         xyz[1] = this.center[1];
         xyz[2] = this.center[2];
-        mat4.translate(transformationMatrix, transformationMatrix, xyz);
+        mat4.translate(this.transformationMatrix, this.transformationMatrix, xyz);
 
-        mat4.rotate(transformationMatrix, transformationMatrix, currentAngle * radToDegree, this.axis);
+        mat4.rotate(this.transformationMatrix, this.transformationMatrix, currentAngle * radToDegree, this.axis);
 
         xyz[0] = this.radius
         xyz[1] = 0;
         xyz[2] = 0;
-        mat4.translate(transformationMatrix, transformationMatrix, xyz);
+        mat4.translate(this.transformationMatrix, this.transformationMatrix, xyz);
 
         if (currentAngle * radToDegree < this.initialAngle + this.rotationAngle) {
             this.movementTime = actualTime;

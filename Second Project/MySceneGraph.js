@@ -1033,7 +1033,7 @@ class MySceneGraph {
                 this.onXMLMinorError("no rotation angle defined for circular, assuming start angle = 90");
             }
 
-            this.animations[circularId] = new CircularAnimation(this.scene, circularId, center, radius, startang, rotang, span)
+            this.animations[circularId] = new CircularAnimation(this.scene, circularId, center, radius, startang, rotang, span);
             this.animations[circularId].type = "circular";
 
             this.log("Parsed circular animation");
@@ -1258,21 +1258,17 @@ class MySceneGraph {
      * @param {Component's ID} componentID
      */
     parseComponentAnimations(componentAnimationBlock, componentID) {
-        this.log(componentID);
         var children = componentAnimationBlock.children;
 
-        if (children.length == 0)
-            this.log("Component " + componentID + ": No animation declared");
-
-        var animationID, animationList = [];
+        var childrenID, animationList = [];
 
         for (var i = 0; i < children.length; i++) {
-            animationID = this.reader.getString(children[i], "id");
+            childrenID = this.reader.getString(children[i], "id");
 
-            if (this.nodes[animationID] == null)
+            if (this.animations[childrenID] == null)
                 return "Component " + componentID + ": Animation " + childrenID + " not previously declared";
 
-            animationList.push(animationID);
+            animationList.push(this.animations[childrenID]);
         }
 
         this.nodes[componentID].animation = animationList;
@@ -1541,9 +1537,11 @@ class MySceneGraph {
         this.displayGraph(this.idRoot, this.nodes[this.idRoot].texture[0], this.nodes[this.idRoot].materials, this.nodes[this.idRoot].texture[1], this.nodes[this.idRoot].texture[0]);
         for (var keys in this.nodes) {
             this.nodes[keys].read = false;
-            for (var k = 0; k < this.nodes[keys].animation.length; k++) {
+            if(this.nodes[keys].animation != null){
+                for (var k = 0; k < this.nodes[keys].animation.length; k++) {
 
-                this.nodes[keys].animation[k].update(currentTime);
+                    this.nodes[keys].animation[k].update(currentTime);
+                }
             }
         }
     }
@@ -1623,7 +1621,6 @@ class MySceneGraph {
 
         if(node.animation != null){
         for (var k = 0; k < node.animation.length; k++) {
-
             node.animation[k].apply();
         }
     }   

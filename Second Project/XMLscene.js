@@ -12,10 +12,11 @@ class XMLscene extends CGFscene {
   constructor(myinterface) {
     super();
 
-    this.interface
-    = myinterface;
+    this.interface = myinterface;
     this.lightValues = {};
     this.views = {};
+    this.startTime = 0;
+    this.elapsedTime = 0;
   }
 
   /**
@@ -73,7 +74,7 @@ class XMLscene extends CGFscene {
   update(currTime) {
     if (this.startTime == 0) this.startTime = currTime;
 
-    this.elapsedTime = (currTime - this.startTime);
+    this.elapsedTime = (currTime - this.startTime) / 1000;
   }
 
   /**
