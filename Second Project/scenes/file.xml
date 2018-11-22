@@ -175,10 +175,13 @@
     <animations>
         <linear id="linear1" span="10">
             <controlpoint x="1" y="0" z="0" />
-            <controlpoint x="15" y="0" z="0" />
+            <controlpoint x="2" y="0" z="0" />
+            <controlpoint x="2" y="0" z="1" />
+            <controlpoint x="1" y="0" z="1" />
+            <controlpoint x="1" y="0" z="0" />
         </linear>
 
-        <circular id="circular1" span="30" center="0 0 0" radius="1" startang="30" rotang="50" />
+        <circular id="circular1" span="10" center="0 0 0" radius="2" startang="30" rotang="180" />
     </animations>
 
     <primitives>

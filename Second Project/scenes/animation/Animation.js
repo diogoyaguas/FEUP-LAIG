@@ -11,10 +11,6 @@ class Animation {
         this.ended = false; 
     }
 
-    update(currentTime) {
-
-    }
-
     apply() {
 
         this.scene.multMatrix(this.transformationMatrix);

@@ -15,7 +15,7 @@ class XMLscene extends CGFscene {
     this.interface = myinterface;
     this.lightValues = {};
     this.views = {};
-    this.startTime = 0;
+    this.lastUpdate = 0;
     this.elapsedTime = 0;
   }
 
@@ -66,15 +66,26 @@ class XMLscene extends CGFscene {
     this.interface.addViewsGroup
     (this.views);
 
-    this.sceneInited = true;
-
     this.setUpdatePeriod(UPDATE_TIME / 60);
+
+    this.sceneInited = true;
   }
 
   update(currTime) {
-    if (this.startTime == 0) this.startTime = currTime;
 
-    this.elapsedTime = (currTime - this.startTime) / 1000;
+    if(this.lastUpdate == 0) this.lastUpdate = currTime;
+
+    var elapsedTime = (currTime - this.lastUpdate) / 1000;
+
+    for (var keys in this.graph.nodes) {
+      if (this.graph.nodes[keys].animation != null) {
+        for (var i = 0; i < this.graph.nodes[keys].animation.length; i++) {
+          this.graph.nodes[keys].animation[i].update(elapsedTime);
+        }
+      }
+    }
+
+    this.lastUpdate = currTime;
   }
 
   /**
@@ -220,7 +231,7 @@ class XMLscene extends CGFscene {
       }
 
       // Displays the scene (MySceneGraph function).
-      this.graph.displayScene(this.elapsedTime);
+      this.graph.displayScene();
     } else {
       // Draw axis
       this.axis.display();

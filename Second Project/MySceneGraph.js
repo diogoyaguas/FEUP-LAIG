@@ -1532,17 +1532,12 @@ class MySceneGraph {
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
-    displayScene(currentTime) {
-
+    displayScene() {
+        
         this.displayGraph(this.idRoot, this.nodes[this.idRoot].texture[0], this.nodes[this.idRoot].materials, this.nodes[this.idRoot].texture[1], this.nodes[this.idRoot].texture[0]);
         for (var keys in this.nodes) {
             this.nodes[keys].read = false;
-            if(this.nodes[keys].animation != null){
-                for (var k = 0; k < this.nodes[keys].animation.length; k++) {
 
-                    this.nodes[keys].animation[k].update(currentTime);
-                }
-            }
         }
     }
 
@@ -1620,10 +1615,10 @@ class MySceneGraph {
         }
 
         if(node.animation != null){
-        for (var k = 0; k < node.animation.length; k++) {
-            node.animation[k].apply();
-        }
-    }   
+            for (var k = 0; k < node.animation.length; k++) {
+                node.animation[k].apply();
+            }
+        }   
 
         for (var i = 0; i < node.children.length; i++) {
 
