@@ -36,7 +36,6 @@ class LinearAnimation extends Animation {
             // find current segment
             var i = 0;
             while (this.currentDistance > this.distanceBetweenPoints[i] && i < this.distanceBetweenPoints.length - 1) {
-                //this.currentDistance -= this.distanceBetweenPoints[i];
                 initTranslation = this.points[i + 1];
                 i++;
             }
@@ -53,9 +52,7 @@ class LinearAnimation extends Animation {
             mat4.translate(this.transformationMatrix, this.transformationMatrix, [(p2[0] - p1[0]) * relativeDistance, (p2[1] - p1[1]) * relativeDistance, (p2[2] - p1[2]) * relativeDistance]);
 
             // calculate rotation angle and apply rotation
-            
             var angle = this.calculateAngle(p1, p2);
-            console.log(angle);
             mat4.rotate(this.transformationMatrix, this.transformationMatrix, angle, [0, 1, 0]);
         }
     }

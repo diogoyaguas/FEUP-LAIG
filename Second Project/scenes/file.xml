@@ -1714,7 +1714,6 @@
             <transformation>
             </transformation>
             <animations>
-            <animationref id="linear1" />
             </animations>
             <materials>
                 <material id="inherit"/>
@@ -1980,6 +1979,7 @@
                 <scale x="0.4" y="0.4" z="0.4"/>
             </transformation>
             <animations>
+                <animationref id="linear1" />
             </animations>
             <materials>
                 <material id ="inherit"/>
