@@ -899,39 +899,39 @@ class MySceneGraph {
     }
 
     /**
-   * Parses the animations node
-   * @param {Animations Node} animationsNode
-   */
-  parseAnimations(animationNode) {
+     * Parses the animations node
+     * @param {Animations Node} animationsNode
+     */
+    parseAnimations(animationNode) {
 
-    var children = animationNode.children;
-    var error;
-    this.animations = [];
+        var children = animationNode.children;
+        var error;
+        this.animations = [];
 
-    if(children.length == 0) {
+        if (children.length == 0) {
 
-        this.log("Animations block empty");
+            this.log("Animations block empty");
+            return null;
+        }
+
+        var nodeNames = [];
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+
+        for (var i = 0; i < children.length; i++) {
+            if (nodeNames[i] == "linear") {
+                error = this.parseLinear(i, children);
+                if (error != null) this.onXMLError("unable to parse linear'");
+            } else if (nodeNames[i] == "circular") {
+                error = this.parseCircular(i, children);
+                if (error != null) this.onXMLError("unable to parse circular'");
+            } else
+                return "Inapropriate tag name in animations";
+        }
+
+        this.log("Parsed animations block");
+
         return null;
-    }
-
-    var nodeNames = [];
-    for (var i = 0; i < children.length; i++)
-      nodeNames.push(children[i].nodeName);
-
-    for (var i = 0; i < children.length; i++) {
-      if (nodeNames[i] == "linear") {
-        error = this.parseLinear(i, children);
-        if (error != null) this.onXMLError("unable to parse linear'");
-      } else if (nodeNames[i] == "circular") {
-        error = this.parseCircular(i, children);
-        if (error != null) this.onXMLError("unable to parse circular'");
-      } else
-        return "Inapropriate tag name in animations";
-    }
-
-    this.log("Parsed animations block");
-
-    return null;
     }
 
 
@@ -962,7 +962,7 @@ class MySceneGraph {
 
             grandChildren = children[linearIndex].children;
 
-            if(grandChildren.length < 2) {
+            if (grandChildren.length < 2) {
                 this.onXMLError("there must be at least two control points");
             }
 
@@ -1013,14 +1013,14 @@ class MySceneGraph {
                 this.onXMLMinorError("no span defined for circular, assuming span = 5");
             }
 
-            var center  =  this.reader.getVector3(children[circularIndex], 'center');
+            var center = this.reader.getVector3(children[circularIndex], 'center');
 
             var radius = this.reader.getFloat(children[circularIndex], 'radius');
             if (radius <= 0) {
                 radius = 1;
                 this.onXMLMinorError("no radius defined for circular, assuming radius = 1");
             }
-                                    
+
             var startang = this.reader.getFloat(children[circularIndex], 'startang');
             if (startang == null || isNaN(startang)) {
                 startang = 45;
@@ -1173,7 +1173,8 @@ class MySceneGraph {
         var children = componentBlock.children;
         var nodeNames = [];
 
-        var tranformationMatrix, animationList = [], materialList = [],
+        var tranformationMatrix, animationList = [],
+            materialList = [],
             textureSpecs = [],
             childrenList = [];
         var componentID = this.reader.getString(componentBlock, "id");
@@ -1189,7 +1190,7 @@ class MySceneGraph {
         if (index == null)
             return "No transformation tag present in component " + componentID;
 
-        if (typeof (tranformationMatrix = this.parseComponentTransformation(children[index], componentID)) == "string")
+        if (typeof(tranformationMatrix = this.parseComponentTransformation(children[index], componentID)) == "string")
             return tranformationMatrix;
 
         var index = nodeNames.indexOf("animations");
@@ -1197,7 +1198,7 @@ class MySceneGraph {
         if (index == null)
             return "No animations tag present in component " + componentID;
 
-        if (typeof (animationList = this.parseComponentAnimations(children[index], componentID)) == "string")
+        if (typeof(animationList = this.parseComponentAnimations(children[index], componentID)) == "string")
             return animationList;
 
         index = nodeNames.indexOf("materials");
@@ -1205,7 +1206,7 @@ class MySceneGraph {
         if (index == null)
             return "No materials tag present in component " + componentID;
 
-        if (typeof (materialList = this.parseComponentMaterials(children[index], componentID)) == "string")
+        if (typeof(materialList = this.parseComponentMaterials(children[index], componentID)) == "string")
             return materialList;
 
         index = nodeNames.indexOf("texture");
@@ -1213,7 +1214,7 @@ class MySceneGraph {
         if (index == null)
             return "No texture tag present in component: " + componentID;
 
-        if (typeof (textureSpecs = this.parseComponentTexture(children[index], componentID)) == "string")
+        if (typeof(textureSpecs = this.parseComponentTexture(children[index], componentID)) == "string")
             return textureSpecs;
 
         index = nodeNames.indexOf("children");
@@ -1221,7 +1222,7 @@ class MySceneGraph {
         if (index == null)
             return "No children tag present in component: " + componentID;
 
-        if (typeof (childrenList = this.parseComponentChildren(children[index], componentID)) == "string")
+        if (typeof(childrenList = this.parseComponentChildren(children[index], componentID)) == "string")
             return childrenList;
 
         this.nodes[componentID].read = false;
@@ -1533,7 +1534,7 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        
+
         this.displayGraph(this.idRoot, this.nodes[this.idRoot].texture[0], this.nodes[this.idRoot].materials, this.nodes[this.idRoot].texture[1], this.nodes[this.idRoot].texture[0]);
         for (var keys in this.nodes) {
             this.nodes[keys].read = false;
@@ -1614,11 +1615,11 @@ class MySceneGraph {
             this.scene.multMatrix(node.transformations);
         }
 
-        if(node.animation != null){
+        if (node.animation != null) {
             for (var k = 0; k < node.animation.length; k++) {
                 node.animation[k].apply();
             }
-        }   
+        }
 
         for (var i = 0; i < node.children.length; i++) {
 
@@ -1646,8 +1647,8 @@ class MySceneGraph {
 
             if ((node.build instanceof MyRectangle || node.build instanceof MyTriangle) && node.texture != null) {
 
-                if(!this.different)
-                node.build.setSAndT(length_s, length_t);
+                if (!this.different)
+                    node.build.setSAndT(length_s, length_t);
             }
 
             node.build.display();
