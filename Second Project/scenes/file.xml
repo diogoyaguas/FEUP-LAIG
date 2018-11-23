@@ -1,5 +1,5 @@
 <yas>
-    <scene root="scene" axis_length="10.0"/>
+    <scene root="ball" axis_length="10.0"/>
 
     <views default="perspective-terrace">
         <perspective id="perspective-front" near="0.5" far="500" angle="20">
@@ -173,7 +173,7 @@
     </transformations>
 
     <animations>
-        <linear id="linear1" span="10">
+        <linear id="linear1" span="8">
             <controlpoint x="0" y="0" z="0" />
             <controlpoint x="5" y="0" z="0" />
             <controlpoint x="5" y="0" z="5" />
@@ -1975,14 +1975,12 @@
 
         <component id="ball">
             <transformation>
-                <translate x="15.2" y="0.81" z="1"/>
-                <scale x="0.4" y="0.4" z="0.4"/>
             </transformation>
             <animations>
                 <animationref id="linear1" />
             </animations>
             <materials>
-                <material id ="inherit"/>
+                <material id ="mat-default"/>
             </materials>
             <texture id="tex-green" length_s="1.0" length_t="1.0"/>
             <children>

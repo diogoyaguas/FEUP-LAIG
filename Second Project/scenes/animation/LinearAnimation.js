@@ -11,11 +11,12 @@ class LinearAnimation extends Animation {
         this.totalDistance = 0;
         this.currentDistance = 0;
         this.distanceBetweenPoints = [];
-
         for (var i = 0; i < points.length - 1; i++) {
             this.totalDistance += vec3.dist(vec3.fromValues(points[i][0], points[i][1], points[i][2]), vec3.fromValues(points[i + 1][0], points[i + 1][1], points[i + 1][2]));
             this.distanceBetweenPoints.push(this.totalDistance);
         }
+
+        console.log(this.distanceBetweenPoints);
 
         this.speed = this.totalDistance / this.movementTime;
     }
@@ -23,9 +24,6 @@ class LinearAnimation extends Animation {
     update(currentTime) {
 
         if (this.currentDistance <= this.totalDistance) {
-
-            console.log(this.currentDistance);
-            console.log(this.totalDistance);
 
             mat4.identity(this.transformationMatrix);
 
@@ -35,24 +33,41 @@ class LinearAnimation extends Animation {
 
             // find current segment
             var i = 0;
+
+    
             while (this.currentDistance > this.distanceBetweenPoints[i] && i < this.distanceBetweenPoints.length - 1) {
                 initTranslation = this.points[i + 1];
                 i++;
             }
-
+            console.log("i = " + i);
             mat4.translate(this.transformationMatrix, this.transformationMatrix, initTranslation);
 
             // get control points from current segment
             var p1 = this.points[i];
             var p2 = this.points[i + 1];
-
+            let vec = [p2[0] - p1[0], p2[1] - p1[1],p2[2] - p1[2]];
+            let dist = Math.sqrt(vec[0]*vec[0] + vec[1]*vec[1]+vec[2]*vec[2]);
             // calculate displacement and apply translation
-            var relativeDistance = this.currentDistance / this.distanceBetweenPoints[i];
+            var relativeDistance;
+            if(i == 0){
+            relativeDistance = ((this.currentDistance) / (this.distanceBetweenPoints[i]));
+            console.log("current =" + (this.currentDistance));
+        }
+            else{
+            relativeDistance = ((this.currentDistance-i*dist) / dist);
+            console.log("current1 =" + (this.currentDistance - i*5));
+
+            }
+
+            console.log("current time =" + currentTime  );
+            console.log("realtive = " +relativeDistance);
+            console.log("bettwen = " +this.distanceBetweenPoints[i]);
 
             mat4.translate(this.transformationMatrix, this.transformationMatrix, [(p2[0] - p1[0]) * relativeDistance, (p2[1] - p1[1]) * relativeDistance, (p2[2] - p1[2]) * relativeDistance]);
-
+            
             // calculate rotation angle and apply rotation
             var angle = this.calculateAngle(p1, p2);
+            
             mat4.rotate(this.transformationMatrix, this.transformationMatrix, angle, [0, 1, 0]);
         }
     }
