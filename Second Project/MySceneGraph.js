@@ -1065,6 +1065,7 @@ class MySceneGraph {
         }
 
         this.log("Parsed primitives");
+
     }
 
     /**
@@ -1114,6 +1115,11 @@ class MySceneGraph {
                 build = new MyTorus(this.scene, this.reader.getFloat(children[0], "inner"),
                     this.reader.getFloat(children[0], "outer"), this.reader.getFloat(children[0], "slices"),
                     this.reader.getFloat(children[0], "loops"));
+                break;
+
+            case "plane":
+                build = new Plane(this.scene, this.reader.getFloat(children[0], "npartsU"),
+                    this.reader.getFloat(children[0], "npartsV"));
                 break;
 
             default:
@@ -1617,7 +1623,12 @@ class MySceneGraph {
 
         if (node.animation != null) {
             for (var k = 0; k < node.animation.length; k++) {
-                node.animation[k].apply();
+
+                if(k > 0) {
+                    if(node.animation[k-1].ended == true){
+                        node.animation[k].apply();
+                    }
+                } else node.animation[0].apply();
             }
         }
 

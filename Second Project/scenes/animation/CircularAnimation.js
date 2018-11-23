@@ -20,7 +20,13 @@ class CircularAnimation extends Animation {
 
   update(currentTime) {
 
-    if (this.totalTime < this.movementTime) {
+    if (!this.ended) {
+
+      if (this.totalTime > this.movementTime) {
+
+        this.ended = true;
+      }
+
       mat4.identity(this.transformationMatrix);
       mat4.translate(this.transformationMatrix, this.transformationMatrix,
                      [this.center[0], this.center[1], this.center[2]]);

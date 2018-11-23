@@ -1,5 +1,5 @@
 <yas>
-    <scene root="ball" axis_length="10.0"/>
+    <scene root="scene" axis_length="10.0"/>
 
     <views default="perspective-terrace">
         <perspective id="perspective-front" near="0.5" far="500" angle="20">
@@ -177,7 +177,7 @@
             <controlpoint x="0" y="0" z="0" />
             <controlpoint x="5" y="0" z="0" />
             <controlpoint x="5" y="0" z="5" />
-            <controlpoint x="0" y="0" z="5" />
+            <controlpoint x="10" y="0" z="5" />
             <controlpoint x="0" y="0" z="0" />
         </linear>
 
@@ -203,6 +203,9 @@
         <primitive id="cone">
             <cylinder base="3" top="1" height="5" slices="150" stacks="150"/>
         </primitive>
+        <primitive id="plane">
+            <plane npartsU="50" npartsV="50" />
+        </primitive>
     </primitives>
 
     <components>
@@ -225,6 +228,20 @@
                 <componentref id="awning"/>
                 <componentref id="building"/>
                 <componentref id="rooftop"/>
+            </children>
+        </component>
+
+        <component id="base">
+            <transformation>
+            </transformation>
+            <animations>
+            </animations>
+            <materials>
+                <material id="mat-default"/>
+            </materials>
+            <texture id="tex-pink"/>
+            <children>
+                <primitiveref id="plane"/>
             </children>
         </component>
 
@@ -1975,9 +1992,12 @@
 
         <component id="ball">
             <transformation>
+                <translate x="15.2" y="0.81" z="1"/>
+                <scale x="0.4" y="0.4" z="0.4"/>
             </transformation>
             <animations>
                 <animationref id="linear1" />
+                <animationref id="circular1" />
             </animations>
             <materials>
                 <material id ="mat-default"/>

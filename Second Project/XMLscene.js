@@ -77,15 +77,28 @@ class XMLscene extends CGFscene {
 
     var elapsedTime = (currTime - this.lastUpdate) / 1000;
 
+    this.updateAnimations(elapsedTime);
+
+    this.lastUpdate = currTime;
+  }
+
+  updateAnimations(elapsedTime) {
+
     for (var keys in this.graph.nodes) {
       if (this.graph.nodes[keys].animation != null) {
         for (var i = 0; i < this.graph.nodes[keys].animation.length; i++) {
-          this.graph.nodes[keys].animation[i].update(elapsedTime);
+
+          if(i > 0) {
+
+            if(this.graph.nodes[keys].animation[i-1].ended == true) {
+
+              this.graph.nodes[keys].animation[i].update(elapsedTime);
+            }
+
+          } else this.graph.nodes[keys].animation[0].update(elapsedTime);
         }
       }
     }
-
-    this.lastUpdate = currTime;
   }
 
   /**
