@@ -57,7 +57,7 @@
         </omni>
         <spot id="spot-logo" enabled="1" angle="45" exponent="15">
             <location x="20" y="20" z="-40" w="1"/>
-            <target x="22.5" y="20" z="-40"/>
+            <target x="20.5" y="20" z="-40"/>
             <ambient r="0.2" g="0.2" b="0.2" a="1"/>
             <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
@@ -206,9 +206,18 @@
         <primitive id="plane">
             <plane npartsU="50" npartsV="50" />
         </primitive>
+        <primitive id="patch">
+            <patch npointsU="2" npointsV="2" npartsU="5" npartsV="5">
+                <controlpoint x="-5" y="0" z="-5" />
+                <controlpoint x="5" y="0" z="-5" />
+                <controlpoint x="-5" y="0" z="5" />
+                <controlpoint x="5" y="0" z="5" />
+            </patch>
+        </primitive>
     </primitives>
 
     <components>
+
         <component id="scene">
             <transformation>
             </transformation>
@@ -228,20 +237,6 @@
                 <componentref id="awning"/>
                 <componentref id="building"/>
                 <componentref id="rooftop"/>
-            </children>
-        </component>
-
-        <component id="base">
-            <transformation>
-            </transformation>
-            <animations>
-            </animations>
-            <materials>
-                <material id="mat-default"/>
-            </materials>
-            <texture id="tex-pink"/>
-            <children>
-                <primitiveref id="plane"/>
             </children>
         </component>
 

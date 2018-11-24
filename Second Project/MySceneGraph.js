@@ -1059,7 +1059,7 @@ class MySceneGraph {
 
                 var error = this.parsePrimitive(children[i]);
                 if (error != null)
-                    this.onXMLError("unable to parse primitive'");
+                    this.onXMLError("unable to parse primitive");
             }
 
         }
@@ -1122,6 +1122,10 @@ class MySceneGraph {
                     this.reader.getFloat(children[0], "npartsV"));
                 break;
 
+            case "patch":
+                build = this.parsePatch(children[0]);
+                break;
+
             default:
                 return "Tag not identified on primitive " + primitiveID;
         }
@@ -1130,6 +1134,46 @@ class MySceneGraph {
         this.nodes[primitiveID].read = false;
 
     }
+
+    /**
+     * Processes the patch node
+     * @param {Patch node} pacthNode
+     */
+    parsePatch(pacthNode) {
+
+        var npointsU = this.reader.getFloat(pacthNode, "npointsU");
+        var npointsV = this.reader.getFloat(pacthNode, "npointsV");
+        var npartsU = this.reader.getFloat(pacthNode, "npartsU");
+        var npartsV = this.reader.getFloat(pacthNode, "npartsV");
+
+        var newNodeNames = [];
+        var grandChildren = pacthNode.children;
+
+            if (grandChildren.length < 2) {
+                this.onXMLError("there must be at least two control points");
+            }
+
+            for (var j = 0; j < grandChildren.length; j++) {
+                newNodeNames.push(grandChildren[j].nodeName);
+            }
+
+            var controlPoint = [];
+
+            for (var i = 0; i < grandChildren.length; i++) {
+
+                if (newNodeNames[i] == "controlpoint") {
+                    controlPoint[i] = this.parseXYZ(grandChildren[i]);
+                } else return "Inapropriate tag name in control point";
+
+            }
+        
+        var build = new Patch(this.scene, npointsU, npointsV, npartsU, npartsV, controlPoint);
+
+        console.log(build);
+
+        return build;
+    }
+
     /**
      * Processes the components node
      * @param {Components node} componentsNode

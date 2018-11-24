@@ -15,13 +15,12 @@ class Plane extends CGFobject {
   }
 
   initControlPoints() {
-
     this.controlPoints = [
       [
         [0.5, 0.0, -0.5, 1],
         [0.5, 0.0, 0.5, 1],
       ],
-      [
+      [ 
         [-0.5, 0.0, -0.5, 1],
         [-0.5, 0.0, 0.5, 1],
       ]
@@ -30,14 +29,12 @@ class Plane extends CGFobject {
   }
 
   defineNurb() {
+    var nurbSurface =
+        new CGFnurbsSurface(this.degree1, this.degree2, this.controlPoints);
 
-    var nurbSurface = new CGFnurbsSurface(this.degree1, this.degree2, this.controlPoints);
-
-    this.nurbObject = new CGFnurbsObject(this.scene, this.uDivs, this.vDivs, nurbSurface);
+    this.nurbObject =
+        new CGFnurbsObject(this.scene, this.uDivs, this.vDivs, nurbSurface);
   }
 
-  display() { 
-    this.nurbObject.display(); 
-}
-
+  display() { this.nurbObject.display(); }
 }
