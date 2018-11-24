@@ -1125,6 +1125,13 @@ class MySceneGraph {
             case "patch":
                 build = this.parsePatch(children[0]);
                 break;
+            
+            case "cylinder2":
+                build = new MyCylinder2(this.scene, this.reader.getFloat(children[0], "base"),
+                    this.reader.getFloat(children[0], "top"), this.reader.getFloat(children[0], "height"),
+                    this.reader.getFloat(children[0], "slices"), this.reader.getFloat(children[0], "stacks"));
+
+                break;
 
             default:
                 return "Tag not identified on primitive " + primitiveID;
