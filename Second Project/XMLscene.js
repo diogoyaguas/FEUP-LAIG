@@ -16,7 +16,6 @@ class XMLscene extends CGFscene {
     this.lightValues = {};
     this.views = {};
     this.lastUpdate = 0;
-    this.elapsedTime = 0;
   }
 
   /**

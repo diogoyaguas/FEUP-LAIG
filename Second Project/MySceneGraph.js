@@ -1130,7 +1130,10 @@ class MySceneGraph {
                 build = new MyCylinder2(this.scene, this.reader.getFloat(children[0], "base"),
                     this.reader.getFloat(children[0], "top"), this.reader.getFloat(children[0], "height"),
                     this.reader.getFloat(children[0], "slices"), this.reader.getFloat(children[0], "stacks"));
+                break;
 
+            case "drone":
+                build = new MyDrone(this.scene);
                 break;
 
             default:
