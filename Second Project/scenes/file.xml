@@ -65,6 +65,8 @@
     </lights>
 
     <textures>
+        <texture id="ocean" file="scenes/images/ocean.jpg" />
+        <texture id="egypt1" file="scenes/images/egypt1.jpg" />
         <texture id="tex-stone" file="scenes/images/stone.jpg"/>
         <texture id="tex-pink" file="scenes/images/pink.jpg"/>
         <texture id="tex-window" file="scenes/images/window.jpg"/>
@@ -217,6 +219,12 @@
         <primitive id="cylinder2">
             <cylinder2 base="1" top="1" height="1" stacks="32" slices="64"/>
         </primitive>
+        <primitive id="terrain">
+            <terrain idtexture="" idheightmap="" parts="2" heightscale="2"/>
+        </primitive >
+        <primitive id="water1">
+             <water idtexture="water" idwavemap="water" parts="2" heightscale="2" texscale="2" />
+        </primitive >
 
     </primitives>
 
@@ -224,6 +232,22 @@
 
         <component id="scene">
             <transformation>
+            </transformation>
+            <animations>
+            </animations>
+            <materials>
+               <material id="mat-default" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="AE"/>
+                <componentref id="terrain1"/>
+                <componentref id="water1"/>
+            </children>
+        </component>
+        <component id="AE">
+            <transformation>
+            <scale x="0.15" y="0.15" z="0.15" />
             </transformation>
             <animations>
             </animations>
@@ -241,6 +265,38 @@
                 <componentref id="awning"/>
                 <componentref id="building"/>
                 <componentref id="rooftop"/>
+            </children>
+        </component>
+
+        <component id="terrain1">
+            <transformation>
+            <translate x="0" y="-5" z="0" />
+               <scale x="30" y="30" z="30" />
+            </transformation>
+            <animations>
+            </animations>
+            <materials>
+               <material id="mat-default" />
+            </materials>
+             <texture id="egypt1" length_s="2" length_t="2" />
+            <children>
+                <primitiveref id="terrain"/>
+            </children>
+        </component>
+
+        <component id="water1">
+            <transformation>
+            <translate x="25" y="-10" z="17" />
+            <scale x="25" y="25" z="25" />
+            </transformation>
+            <materials>
+               <material id="mat-default" />
+            </materials>
+            <texture id="ocean" length_s="2" length_t="2" />
+            <animations>
+            </animations>
+            <children>
+                <primitiveref id="water1"/>
             </children>
         </component>
 

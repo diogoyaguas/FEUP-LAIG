@@ -1132,7 +1132,16 @@ class MySceneGraph {
                     this.reader.getFloat(children[0], "slices"), this.reader.getFloat(children[0], "stacks"));
 
                 break;
-
+            case "terrain":
+                build = new MyTerrain(this.scene, this.reader.getString(children[0], "idtexture"),
+                    this.reader.getString(children[0], "idheightmap"), this.reader.getInteger(children[0], "parts"),
+                    this.reader.getFloat(children[0], "heightscale"));
+                break;
+            case "water":
+                build = new MyWater(this.scene, this.reader.getString(children[0], 'idtexture'),this.reader.getString(children[0], 'idwavemap'),
+                this.reader.getInteger(children[0], 'parts'), this.reader.getFloat(children[0], 'heightscale'),
+                this.reader.getFloat(children[0], 'texscale'));
+                break;
             default:
                 return "Tag not identified on primitive " + primitiveID;
         }
