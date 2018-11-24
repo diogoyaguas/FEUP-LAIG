@@ -16,16 +16,13 @@ class Patch extends CGFobject {
     var degree2 = this.npointsV - 1;
     this.controlVertexes = [];
 
-    this.defineNurb();
-
-    console.log(this.controlVertexes);
+    this.defineVertices();
 
     var nurbSurface = new CGFnurbsSurface(degree1, degree2, this.controlVertexes);
-    console.log(nurbSurface);
     this.nurbObject = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbSurface);
   }
 
-  defineNurb() {
+  defineVertices() {
 
     var k = 0;
 

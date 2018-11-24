@@ -1176,8 +1176,6 @@ class MySceneGraph {
         
         var build = new Patch(this.scene, npointsU, npointsV, npartsU, npartsV, controlPoint);
 
-        console.log(build);
-
         return build;
     }
 
