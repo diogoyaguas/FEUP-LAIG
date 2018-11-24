@@ -65,6 +65,8 @@
     </lights>
 
     <textures>
+        <texture id="ocean" file="scenes/images/ocean.jpg" />
+        <texture id="egypt1" file="scenes/images/egypt1.jpg" />
         <texture id="tex-stone" file="scenes/images/stone.jpg"/>
         <texture id="tex-pink" file="scenes/images/pink.jpg"/>
         <texture id="tex-window" file="scenes/images/window.jpg"/>
@@ -221,6 +223,12 @@
         <primitive id="drone">
             <drone />
         </primitive>
+        <primitive id="terrain">
+            <terrain idtexture="" idheightmap="" parts="2" heightscale="2"/>
+        </primitive >
+        <primitive id="water1">
+             <water idtexture="water" idwavemap="water" parts="2" heightscale="2" texscale="2" />
+        </primitive >
 
     </primitives>
 
@@ -228,6 +236,23 @@
 
         <component id="scene">
             <transformation>
+            </transformation>
+            <animations>
+            </animations>
+            <materials>
+               <material id="mat-default" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="AE"/>
+                <componentref id="terrain1"/>
+                <componentref id="water1"/>
+            </children>
+        </component>
+
+        <component id="AE">
+            <transformation>
+            <scale x="0.15" y="0.15" z="0.15" />
             </transformation>
             <animations>
             </animations>
@@ -246,23 +271,6 @@
                 <componentref id="building"/>
                 <componentref id="rooftop"/>
                 <componentref id="drone-comp"/>
-            </children>
-        </component>
-
-        <component id="drone-comp">
-            <transformation>
-                <translate x="5" y="5.25" z="-5" />
-            </transformation>
-            <animations>
-                <animationref id="linear1" />
-                <animationref id="circular1" />
-            </animations>
-            <materials>
-                <material id="mat-default"/>
-            </materials>
-            <texture id="none"/>
-            <children>
-                <primitiveref id="drone" />
             </children>
         </component>
 
