@@ -188,7 +188,7 @@ class XMLscene extends CGFscene {
           this.lights[i].setSpotExponent(exponent);
           this.lights[i].setSpotDirection(target[0] - light[1][0],
                                           target[1] - light[1][1],
-                                          target[3] - light[1][2]);
+                                          target[2] - light[1][2]);
         }
 
         this.lights[i].setVisible(true);
@@ -202,6 +202,8 @@ class XMLscene extends CGFscene {
         i++;
       }
     }
+
+    console.log(this.lights[4]);
   }
 
   /**
