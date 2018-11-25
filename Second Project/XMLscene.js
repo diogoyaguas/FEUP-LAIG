@@ -98,6 +98,10 @@ class XMLscene extends CGFscene {
           } else this.graph.nodes[keys].animation[0].update(elapsedTime);
         }
       }
+      if(keys == "water") {
+
+        this.graph.nodes[keys].build.update(elapsedTime);
+      }
     }
   }
 
@@ -202,8 +206,6 @@ class XMLscene extends CGFscene {
         i++;
       }
     }
-
-    console.log(this.lights[4]);
   }
 
   /**

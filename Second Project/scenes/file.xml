@@ -65,8 +65,6 @@
     </lights>
 
     <textures>
-        <texture id="ocean" file="scenes/images/ocean.jpg" />
-        <texture id="egypt1" file="scenes/images/egypt1.jpg" />
         <texture id="tex-stone" file="scenes/images/stone.jpg"/>
         <texture id="tex-pink" file="scenes/images/pink.jpg"/>
         <texture id="tex-window" file="scenes/images/window.jpg"/>
@@ -82,8 +80,8 @@
         <texture id="tex-little-rocks" file="scenes/images/little-rocks.jpg"/>
         <texture id="tex-grass" file="scenes/images/grass.jpeg"/>
         <texture id="tex-aefeup" file="scenes/images/aefeup.jpg"/>
-        <texture id="tex-wavemap" file="scenes/images/wavemap.jpg" />
-        <texture id="tex-water" file="scenes/images/water.jpg" />
+        <texture id="tex-wavemap" file="scenes/images/wavemap.png" />
+        <texture id="tex-water" file="scenes/images/ocean.jpg" />
         <texture id="tex-terrain-heigth" file="scenes/images/terrain-height-map.jpg" />
         <texture id="tex-terrain" file="scenes/images/terrain.jpg" />
     </textures>
@@ -231,7 +229,7 @@
             <terrain idtexture="tex-terrain" idheightmap="tex-terrain-heigth" parts="20" heightscale="50"/>
         </primitive >
         <primitive id="water">
-            <water idtexture="ocean" idwavemap="tex-wavemap" parts="1" heightscale="50" texscale="50" />
+            <water idtexture="tex-water" idwavemap="tex-wavemap" parts="100" heightscale="2" texscale="50" />
         </primitive >
 
     </primitives>
@@ -278,6 +276,7 @@
 
         <component id="earth">
             <transformation>
+            <translate x="0" y="-0.3" z="0" />
             </transformation>
             <animations>
             </animations>
@@ -301,7 +300,7 @@
             <materials>
                 <material id="mat-default" />
             </materials>
-            <texture id="egypt1" length_s="2" length_t="2" />
+            <texture id="tex-terrain" length_s="2" length_t="2" />
             <children>
                 <primitiveref id="terrain"/>
             </children>
@@ -309,13 +308,12 @@
 
         <component id="water-comp">
             <transformation>
-                <scale x="4" y="4" z="4" />
-                <translate x="0.75" y="0.005" z="-1.5" />
+            <scale x="4" y="1" z="4" />
             </transformation>
             <materials>
                 <material id="mat-default" />
             </materials>
-            <texture id="ocean" length_s="2" length_t="2" />
+            <texture id="tex-water" />
             <animations>
             </animations>
             <children>

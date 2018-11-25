@@ -1605,7 +1605,6 @@ class MySceneGraph {
         this.displayGraph(this.idRoot, this.nodes[this.idRoot].texture[0], this.nodes[this.idRoot].materials, this.nodes[this.idRoot].texture[1], this.nodes[this.idRoot].texture[0]);
         for (var keys in this.nodes) {
             this.nodes[keys].read = false;
-
         }
     }
 
