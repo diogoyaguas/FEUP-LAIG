@@ -3,7 +3,7 @@
 
     <views default="perspective-front">
         <perspective id="perspective-front" near="0.5" far="500" angle="20">
-            <from x="-120" y="50" z="-120"/>
+            <from x="-150" y="70" z="-150"/>
             <to x="60" y="5.0" z="10"/>
         </perspective>
         <perspective id="perspective-entry" near="0.5" far="500" angle="60">
@@ -179,15 +179,16 @@
     </transformations>
 
     <animations>
-        <linear id="linear1" span="10">
+        <linear id="linear1" span="15">
             <controlpoint x="0" y="0" z="0" />
-            <controlpoint x="4" y="0" z="0" />
-            <controlpoint x="6" y="0" z="5" />
-            <controlpoint x="0" y="0" z="5" />
-            <controlpoint x="0" y="0" z="0" />
+            <controlpoint x="0" y="5" z="0" />
+            <controlpoint x="5" y="5" z="0" />
+            <controlpoint x="5" y="5" z="5" />
+            <controlpoint x="0" y="5" z="5" />
+            <controlpoint x="0" y="5" z="0" />
         </linear>
 
-        <circular id="circular1" span="15" center="0 3.5 0" radius="5" startang="0" rotang="360" />
+        <circular id="circular1" span="15" center="0 0 0" radius="2.5" startang="30" rotang="180" />
     </animations>
 
     <primitives>
@@ -309,10 +310,11 @@
 
         <component id="drone-comp">
             <transformation>
-                <translate x="5" y="5" z="-10" />
+                <translate x="15" y="0" z="3" />
                 <scale x="2" y="2" z="2" />
             </transformation>
             <animations>
+                <animationref id="linear1" />
                 <animationref id="circular1" />
             </animations>
             <materials>
