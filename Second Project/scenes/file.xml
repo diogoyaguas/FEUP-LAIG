@@ -225,11 +225,11 @@
         <primitive id="drone">
             <drone />
         </primitive>
-       <primitive id="terrain">
+        <primitive id="terrain">
             <terrain idtexture="tex-terrain" idheightmap="tex-terrain-heigth" parts="20" heightscale="50"/>
         </primitive >
         <primitive id="water">
-            <water idtexture="tex-water" idwavemap="tex-wavemap" parts="100" heightscale="2" texscale="50" />
+            <water idtexture="tex-water" idwavemap="tex-wavemap" parts="50" heightscale="2" texscale="50" />
         </primitive >
 
     </primitives>
@@ -276,7 +276,7 @@
 
         <component id="earth">
             <transformation>
-            <translate x="0" y="-0.3" z="0" />
+                <translate x="0" y="-0.3" z="0" />
             </transformation>
             <animations>
             </animations>
@@ -308,7 +308,8 @@
 
         <component id="water-comp">
             <transformation>
-            <scale x="4" y="1" z="4" />
+                <scale x="4" y="1" z="4" />
+                <translate x="0.75" y="0" z="-1.5" />
             </transformation>
             <materials>
                 <material id="mat-default" />
