@@ -1,5 +1,5 @@
 <yas>
-    <scene root="AE" axis_length="10.0"/>
+    <scene root="scene" axis_length="10.0"/>
 
     <views default="perspective-front">
         <perspective id="perspective-front" near="0.5" far="500" angle="20">
@@ -227,11 +227,11 @@
         <primitive id="drone">
             <drone />
         </primitive>
-        <primitive id="terrain">
-            <terrain idtexture="tex-terrain" idheightmap="tex-terrain-heigth" parts="20" heightscale="10"/>
+       <primitive id="terrain">
+            <terrain idtexture="tex-terrain" idheightmap="tex-terrain-heigth" parts="20" heightscale="50"/>
         </primitive >
         <primitive id="water">
-            <water idtexture="tex-water" idwavemap="tex-wavemap" parts="20" heightscale="5" texscale="2" />
+            <water idtexture="ocean" idwavemap="tex-wavemap" parts="1" heightscale="50" texscale="50" />
         </primitive >
 
     </primitives>
@@ -249,8 +249,7 @@
             <texture id="none"/>
             <children>
                 <componentref id="AE"/>
-                <componentref id="terrain1"/>
-                <componentref id="water-comp"/>
+                <componentref id="earth"/>
             </children>
         </component>
 
@@ -277,9 +276,25 @@
             </children>
         </component>
 
+        <component id="earth">
+            <transformation>
+            </transformation>
+            <animations>
+            </animations>
+            <materials>
+                <material id="mat-default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="terrain1"/>
+                <componentref id="water-comp"/>
+            </children>
+        </component>
+
         <component id="terrain1">
             <transformation>
-                <scale x="30" y="30" z="30" />
+                <scale x="15" y="15" z="15" />
+                <translate x="1" y="0" z="-2" />
             </transformation>
             <animations>
             </animations>
@@ -294,8 +309,8 @@
 
         <component id="water-comp">
             <transformation>
-                <scale x="5" y="5" z="5" />
-                <translate x="0" y="0.01" z="0" />
+                <scale x="4" y="4" z="4" />
+                <translate x="0.75" y="0.005" z="-1.5" />
             </transformation>
             <materials>
                 <material id="mat-default" />

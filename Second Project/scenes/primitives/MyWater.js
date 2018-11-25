@@ -5,17 +5,15 @@
 class MyWater extends Plane {
     constructor(scene, idTexture, idWavemap, parts, heightscale, texscale){
         
-        super(scene, parts, heightscale);
+        super(scene, parts, parts);
         
         this.scene = scene;
 
         this.ocean = this.scene.graph.textures[idTexture];
         this.wavemap = this.scene.graph.textures[idWavemap];
-
-        this.waterShader = new CGFshader(this.scene.gl, "scenes/shaders/ocean.vert", "scenes/shaders/texture1.frag");
-        this.waterShader.setUniformsValues({date:Date.now(),colormap: 2});
-
-        this.plane = new Plane(this.scene, parts, heightscale);
+        let scale=texscale*Date.now();
+        this.waterShader = new CGFshader(this.scene.gl, "scenes/shaders/ocean.vert", "scenes/shaders/shader.frag");
+        this.waterShader.setUniformsValues({scale,colormap: 2});
 
     }
 
@@ -26,7 +24,8 @@ class MyWater extends Plane {
         this.waterShader.setUniformsValues({factor:factor,colormap: 2});
         this.wavemap.bind(1);
         this.ocean.bind(2);
-        this.plane.display();
+
+        super.display();
         this.scene.setActiveShader(this.scene.defaultShader);
     }
 }

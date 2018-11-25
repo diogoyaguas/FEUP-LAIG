@@ -26,7 +26,6 @@ vec4 getNoise(vec2 uv){
 void main() {
 	vec3 offset=vec3(0.0,0.0,0.0);
 	vTextureCoord = aTextureCoord;
-    offset = aVertexNormal*10.0*(getNoise(aTextureCoord).b/100.0);
+    offset = aVertexNormal*10.0*(getNoise(aTextureCoord).b/10.0);
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition+offset, 1.0);
 }
-
