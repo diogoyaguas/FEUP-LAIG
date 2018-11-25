@@ -1,7 +1,7 @@
 <yas>
     <scene root="scene" axis_length="10.0"/>
 
-    <views default="perspective-front">
+    <views default="perspective-drone">
         <perspective id="perspective-front" near="0.5" far="500" angle="20">
             <from x="-150" y="70" z="-150"/>
             <to x="60" y="5.0" z="10"/>
@@ -17,6 +17,14 @@
         <perspective id="perspective-deck" near="0.5" far="500" angle="60">
             <from x="27.5" y="7" z="32.5"/>
             <to x="27.5" y="0" z="-20.0"/>
+        </perspective>
+        <perspective id="perspective-earth" near="0.5" far="500" angle="20">
+            <from x="-45" y="30" z="-45"/>
+            <to x="10" y="5.0" z="-30"/>
+        </perspective>
+        <perspective id="perspective-drone" near="0.5" far="500" angle="20">
+            <from x="20" y="100" z="20"/>
+            <to x="20" y="5.0" z="30"/>
         </perspective>
         <ortho id="ortho-general" near="0.5" far="500" left="-50" right="50" top="50" bottom="-50">
             <from x="20" y="100" z="-15" />
@@ -229,7 +237,7 @@
             <terrain idtexture="tex-terrain" idheightmap="tex-terrain-heigth" parts="20" heightscale="50"/>
         </primitive >
         <primitive id="water">
-            <water idtexture="tex-water" idwavemap="tex-wavemap" parts="50" heightscale="2" texscale="50" />
+            <water idtexture="tex-water" idwavemap="tex-wavemap" parts="50" heightscale="2" texscale="1" />
         </primitive >
 
     </primitives>
@@ -314,7 +322,7 @@
             <materials>
                 <material id="mat-default" />
             </materials>
-            <texture id="tex-water" />
+            <texture id="none" length_s="2" length_t="2" />
             <animations>
             </animations>
             <children>
