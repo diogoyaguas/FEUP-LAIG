@@ -1,7 +1,7 @@
 <yas>
-    <scene root="scene" axis_length="10.0"/>
+    <scene root="AE" axis_length="10.0"/>
 
-    <views default="perspective-terrace">
+    <views default="perspective-front">
         <perspective id="perspective-front" near="0.5" far="500" angle="20">
             <from x="-120" y="50" z="-120"/>
             <to x="60" y="5.0" z="10"/>
@@ -82,6 +82,10 @@
         <texture id="tex-little-rocks" file="scenes/images/little-rocks.jpg"/>
         <texture id="tex-grass" file="scenes/images/grass.jpeg"/>
         <texture id="tex-aefeup" file="scenes/images/aefeup.jpg"/>
+        <texture id="tex-wavemap" file="scenes/images/wavemap.jpg" />
+        <texture id="tex-water" file="scenes/images/water.jpg" />
+        <texture id="tex-terrain-heigth" file="scenes/images/terrain-height-map.jpg" />
+        <texture id="tex-terrain" file="scenes/images/terrain.jpg" />
     </textures>
 
     <materials>
@@ -176,15 +180,14 @@
 
     <animations>
         <linear id="linear1" span="10">
-            <controlpoint x="0" y="5" z="0" />
-            <controlpoint x="5" y="5" z="0" />
-            <controlpoint x="5" y="5" z="5" />
-            <controlpoint x="0" y="5" z="5" />
-            <controlpoint x="0" y="5" z="0" />
+            <controlpoint x="0" y="0" z="0" />
+            <controlpoint x="4" y="0" z="0" />
+            <controlpoint x="6" y="0" z="5" />
+            <controlpoint x="0" y="0" z="5" />
             <controlpoint x="0" y="0" z="0" />
         </linear>
 
-        <circular id="circular1" span="10" center="0 5 0" radius="2" startang="30" rotang="180" />
+        <circular id="circular1" span="15" center="0 3.5 0" radius="5" startang="0" rotang="360" />
     </animations>
 
     <primitives>
@@ -224,10 +227,10 @@
             <drone />
         </primitive>
         <primitive id="terrain">
-            <terrain idtexture="" idheightmap="" parts="2" heightscale="2"/>
+            <terrain idtexture="tex-terrain" idheightmap="tex-terrain-heigth" parts="20" heightscale="10"/>
         </primitive >
         <primitive id="water">
-             <water idtexture="water" idwavemap="water" parts="2" heightscale="2" texscale="2" />
+            <water idtexture="tex-water" idwavemap="tex-wavemap" parts="20" heightscale="5" texscale="2" />
         </primitive >
 
     </primitives>
@@ -240,7 +243,7 @@
             <animations>
             </animations>
             <materials>
-               <material id="mat-default" />
+                <material id="mat-default" />
             </materials>
             <texture id="none"/>
             <children>
@@ -252,7 +255,6 @@
 
         <component id="AE">
             <transformation>
-            <scale x="0.15" y="0.15" z="0.15" />
             </transformation>
             <animations>
             </animations>
@@ -276,15 +278,14 @@
 
         <component id="terrain1">
             <transformation>
-            <translate x="0" y="-5" z="0" />
-               <scale x="30" y="30" z="30" />
+                <scale x="30" y="30" z="30" />
             </transformation>
             <animations>
             </animations>
             <materials>
-               <material id="mat-default" />
+                <material id="mat-default" />
             </materials>
-             <texture id="egypt1" length_s="2" length_t="2" />
+            <texture id="egypt1" length_s="2" length_t="2" />
             <children>
                 <primitiveref id="terrain"/>
             </children>
@@ -292,11 +293,11 @@
 
         <component id="water-comp">
             <transformation>
-            <translate x="25" y="-10" z="17" />
-            <scale x="25" y="25" z="25" />
+                <scale x="5" y="5" z="5" />
+                <translate x="0" y="0.01" z="0" />
             </transformation>
             <materials>
-               <material id="mat-default" />
+                <material id="mat-default" />
             </materials>
             <texture id="ocean" length_s="2" length_t="2" />
             <animations>
@@ -308,8 +309,11 @@
 
         <component id="drone-comp">
             <transformation>
+                <translate x="5" y="5" z="-10" />
+                <scale x="2" y="2" z="2" />
             </transformation>
             <animations>
+                <animationref id="circular1" />
             </animations>
             <materials>
                 <material id="mat-default"/>

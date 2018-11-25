@@ -70,128 +70,128 @@ class MyDrone extends CGFobject {
   display() {
     this.scene.pushMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.rotate((Math.PI / 2), 1, 0, 0);
-    this.redAppearence.apply();
-    this.bodyTop.display();
-    this.bodyBottom.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.rotate((Math.PI / 2), 1, 0, 0);
+      this.redAppearence.apply();
+      this.bodyTop.display();
+      this.bodyBottom.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.rotate((Math.PI / 4), 0, 1, 0);
-    this.scene.scale(0.2, 0.2, 1);
-    this.greyAppearence.apply();
-    this.arm.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.rotate((Math.PI / 4), 0, 1, 0);
+      this.scene.scale(0.2, 0.2, 1);
+      this.greyAppearence.apply();
+      this.arm.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.rotate((Math.PI / 4) * 3, 0, 1, 0);
-    this.scene.scale(0.2, 0.2, 1);
-    this.greyAppearence.apply();
-    this.arm.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.rotate((Math.PI / 4) * 3, 0, 1, 0);
+      this.scene.scale(0.2, 0.2, 1);
+      this.greyAppearence.apply();
+      this.arm.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.rotate((-Math.PI / 4), 0, 1, 0);
-    this.scene.scale(0.2, 0.2, 1);
-    this.greyAppearence.apply();
-    this.arm.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.rotate((-Math.PI / 4), 0, 1, 0);
+      this.scene.scale(0.2, 0.2, 1);
+      this.greyAppearence.apply();
+      this.arm.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.rotate((Math.PI / 4) * -3, 0, 1, 0);
-    this.scene.scale(0.2, 0.2, 1);
-    this.greyAppearence.apply();
-    this.arm.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.rotate((Math.PI / 4) * -3, 0, 1, 0);
+      this.scene.scale(0.2, 0.2, 1);
+      this.greyAppearence.apply();
+      this.arm.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.rotate((Math.PI / 2), 1, 0, 0);
-    this.scene.scale(0.5, 0.5, 0.5);
-    this.scene.translate(2.5, 2.5, -0.5);
-    this.helixBody.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.rotate((Math.PI / 2), 1, 0, 0);
+      this.scene.scale(0.5, 0.5, 0.5);
+      this.scene.translate(2.5, 2.5, -0.5);
+      this.helixBody.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.rotate((Math.PI / 2), 1, 0, 0);
-    this.scene.scale(0.5, 0.5, 0.5);
-    this.scene.translate(-2.5, -2.5, -0.5);
-    this.helixBody.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.rotate((Math.PI / 2), 1, 0, 0);
+      this.scene.scale(0.5, 0.5, 0.5);
+      this.scene.translate(-2.5, -2.5, -0.5);
+      this.helixBody.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.rotate((Math.PI / 2), 1, 0, 0);
-    this.scene.scale(0.5, 0.5, 0.5);
-    this.scene.translate(2.5, -2.5, -0.5);
-    this.helixBody.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.rotate((Math.PI / 2), 1, 0, 0);
+      this.scene.scale(0.5, 0.5, 0.5);
+      this.scene.translate(2.5, -2.5, -0.5);
+      this.helixBody.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.rotate((Math.PI / 2), 1, 0, 0);
-    this.scene.scale(0.5, 0.5, 0.5);
-    this.scene.translate(-2.5, 2.5, -0.5);
-    this.helixBody.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.rotate((Math.PI / 2), 1, 0, 0);
+      this.scene.scale(0.5, 0.5, 0.5);
+      this.scene.translate(-2.5, 2.5, -0.5);
+      this.helixBody.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.scale(0.5, 0.5, 0.5);
-    this.scene.rotate((-Math.PI / 2), 1, 0, 0);
-    this.scene.translate(2.5, 2.5, 0.5);
-    this.redAppearence.apply();
-    this.helixTip.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.scale(0.5, 0.5, 0.5);
+      this.scene.rotate((-Math.PI / 2), 1, 0, 0);
+      this.scene.translate(2.5, 2.5, 0.5);
+      this.redAppearence.apply();
+      this.helixTip.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.scale(0.5, 0.5, 0.5);
-    this.scene.rotate((-Math.PI / 2), 1, 0, 0);
-    this.scene.translate(-2.5, 2.5, 0.5);
-    this.redAppearence.apply();
-    this.helixTip.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.scale(0.5, 0.5, 0.5);
+      this.scene.rotate((-Math.PI / 2), 1, 0, 0);
+      this.scene.translate(-2.5, 2.5, 0.5);
+      this.redAppearence.apply();
+      this.helixTip.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.scale(0.5, 0.5, 0.5);
-    this.scene.rotate((-Math.PI / 2), 1, 0, 0);
-    this.scene.translate(2.5, -2.5, 0.5);
-    this.redAppearence.apply();
-    this.helixTip.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.scale(0.5, 0.5, 0.5);
+      this.scene.rotate((-Math.PI / 2), 1, 0, 0);
+      this.scene.translate(2.5, -2.5, 0.5);
+      this.redAppearence.apply();
+      this.helixTip.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.scale(0.5, 0.5, 0.5);
-    this.scene.rotate((-Math.PI / 2), 1, 0, 0);
-    this.scene.translate(-2.5, -2.5, 0.5);
-    this.redAppearence.apply();
-    this.helixTip.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.scale(0.5, 0.5, 0.5);
+      this.scene.rotate((-Math.PI / 2), 1, 0, 0);
+      this.scene.translate(-2.5, -2.5, 0.5);
+      this.redAppearence.apply();
+      this.helixTip.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.scale(0.1, 1, 1)
-    this.scene.translate(12.5, 0.51, 1.25);
-    this.greyAppearence.apply();
-    this.helixTop.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.scale(0.1, 1, 1)
+      this.scene.translate(12.5, 0.51, 1.25);
+      this.greyAppearence.apply();
+      this.helixTop.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.scale(0.1, 1, 1)
-    this.scene.translate(-12.5, 0.51, 1.25);
-    this.greyAppearence.apply();
-    this.helixTop.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.scale(0.1, 1, 1)
+      this.scene.translate(-12.5, 0.51, 1.25);
+      this.greyAppearence.apply();
+      this.helixTop.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.scale(0.1, 1, 1)
-    this.scene.translate(12.5, 0.51, -1.25);
-    this.greyAppearence.apply();
-    this.helixTop.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.scale(0.1, 1, 1)
+      this.scene.translate(12.5, 0.51, -1.25);
+      this.greyAppearence.apply();
+      this.helixTop.display();
+      this.scene.popMatrix();
 
-    this.scene.pushMatrix();
-    this.scene.scale(0.1, 1, 1)
-    this.scene.translate(-12.5, 0.51, -1.25);
-    this.greyAppearence.apply();
-    this.helixTop.display();
-    this.scene.popMatrix();
+      this.scene.pushMatrix();
+      this.scene.scale(0.1, 1, 1)
+      this.scene.translate(-12.5, 0.51, -1.25);
+      this.greyAppearence.apply();
+      this.helixTop.display();
+      this.scene.popMatrix();
 
     this.scene.popMatrix();
   }

@@ -2,34 +2,28 @@
  * MyWater
  * @constuctor
  */
-class MyWater{
-    constructor(scene,idtexture,idwavemap,parts,heightscale,texscale){
+class MyWater extends Plane {
+    constructor(scene, idTexture, idWavemap, parts, heightscale, texscale){
+        
+        super(scene, parts, heightscale);
+        
         this.scene = scene;
-        this.wavemap = new CGFtexture(this.scene, "scenes/images/wavemap.jpg");
-        this.ocean = new CGFtexture(this.scene, "scenes/images/water.jpg");
 
-        this.WaterShader = new CGFshader(this.scene.gl, "scenes/shaders/ocean.vert", "scenes/shaders/texture1.frag");
-        this.WaterShader.setUniformsValues({date:Date.now(),colormap: 2});
+        this.ocean = this.scene.graph.textures[idTexture];
+        this.wavemap = this.scene.graph.textures[idWavemap];
 
-        this.controlPoint = [	
-			// U = 0
-            [ // V = 0..1;
-                [-1.0, -1.0, 0.0, 1],
-                [-1.0, 1.0, 0.0, 1]
-            ],
-            // U = 1
-            [ // V = 0..1
-                [1.0, -1.0, 0.0, 1],
-                [1.0, 1.0, 0.0, 1]
-            ]
-        ];
+        this.waterShader = new CGFshader(this.scene.gl, "scenes/shaders/ocean.vert", "scenes/shaders/texture1.frag");
+        this.waterShader.setUniformsValues({date:Date.now(),colormap: 2});
 
-        this.plane = new Plane(this.scene,1,1,this.controlPoint);
+        this.plane = new Plane(this.scene, parts, heightscale);
+
     }
+
     display(){
-        this.scene.setActiveShader(this.WaterShader);
+        
+        this.scene.setActiveShader(this.waterShader);
         let factor = Math.sin(Date.now() * 0.00001) * 20;
-        this.WaterShader.setUniformsValues({factor:factor,colormap: 2});
+        this.waterShader.setUniformsValues({factor:factor,colormap: 2});
         this.wavemap.bind(1);
         this.ocean.bind(2);
         this.plane.display();

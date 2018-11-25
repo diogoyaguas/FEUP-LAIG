@@ -59,7 +59,7 @@ class LinearAnimation extends Animation {
             if (i == 0) {
                 relativeDistance = ((this.currentDistance) / (this.distanceBetweenPoints[i]));
             } else {
-                relativeDistance = ((this.currentDistance - i * this.distanceBetweenPoints[i - 1]) / this.distanceBetweenPoints[i]);
+                relativeDistance = ((this.currentDistance - this.distanceFromInitialPoint[i - 1]) / this.distanceBetweenPoints[i]);
             }
 
             mat4.translate(this.transformationMatrix, this.transformationMatrix, [
