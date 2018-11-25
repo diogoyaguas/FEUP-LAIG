@@ -2,7 +2,24 @@
  * MyCylinder2
  * @constructor
  */
+/**
+ * Creates and draws a primitive of cylinder2 type given the parameters.
+ * 
+ * @class MyCylinder2
+ * @extends {CGFobject}
+ */
 class MyCylinder2 extends CGFobject {
+    /**
+     * Creates an instance of MyCylinder2.
+     * @param {any} scene 
+     * @param {any} baseRadius 
+     * @param {any} topRadius 
+     * @param {any} height 
+     * @param {any} slices 
+     * @param {any} stacks 
+     * 
+     * @memberOf MyCylinder2
+     */
     constructor(scene, baseRadius, topRadius, height, slices, stacks) {
         super(scene);
 
@@ -44,7 +61,15 @@ class MyCylinder2 extends CGFobject {
 
         this.defineNurb(degreeU, degreeV, this.controlvertexes);
     };
-
+/**
+ * 
+ * 
+ * @param {any} degreeU 
+ * @param {any} degreeV 
+ * @param {any} controlvertexes 
+ * 
+ * @memberOf MyCylinder2
+ */
     defineNurb(degreeU, degreeV, controlvertexes) {
 
         var nurbsSurface = new CGFnurbsSurface(degreeU, degreeV, controlvertexes);
@@ -52,7 +77,12 @@ class MyCylinder2 extends CGFobject {
 
         this.cylinder = nurbObject;
     }
-
+/**
+ * 
+ * 
+ * 
+ * @memberOf MyCylinder2
+ */
     display(){
         this.cylinder.display();
     }

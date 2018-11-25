@@ -2,7 +2,22 @@
  * MySphere
  * @constructor
  */
+/**
+ * Creates a sphere
+ * 
+ * @class MySphere
+ * @extends {CGFobject}
+ */
 class MySphere extends CGFobject {
+    /**
+     * Creates an instance of MySphere.
+     * @param {any} scene 
+     * @param {any} radius 
+     * @param {any} slices 
+     * @param {any} stacks 
+     * 
+     * @memberOf MySphere
+     */
     constructor(scene, radius, slices, stacks) {
         super(scene);
         this.radius = radius;
@@ -11,7 +26,12 @@ class MySphere extends CGFobject {
 
         this.initBuffers();
     };
-
+/**
+ * Initiates all the values (vertices, normals, indices and texture coordinates for the sphere primitive).
+ * Overwrites the default initBuffers function.
+ * 
+ * @memberOf MySphere
+ */
     initBuffers() {
         this.vertices = [];
         this.normals = [];

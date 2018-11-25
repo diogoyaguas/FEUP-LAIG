@@ -17,7 +17,11 @@ var COMPONENTS_INDEX = 9;
  */
 class MySceneGraph {
     /**
-     * @constructor
+     * Creates an instance of MySceneGraph.
+     * @param {any} filename 
+     * @param {any} scene 
+     * 
+     * @memberOf MySceneGraph
      */
     constructor(filename, scene) {
         this.loadedOk = null;

@@ -2,8 +2,24 @@
  * MyCylinderSide
  * @constructor
  */
+/**
+ * Creates a cylinder side
+ * 
+ * @class CylinderSide
+ * @extends {CGFobject}
+ */
 class CylinderSide extends CGFobject {
-    
+    /**
+     * Creates an instance of CylinderSide.
+     * @param {any} scene 
+     * @param {any} height 
+     * @param {any} baseRadius 
+     * @param {any} topRadius 
+     * @param {any} stacks 
+     * @param {any} slices 
+     * 
+     * @memberOf CylinderSide
+     */
     constructor(scene, height, baseRadius, topRadius, stacks, slices) {
 
         super(scene);
@@ -16,7 +32,12 @@ class CylinderSide extends CGFobject {
 
         this.initBuffers();
     };
-
+/**
+ * Initiates all the values (vertices, normals, indices and texture coordinates for the cylinder side)
+ * Overwrites the default initBuffers function.
+ * 
+ * @memberOf CylinderSide
+ */
     initBuffers() {
 
         this.vertices = [];

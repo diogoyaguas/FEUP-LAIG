@@ -2,7 +2,21 @@
  * MyCylinderTop
  * @constructor
  */
+/**
+ * Creates a cylinder top
+ * 
+ * @class CylinderTop
+ * @extends {CGFobject}
+ */
 class CylinderTop extends CGFobject {
+    /**
+     * Creates an instance of CylinderTop.
+     * @param {any} scene 
+     * @param {any} radius 
+     * @param {any} slices 
+     * 
+     * @memberOf CylinderTop
+     */
     constructor(scene, radius, slices) {
 
         super(scene);
@@ -12,7 +26,12 @@ class CylinderTop extends CGFobject {
 
         this.initBuffers();
     };
-
+/**
+ * Initiates all the values (vertices, normals, indices and texture coordinates for the cylinder top/bottom)
+ * Overwrites the default initBuffers function.
+ * 
+ * @memberOf CylinderTop
+ */
     initBuffers() {
 
         this.vertices = [];

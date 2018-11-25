@@ -2,7 +2,23 @@
  * MyRectangle
  * @constructor
  */
+/**
+ * Creates arectangle
+ * 
+ * @class MyRectangle
+ * @extends {CGFobject}
+ */
 class MyRectangle extends CGFobject {
+    /**
+     * Creates an instance of MyRectangle.
+     * @param {any} scene 
+     * @param {any} x1 
+     * @param {any} y1 
+     * @param {any} x2 
+     * @param {any} y2 
+     * 
+     * @memberOf MyRectangle
+     */
     constructor(scene, x1, y1, x2, y2) {
         super(scene);
         this.x1 = x1;
@@ -12,7 +28,12 @@ class MyRectangle extends CGFobject {
 
         this.initBuffers();
     };
-
+/**
+*  Initiates all the values (vertices, normals, indices and texture coordinates for the rectangle primitive).
+ * Overwrites the default initBuffers function. 
+ * 
+ * @memberOf MyRectangle
+ */
     initBuffers() {
         this.vertices = [
             this.x1, this.y1, 0,
@@ -47,7 +68,14 @@ class MyRectangle extends CGFobject {
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     };
-
+/**
+ * 
+ * Amplify the texture of the primitive given its values.
+ * @param lenghtS the length along S 
+ * @param lenghtT the length along T
+ * 
+ * @memberOf MyRectangle
+ */
     setSAndT(s, t) {
 
         let c = this.x2 - this.x1;

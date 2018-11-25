@@ -9,10 +9,14 @@ class MyInterface extends CGFinterface {
         super();
     }
 
-    /**
-     * Initializes the interface.
-     * @param {CGFapplication} application
-     */
+ /**
+  *  Initializes the scene
+  * 
+  * @param {any} application 
+  * @returns 
+  * 
+  * @memberOf MyInterface
+  */
     init(application) {
         super.init(application);
 
@@ -22,11 +26,14 @@ class MyInterface extends CGFinterface {
 
         return true;
     }
-
-    /**
-     * Adds a folder containing the IDs of the lights passed as parameter.
-     * @param {array} lights
-     */
+/**
+ * 
+ *  Adds lights group.
+ * 
+ * @param {any} lights 
+ * 
+ * @memberOf MyInterface
+ */
     addLightsGroup(lights) {
 
         var group = this.gui.addFolder("Lights");
@@ -39,7 +46,14 @@ class MyInterface extends CGFinterface {
             }
         }
     }
-
+/**
+ * 
+ *  Adds views group.
+ * 
+ * @param {any} views 
+ * 
+ * @memberOf MyInterface
+ */
     addViewsGroup(views) {
 
         var group = this.gui.addFolder("Views");
@@ -50,7 +64,12 @@ class MyInterface extends CGFinterface {
 
         group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
     }
-
+/**
+ * 
+ * Inits scene keys
+ * 
+ * @memberOf MyInterface
+ */
     initKeys() {
         this.scene.gui = this;
         this.processKeyboard = function () { };

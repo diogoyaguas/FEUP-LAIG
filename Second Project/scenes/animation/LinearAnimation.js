@@ -2,7 +2,22 @@
  * LinearAnimation
  * @constructor
  */
+/**
+ * Creates a linear animation
+ * 
+ * @class LinearAnimation
+ * @extends {Animation}
+ */
 class LinearAnimation extends Animation {
+  /**
+   * Creates an instance of LinearAnimation.
+   * @param {any} scene where the animation will be applied
+   * @param {any} id the animation ID
+   * @param {any} time the time of this linear animation 
+   * @param {any} points all the control points used for this linear animation
+   * 
+   * @memberOf LinearAnimation
+   */
   constructor(scene, id, time, points) {
     super(scene, id);
 
@@ -26,7 +41,13 @@ class LinearAnimation extends Animation {
 
     this.speed = this.totalDistance / this.movementTime;
   }
-
+/**
+ * Updates the values of the object (its angle and its new coordinates)
+ * 
+ * @param {any} currentTime the time value passed from the scene, used to animate this object.
+ * 
+ * @memberOf LinearAnimation
+ */
   update(currentTime) {
     if (!this.ended) {
       if (this.currentDistance > this.totalDistance) {
@@ -76,7 +97,15 @@ class LinearAnimation extends Animation {
                   [0, 1, 0]);
     }
   }
-
+/**
+ * Calculates the angle of this linear animation
+ * 
+ * @param {any} p1 starting point
+ * @param {any} p2 finishing point
+ * @returns 
+ * 
+ * @memberOf LinearAnimation
+ */
   calculateAngle(p1, p2) {
     var subtractedPoints = [p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]];
     var vector1 = [0, 0, 1];

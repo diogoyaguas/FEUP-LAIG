@@ -3,7 +3,15 @@
  */
 class MyNode {
     /**
-     * Constructor
+     * Creates an instance of MyNode.
+     * @param {any} [build=null] 
+     * @param {any} id 
+     * @param {any} [children=[]] 
+     * @param {any} [transformations=null] 
+     * @param {any} [texture=[]] 
+     * @param {any} [materials=[]] 
+     * 
+     * @memberOf MyNode
      */
     constructor(build = null, id, children = [], transformations = null, texture = [], materials = []) {
         this.id = id;

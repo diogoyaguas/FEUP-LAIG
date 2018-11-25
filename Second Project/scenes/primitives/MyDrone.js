@@ -2,7 +2,19 @@
  * MyDrone
  * @constructor
  */
+/**
+Creates and draws the drone
+ * 
+ * @class MyDrone
+ * @extends {CGFobject}
+ */
 class MyDrone extends CGFobject {
+  /**
+   * Creates an instance of MyDrone.
+   * @param {any} scene 
+   * 
+   * @memberOf MyDrone
+   */
   constructor(scene) {
     super(scene);
 
@@ -17,7 +29,12 @@ class MyDrone extends CGFobject {
     this.helixTip = new MyCylinder(this.scene, 0.1, 0.05, 0.5, 32, 64);
     this.helixTop = new Plane(this.scene, 25, 25);
   };
-
+/**
+ * 
+ * Defines drone's control points
+ * 
+ * @memberOf MyDrone
+ */
   controlPoints() {
     this.bodyPointsBottom = [
       [1, 1, 0],
@@ -50,7 +67,12 @@ class MyDrone extends CGFobject {
 
     ];
   }
-
+/**
+ * 
+ * Start drone's materials and textures
+ * 
+ * @memberOf MyDrone
+ */
   startMaterials() {
     this.redAppearence = new CGFappearance(this.scene);
     this.redAppearence.setAmbient(0.3, 0.3, 0.3, 1);
@@ -66,7 +88,12 @@ class MyDrone extends CGFobject {
     this.greyAppearence.setShininess(10);
     this.greyAppearence.loadTexture("scenes/images/dark-grey.jpg");
   }
-
+/**
+* Displays the drone in the scene.
+ * Overwrites the default display function to include the display of more than one element 
+ * 
+ * @memberOf MyDrone
+ */
   display() {
     this.scene.pushMatrix();
 

@@ -1,6 +1,12 @@
 /**
  * MyWater
- * @constuctor
+ * @constructor
+ */
+/**
+ * Creates the water
+ * 
+ * @class MyWater
+ * @extends {Plane}
  */
 class MyWater extends Plane {
   constructor(scene, idTexture, idWavemap, parts, heightscale, texscale) {
@@ -11,7 +17,6 @@ class MyWater extends Plane {
 
     this.time = 0;
     this.heightscale = heightscale;
-    this.texscale = texscale;
 
     this.ocean = this.scene.graph.textures[idTexture];
     this.wavemap = this.scene.graph.textures[idWavemap];
@@ -19,9 +24,7 @@ class MyWater extends Plane {
     this.waterShader = new CGFshader(this.scene.gl, "scenes/shaders/ocean.vert",
                                      "scenes/shaders/ocean.frag");
     this.waterShader.setUniformsValues({uSampler2: 1});
-    this.waterShader.setUniformsValues({uSampler: 0});
     this.waterShader.setUniformsValues({heightScale: this.heightscale});
-    this.waterShader.setUniformsValues({texscale: this.texscale});
   }
 
   display() {
@@ -32,15 +35,15 @@ class MyWater extends Plane {
 
     super.display();    
 
-    this.ocean.unbind(1);
-    this.wavemap.unbind(0);
+    this.wavemap.unbind(1);
+    this.ocean.unbind(0);
 
     this.scene.setActiveShader(this.scene.defaultShader);
   }
 
   update(currTime) {
 
-    this.time += currTime;
+    this.time += currTime*0.005;
     this.waterShader.setUniformsValues({timeFactor: this.time});
 
   }

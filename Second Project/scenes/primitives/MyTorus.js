@@ -2,7 +2,23 @@
  * MyTorus
  * @constructor
  */
+/**
+ * Creates a torus
+ * 
+ * @class MyTorus
+ * @extends {CGFobject}
+ */
 class MyTorus extends CGFobject {
+	/**
+	 * Creates an instance of MyTorus.
+	 * @param {any} scene 
+	 * @param {any} inner 
+	 * @param {any} outer 
+	 * @param {any} slices 
+	 * @param {any} loops 
+	 * 
+	 * @memberOf MyTorus
+	 */
 	constructor(scene, inner, outer, slices, loops) {
 		super(scene);
 
@@ -13,7 +29,13 @@ class MyTorus extends CGFobject {
 
 		this.initBuffers();
 	};
-
+/**
+ * 
+ * Initiates all the values (vertices, normals, indices and texture coordinates for the torus primitive).
+ * Overwrites the default initBuffers function. 
+ * 
+ * @memberOf MyTorus
+ */
 	initBuffers() {
 		this.vertices = [];
 		this.indices = [];

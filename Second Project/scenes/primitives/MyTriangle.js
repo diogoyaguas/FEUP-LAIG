@@ -2,6 +2,12 @@
  * MyTriangle
  * @constructor
  */
+/**
+ * Creates a triangle
+ * 
+ * @class MyTriangle
+ * @extends {CGFobject}
+ */
 class MyTriangle extends CGFobject {
 	constructor(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3) {
 		super(scene);
@@ -11,7 +17,12 @@ class MyTriangle extends CGFobject {
 
 		this.initBuffers();
 	};
-
+/**
+ * Initiates all the values (vertices, normals, indices and texture coordinates for the triangle primitive).
+ * Overwrites the default initBuffers function.
+ * 
+ * @memberOf MyTriangle
+ */
 	initBuffers() {
 		this.vertices = [
 			this.p1[0], this.p1[1], this.p1[2],
@@ -55,7 +66,14 @@ class MyTriangle extends CGFobject {
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	};
-
+/**
+ * 
+ * Amplify the texture of the primitive given its values.
+ * @param lenghtS the length along S 
+ * @param lenghtT the length along T
+ * 
+ * @memberOf MyTriangle
+ */
 	setSAndT(s, t) {
 
 		var a = vec3.dist(this.p1, this.p3);

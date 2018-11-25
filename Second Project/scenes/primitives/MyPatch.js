@@ -2,7 +2,24 @@
  * Patch
  * @constructor
  */
+/**
+* Creates a patch
+ * 
+ * @class Patch
+ * @extends {CGFobject}
+ */
 class Patch extends CGFobject {
+  /**
+   * Creates an instance of Patch.
+   * @param {any} scene 
+   * @param {any} npointsU 
+   * @param {any} npointsV 
+   * @param {any} npartsU 
+   * @param {any} npartsV 
+   * @param {any} controlpoints 
+   * 
+   * @memberOf Patch
+   */
   constructor(scene, npointsU, npointsV, npartsU, npartsV, controlpoints) {
     super(scene);
 
@@ -21,7 +38,12 @@ class Patch extends CGFobject {
     var nurbSurface = new CGFnurbsSurface(degree1, degree2, this.controlVertexes);
     this.nurbObject = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbSurface);
   }
-
+/**
+ * 
+ * 
+ * 
+ * @memberOf Patch
+ */
   defineVertices() {
 
     var k = 0;
@@ -37,7 +59,12 @@ class Patch extends CGFobject {
       this.controlVertexes.push(contVSubSet);
     }
   }
-
+/**
+ * 
+ * Displays the surface in the scene.
+ * 
+ * @memberOf Patch
+ */
   display() { 
  
     this.nurbObject.display(); }
