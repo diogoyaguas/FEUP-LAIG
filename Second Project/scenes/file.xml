@@ -1,7 +1,7 @@
 <yas>
     <scene root="scene" axis_length="10.0"/>
 
-    <views default="perspective-drone">
+    <views default="perspective-front">
         <perspective id="perspective-front" near="0.5" far="500" angle="20">
             <from x="-150" y="70" z="-150"/>
             <to x="60" y="5.0" z="10"/>
@@ -23,8 +23,8 @@
             <to x="10" y="5.0" z="-30"/>
         </perspective>
         <perspective id="perspective-drone" near="0.5" far="500" angle="20">
-            <from x="20" y="100" z="20"/>
-            <to x="20" y="5.0" z="30"/>
+            <from x="30" y="40" z="130"/>
+            <to x="30" y="30" z="-20.0"/>
         </perspective>
         <ortho id="ortho-general" near="0.5" far="500" left="-50" right="50" top="50" bottom="-50">
             <from x="20" y="100" z="-15" />
