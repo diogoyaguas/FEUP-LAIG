@@ -16,6 +16,7 @@ class MyWater extends Plane {
 
     this.time = 0;
     this.heightscale = heightscale;
+    this.texscale = texscale;
 
     this.ocean = this.scene.graph.textures[idTexture];
     this.wavemap = this.scene.graph.textures[idWavemap];
