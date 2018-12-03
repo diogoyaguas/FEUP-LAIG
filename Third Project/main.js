@@ -52,13 +52,13 @@ function getUrlVars() {
 // Include additional files here
 serialInclude([
   '../lib/CGF.js',
-  'interface/MyInterface.js',
-  'game/MyGame.js',
-  'game/MyBoard.js',
-  'game/MyCell.js',
-  'game/MyMove.js',
-  'game/MyMoviePlay.js',
-  'game/MyPlay.js',
+  'scenes/interface/MyInterface.js',
+  'scenes/game/MyGame.js',
+  'scenes/game/MyBoard.js',
+  'scenes/game/MyCell.js',
+  'scenes/game/MyMove.js',
+  'scenes/game/MyMoviePlay.js',
+  'scenes/game/MyPlay.js',
 
   main =
   function () {
@@ -71,6 +71,9 @@ serialInclude([
 
     app.setScene(zurero);
     app.setInterface(myInterface);
+
+    myInterface.addGameOptions();
+	  myInterface.addVisualOptions();
 
     // start
     app.run();

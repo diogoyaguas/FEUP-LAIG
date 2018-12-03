@@ -1,94 +1,84 @@
 /**
-* MyInterface class, creating a GUI interface.
-*/
+ * Creates a GUI interface.
+ *
+ * @class MyInterface
+ */
 class MyInterface extends CGFinterface {
     /**
-     * @constructor
+     * Creates an instance of MyInterface.
+     *
+     * @memberOf MyBoard
      */
     constructor() {
         super();
-    }
+    };
 
- /**
-  *  Initializes the scene
-  * 
-  * @param {any} application 
-  * @returns 
-  * 
-  * @memberOf MyInterface
-  */
+    /**
+     *  Initializes the interface.
+     * 
+     * @param {any} application 
+     * 
+     * @memberOf MyInterface
+     */
     init(application) {
+
         super.init(application);
 
         this.gui = new dat.GUI();
 
-        this.initKeys();
-
         return true;
-    }
-/**
- * 
- *  Adds lights group.
- * 
- * @param {any} lights 
- * 
- * @memberOf MyInterface
- */
-    addLightsGroup(lights) {
+    };
 
-        var group = this.gui.addFolder("Lights");
+    /**
+     * Adds a folder containing the cameras, the style of the game and the replay game button
+     */
+    addVisualOptions() {
+
+        var group = this.gui.addFolder("Visual Options");
         group.open();
 
-        for (var key in lights) {
-            if (lights.hasOwnProperty(key)) {
-                this.scene.lightValues[key] = lights[key][0];
-                group.add(this.scene.lightValues, key);
+        var Movie = function (scene) {
+            this.movie = function () {
+                scene.playMovie();
             }
-        }
-    }
-/**
- * 
- *  Adds views group.
- * 
- * @param {any} views 
- * 
- * @memberOf MyInterface
- */
-    addViewsGroup(views) {
+        };
 
-        var group = this.gui.addFolder("Views");
+        var movie = new Movie(this.scene);
+
+        group.add(this.scene, 'activeCamera', ['Front', 'Top']).name("Camera");
+        group.add(this.scene, 'activeBackground', ['Room', 'Casino', 'Beach']).name("Style");
+        group.add(movie, 'movie').name("Replay game");
+
+    };
+
+    /**
+     * Adds a folder containing the start game  button, the game mode, the bot difficuty and the undo button
+     */
+    addGameOptions() {
+
+        var group = this.gui.addFolder("Game Options");
         group.open();
 
-        const cameraIdArray = Object.keys(views);
-        this.currentCameraId = this.scene.graph.default;
+        var Start = function (scene) {
+            this.start = function () {
+                scene.startGame();
+            }
+        };
 
-        group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
-    }
-/**
- * 
- * Inits scene keys
- * 
- * @memberOf MyInterface
- */
-    initKeys() {
-        this.scene.gui = this;
-        this.processKeyboard = function () { };
-        this.activeKeys = {};
-    }
+        var start = new Start(this.scene);
 
-    processKeyDown(event) {
-        this.activeKeys[event.code] = true;
-    };
+        var Undo = function (scene) {
+            this.undo = function () {
+                scene.undo();
+            }
+        };
 
-    processKeyUp(event) {
-        if (event.code === "KeyM") {
-            this.scene.graph.counter++;
-        }
-        this.activeKeys[event.code] = false;
-    };
+        var undo = new Undo(this.scene);
 
-    isKeyPressed(keyCode) {
-        return this.activeKeys[keyCode] || false;
+        group.add(start, 'start').name("Start game");
+        group.add(this.scene, 'gameMode', ['Human vs Human', 'Human vs Bot', 'Bot vs Bot']).name("Game mode");
+        group.add(this.scene, 'botType', ['Easy', 'Smart']).name("Bot type");
+        group.add(undo, 'undo').name("Undo last move");
     }
 
 }

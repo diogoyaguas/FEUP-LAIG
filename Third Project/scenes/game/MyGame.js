@@ -44,6 +44,11 @@ class Game extends CGFscene {
         this.board = new MyBoard(this);
 
 
+        this.activeCamera = "Front";
+        this.activeStyle = "Room";
+        this.gameMode = "Human vs Human";
+        this.botType = "Easy";
+
     };
 
     /**
@@ -86,6 +91,51 @@ class Game extends CGFscene {
 
         this.lastUpdate = currTime;
     };
-    
+
+    display() {
+
+        var winner = this.board.winner();
+
+        if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3 && winner == 'No')
+            this.logPicking();
+
+        if (this.botPlaying) {
+            if (this.selectedMoveAnimation == undefined && this.removedMoveAnimation == undefined) {
+                this.botPlay("pieceSelection");
+                this.botPlaying = false;
+            }
+        }
+
+        this.clearPickRegistration();
+
+        // Clear image and depth buffer every time we update the scene
+        this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+        this.gl.enable(this.gl.DEPTH_TEST);
+
+        // Initialize Model-View matrix as identity (no transformation
+        this.updateProjectionMatrix();
+        this.loadIdentity();
+
+        // Apply transformations corresponding to the camera position relative to the origin
+        this.applyViewMatrix();
+
+        // Update all lights used
+        this.lights[0].update();
+
+        if (this.gameStarted) {
+            this.board.display();
+
+            if (!this.isPlayingMovie)
+                this.timer.display();
+        }
+
+        if (this.activeBackground == "Room")
+            this.room.display();
+        else if (this.activeBackground == "Casino")
+            this.casino.display();
+        else if (this.activeBackground == "Beach")
+            this.beach.display();
+    }
 
 }
