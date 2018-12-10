@@ -43,7 +43,6 @@ class Game extends CGFscene {
 
         this.board = new MyBoard(this);
 
-
         this.activeCamera = "Front";
         this.activeStyle = "Room";
         this.gameMode = "Human vs Human";
@@ -92,6 +91,43 @@ class Game extends CGFscene {
         this.lastUpdate = currTime;
     };
 
+    countdown() {
+        return 61 - (this.elapsedTime - this.lastMoveTime);
+    }
+
+    setCountdown() {
+        this.lastMoveTime = this.elapsedTime;
+    }
+
+    startGame() {
+        this.board = new Board(this);
+        this.getPrologRequest('start');
+        this.activePlayer = 1;
+        this.activeBot = 1;
+        this.backupPlays = [];
+        this.moviePlays = [];
+        this.botInPlay = false;
+        this.botPlaying = false;
+        this.isPlayingMovie = false;
+        this.lastMoveTime = this.elapsedTime;
+        
+        this.board.selectedCell = null;
+        this.board.destinationCell = null;
+        this.selectedMoveAnimation = undefined;
+        this.removedMoveAnimation = undefined;
+        
+        if (this.gameMode == "Human vs Human")
+            this.activeGameMode = 1;
+        else if (this.gameMode == "Human vs Bot")
+            this.activeGameMode = 2;
+        else if (this.gameMode == "Bot vs Bot") {
+            this.activeGameMode = 3;
+            this.first = true;
+        }
+        
+        this.gameStarted = true;
+    };
+
     display() {
 
         var winner = this.board.winner();
@@ -132,9 +168,9 @@ class Game extends CGFscene {
 
         if (this.activeBackground == "Room")
             this.room.display();
-        else if (this.activeBackground == "Casino")
-            this.casino.display();
-        else if (this.activeBackground == "Beach")
+        else if (this.activeBackground == "AE")
+            this.AE.display();
+        else if (this.activeBackground == "FEUP")
             this.beach.display();
     }
 

@@ -59,6 +59,8 @@ serialInclude([
   'scenes/game/MyMove.js',
   'scenes/game/MyMoviePlay.js',
   'scenes/game/MyPlay.js',
+  'scenes/animation/Animation.js',
+  'scenes/animation/CircularAnimation.js',
 
   main =
   function () {

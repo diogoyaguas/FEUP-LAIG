@@ -46,7 +46,7 @@ class MyInterface extends CGFinterface {
         var movie = new Movie(this.scene);
 
         group.add(this.scene, 'activeCamera', ['Front', 'Top']).name("Camera");
-        group.add(this.scene, 'activeBackground', ['Room', 'Casino', 'Beach']).name("Style");
+        group.add(this.scene, 'activeStyle', ['Room', 'AE', 'FEUP']).name("Style");
         group.add(movie, 'movie').name("Replay game");
 
     };
