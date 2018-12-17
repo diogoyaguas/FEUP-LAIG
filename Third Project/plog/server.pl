@@ -108,45 +108,32 @@ print_header_line(_).
 % Initial board
 parse_input(start, Board) :- table(Board).
 
-% Selection piece validation
-parse_input(validatePieceSelection(Player, Board, Line, Column, IsKing), FinalValidity) :- 
-validatePieceSelection(Player, Board, Line, Column, IsKing, false, FinalValidity).
-
-% Destiny piece validation
-parse_input(validateDestinySelection(Player, Board, PieceLine, DestinyLine, PieceColumn, DestinyColumn, IsKing), FinalValidity) :- 
-validateDestinySelection(Player, Board, PieceLine, DestinyLine, PieceColumn, DestinyColumn, IsKing, false, FinalValidity).
-
-% Move piece from origin to destiny
-parse_input(movePiece(Board, PieceLine, PieceColumn, DestinyLine, DestinyColumn, Captures), BoardWithNewPiece) :- 
-movePiece(Board, PieceLine, PieceColumn, DestinyLine, DestinyColumn, BoardWithNewPiece, Captures, _).
+% Selection move validation
+parse_input(validateSelection(Player, Board, Symbol, Inxed, Direction), FinalValidity) :- 
+	Move = [Symbol, Index, Direction, Player],
+	valid_moves(Player, Board, ValidMoves),
+	(
+		member(Move, ValidMoves), FinalValidity = true;
+		FinalValidity = false;
+	).
+	
+% Move piece
+parse_input(movePiece(Board, Player, Symbol, Index, Direction), NewBoard) :-
+	Move = [Symbol, Index, Direction, Player],
+	valid_moves(Player, Board, ValidMoves),
+	move(Move, ValidMoves, Board, NewBoard).
 
 % Check if its game over
-parse_input(checkGameOver(Board, Player, Captures), IsGameOver) :- 
-checkGameOver(Board, IsGameOver, Player, Captures).
+parse_input(checkGameOver(Board), Winner) :- 
+	game_over(Board, Winner, 0).
 
-% Piece selection for bot
-parse_input(botSelection(Board), Line-Column) :- 
-repeat, random(1, 9, Line), random(1, 9, Column),
-validatePieceSelection(2, Board, Line, Column, _, false, FinalValidity), FinalValidity == true, !.
-
-% Piece destination for bot
-parse_input(botDestination(Board, Line, Column), DestinyLine-DestinyColumn) :- 
-repeat, random(1, 9, DestinyLine), random(1, 9, DestinyColumn),
-validateDestinySelection(2, Board, Line, DestinyLine, Column, DestinyColumn, _, false, FinalValidity), FinalValidity == true, !.
-
-% Piece selection for the other bot
-parse_input(secondSelection(Board), Line-Column) :- 
-repeat, random(1, 9, Line), random(1, 9, Column),
-validatePieceSelection(1, Board, Line, Column, _, false, FinalValidity), FinalValidity == true, !.
-
-% Piece destination for the other bot
-parse_input(secondDestination(Board, Line, Column), DestinyLine-DestinyColumn) :- 
-repeat, random(1, 9, DestinyLine), random(1, 9, DestinyColumn),
-validateDestinySelection(1, Board, Line, DestinyLine, Column, DestinyColumn, _, false, FinalValidity), FinalValidity == true, !.
-
-% Piece piece for bot
-parse_input(moveBot(Board, PieceLine, PieceColumn, DestinyLine, DestinyColumn, Captures), BoardWithNewPiece) :- 
-movePiece(Board, PieceLine, PieceColumn, DestinyLine, DestinyColumn, BoardWithNewPiece, Captures, _).
+% Selection move for bot
+parse_input(easyBotMove(Board, Player, Column, Difficulty), Symbol-Index-Direction) :-
+	valid_moves(Player, Board, ValidMoves),
+	choose_move(Board, Player, Move, Difficulty, ValidMoves),
+	Move = [Symbol | RestOfPlay],
+	RestOfPlay = [Index | EndOfPlay],
+	EndOfPlay = [Direction | End].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
