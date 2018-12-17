@@ -107,15 +107,6 @@ print_header_line(_).
 
 % Initial board
 parse_input(start, Board) :- table(Board).
-
-% Selection move validation
-parse_input(validateSelection(Player, Board, Symbol, Inxed, Direction), FinalValidity) :- 
-	Move = [Symbol, Index, Direction, Player],
-	valid_moves(Player, Board, ValidMoves),
-	(
-		member(Move, ValidMoves), FinalValidity = true;
-		FinalValidity = false;
-	).
 	
 % Move piece
 parse_input(movePiece(Board, Player, Symbol, Index, Direction), NewBoard) :-
@@ -128,7 +119,7 @@ parse_input(checkGameOver(Board), Winner) :-
 	game_over(Board, Winner, 0).
 
 % Selection move for bot
-parse_input(easyBotMove(Board, Player, Column, Difficulty), Symbol-Index-Direction) :-
+parse_input(botMove(Board, Player, Column, Difficulty), Symbol-Index-Direction) :-
 	valid_moves(Player, Board, ValidMoves),
 	choose_move(Board, Player, Move, Difficulty, ValidMoves),
 	Move = [Symbol | RestOfPlay],
