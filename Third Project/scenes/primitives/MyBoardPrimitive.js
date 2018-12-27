@@ -3,7 +3,7 @@
  *
  * @class MyBoard
  */
-class MyBoard extends CGFobject {
+class MyBoardPrimitive extends CGFobject {
 
     constructor(scene) {
         super(scene);

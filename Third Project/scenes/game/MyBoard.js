@@ -109,7 +109,7 @@ class MyBoard {
             if (this.scene.activePlayer == 1)
                 return "Black";
             else if (this.scene.activePlayer == 2)
-            return "White";
+                return "White";
 
         var foundBlack = false;
         var foundWhite = false;

@@ -53,13 +53,17 @@ function getUrlVars() {
 serialInclude([
   '../lib/CGF.js',
   'scenes/interface/MyInterface.js',
-  'scenes/interface/MyCommunication.js',
   'scenes/game/MyGame.js',
   'scenes/game/MyBoard.js',
   'scenes/game/MyCell.js',
   'scenes/game/MyMove.js',
   'scenes/game/MyMoviePlay.js',
   'scenes/game/MyPlay.js',
+  'scenes/primitives/MyBoardPrimitive.js',
+  'scenes/primitives/MyRectangle.js',
+  'scenes/primitives/MyRoom.js',
+  'scenes/primitives/MySphere.js',
+  'scenes/primitives/MyTriangle.js',
   'scenes/animation/Animation.js',
   'scenes/animation/CircularAnimation.js',
 
