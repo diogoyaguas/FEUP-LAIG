@@ -4,13 +4,11 @@ var UPDATE_TIME = 1000;
  * Game class, representing the scene that is to be rendered.
  */
 class Game extends CGFscene {
-
     /**
      * @constructor
      * @param {MyInterface} myinterface
      */
     constructor(myInterface) {
-
         super();
 
         this.texture = null;
@@ -20,7 +18,6 @@ class Game extends CGFscene {
         this.lastUpdate = 0;
 
         this.interface = myInterface;
-
     };
 
     /**
@@ -31,14 +28,11 @@ class Game extends CGFscene {
     init(application) {
         super.init(application);
 
-        this.sceneInited = false;
-
         this.initDefaults();
 
         this.enableTextures(true);
 
-        this.gl.clearColor(0, 0, 0, 1.0);
-        this.gl.clearDepth(10000.0);
+        this.gl.clearDepth(100.0);
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
@@ -57,7 +51,11 @@ class Game extends CGFscene {
         this.changedOnce = false;
         this.isPlayingMovie = false;
 
-        this.startTime = 0
+        // this.getPrologRequest('start');
+
+        this.setPickEnabled(true);
+
+        this.startTime = 0;
         this.setUpdatePeriod(UPDATE_TIME / 60);
         this.lastMoveTime = 0;
 
@@ -87,10 +85,15 @@ class Game extends CGFscene {
 
         this.axis = new CGFaxis(this);
 
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15),
-            vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(8, 35, 50),
+            vec3.fromValues(8, -10, -10));
+
+        this.setGlobalAmbientLight(0.1, 0.1, 0.1, 1.0);
+        this.gl.clearColor(0.075, 0.125, 0.150, 1.0);
 
         this.initLights();
+
+        this.initTextures();
     };
 
     /**
@@ -110,6 +113,22 @@ class Game extends CGFscene {
         this.lights[1].setSpecular(0, 0, 0, 1);
         this.lights[1].enable();
         this.lights[1].update();
+    };
+
+    initTextures() {
+
+        this.tableTex = new CGFappearance(this);
+        this.tableTex.setAmbient(1, 1, 1, 1);
+        this.tableTex.loadTexture('scenes/images/wood-texture.jpg');
+
+        this.wallTex = new CGFappearance(this);
+        this.wallTex.setAmbient(1, 1, 1, 1);
+        this.wallTex.loadTexture('scenes/images/blue-grey-texture.jpg');
+
+        this.clockTex = new CGFappearance(this);
+        this.clockTex.setAmbient(1, 1, 1, 1);
+        this.clockTex.loadTexture('scenes/images/silver-texture.jpg');
+
     };
 
     /**
@@ -156,7 +175,6 @@ class Game extends CGFscene {
      * Update time
      */
     update(currTime) {
-
         if (this.lastUpdate == 0) this.lastUpdate = currTime;
 
         this.elapsedTime = (currTime - this.lastUpdate) / 1000;
@@ -202,12 +220,14 @@ class Game extends CGFscene {
     undo() {
         if (this.activeGameMode == 1) {
             if (this.backupPlays.length > 0) {
-                this.board.undoAnimation = new CircularAnimation(this, "BoardRotation", [0, 0, 0], 0, 0, 180, 1);
+                this.board.undoAnimation = new CircularAnimation(
+                    this, "BoardRotation", [0, 0, 0], 0, 0, 180, 1);
 
                 var selcoords = this.selCoords[this.selCoords.length - 1];
                 var finalselcoords = [selcoords, [0, 0, 0]];
 
-                this.board.backAnimation = new LinearAnimation(this, "id", this.board.animationSpeed, finalselcoords);
+                this.board.backAnimation = new LinearAnimation(
+                    this, "id", this.board.animationSpeed, finalselcoords);
 
                 if (this.activePlayer == 1)
                     this.activePlayer = 2;
@@ -242,32 +262,33 @@ class Game extends CGFscene {
 
     /*botPlay(botState) {
         if (botState == "selection") {
-            this.board.prologBoard = this.board.rotatePrologBoard(this.board.prologBoard);
-            
+            this.board.prologBoard =
+    this.board.rotatePrologBoard(this.board.prologBoard);
+
             if (this.activeGameMode == 3 && this.activeBot == 1)
                 var botSelectionRequest = "secondSelection(";
             else
                 var botSelectionRequest = "botSelection(";
-            
+
             botSelectionRequest += this.board.prologBoard;
             botSelectionRequest += ")";
-            
+
             this.getPrologRequest(botSelectionRequest);
         } else if (botState == "pieceDestination") {
-        
+
             if (this.activeGameMode == 3 && this.activeBot == 1)
                 var botDestinationRequest = "secondDestination(";
             else
                 var botDestinationRequest = "botDestination(";
-    
+
             botDestinationRequest += this.board.prologBoard;
-            botDestinationRequest += ",";	
+            botDestinationRequest += ",";
             botDestinationRequest += this.botSelectedLine;
             botDestinationRequest += ",";
             botDestinationRequest += this.botSelectedColumn;
-            botDestinationRequest += ")";		
-            
-            this.getPrologRequest(botDestinationRequest);		
+            botDestinationRequest += ")";
+
+            this.getPrologRequest(botDestinationRequest);
         } else if (botState == "botMovePiece") {
             if (!this.isPlayingMovie) {
                 var movePrologRequest = "moveBot(";
@@ -281,25 +302,29 @@ class Game extends CGFscene {
                 movePrologRequest += ","
                 movePrologRequest += this.botDestinationColumn;
                 movePrologRequest += ","
-                movePrologRequest += this.roundsWithoutCapture;		
+                movePrologRequest += this.roundsWithoutCapture;
                 movePrologRequest += ")"
-                
-                this.board.selectedCell = this.board.cells[this.botSelectedColumn - 1][this.botSelectedLine - 1];
-                this.board.destinationCell = this.board.cells[this.botDestinationColumn - 1][this.botDestinationLine - 1];
-                
-                this.moviePlays.push(new MoviePlay(this.board.selectedCell.x, this.board.selectedCell.y, this.board.destinationCell.x, this.board.destinationCell.y));
-                
+
+                this.board.selectedCell = this.board.cells[this.botSelectedColumn
+    - 1][this.botSelectedLine - 1];
+                this.board.destinationCell =
+    this.board.cells[this.botDestinationColumn - 1][this.botDestinationLine - 1];
+
+                this.moviePlays.push(new MoviePlay(this.board.selectedCell.x,
+    this.board.selectedCell.y, this.board.destinationCell.x,
+    this.board.destinationCell.y));
+
                 this.botInPlay = true;
-    
+
                 this.board.pieceMoveAnimation();
-                
+
                 this.board.selectedCell = null;
-                
+
                 this.getPrologRequest(movePrologRequest);
             } else {
                 if (this.moviePlays.length > 0) {
                     var lastMove = this.moviePlays[this.moviePlays.length - 1];
-                    
+
                     if (this.incounter % 2 == 0) {
                         var sx = 9 - lastMove.sx;
                         var sy = 9 - lastMove.sy;
@@ -309,9 +334,9 @@ class Game extends CGFscene {
                         var sx = lastMove.sx;
                         var sy = lastMove.sy;
                         var dx = lastMove.dx;
-                        var dy = lastMove.dy;					
+                        var dy = lastMove.dy;
                     }
-                    
+
                     var movePrologRequest = "moveBot(";
                     movePrologRequest += this.board.prologBoard;
                     movePrologRequest += ","
@@ -323,24 +348,24 @@ class Game extends CGFscene {
                     movePrologRequest += ","
                     movePrologRequest += dy;
                     movePrologRequest += ","
-                    movePrologRequest += this.roundsWithoutCapture;		
+                    movePrologRequest += this.roundsWithoutCapture;
                     movePrologRequest += ")"
-                    
+
                     this.board.selectedCell = this.board.cells[sy - 1][sx - 1];
                     this.board.destinationCell = this.board.cells[dy - 1][dx - 1];
-                    
+
                     this.moviePlays.pop();
                     this.incounter++;
-                    
+
                     console.log(this.board.selectedCell);
                     console.log(this.board.destinationCell);
-                    
+
                     this.botInPlay = true;
-    
+
                     this.board.pieceMoveAnimation();
-                    
+
                     this.board.selectedCell = null;
-                    
+
                     this.getPrologRequest(movePrologRequest);
                 }
             }
@@ -360,7 +385,8 @@ class Game extends CGFscene {
 
                         var cell = this.board.getCell(objId);
 
-                        if (this.board.selectedCell == null && cell.pieceType != 0) {
+                        if (this.board.selectedCell == null && cell.pieceType !=
+    0) {
                             var pickingPrologRequest = "validatePieceSelection(";
                             pickingPrologRequest += this.activePlayer;
                             pickingPrologRequest += ","
@@ -383,7 +409,8 @@ class Game extends CGFscene {
                                 this.board.selectedCell = null;
                                 this.board.possibleCells = [];
                             } else {
-                                var pickingPrologRequest = "validateDestinySelection(";
+                                var pickingPrologRequest =
+    "validateDestinySelection(";
                                 pickingPrologRequest += this.activePlayer;
                                 pickingPrologRequest += ","
                                 pickingPrologRequest += this.board.prologBoard;
@@ -397,7 +424,8 @@ class Game extends CGFscene {
                                 pickingPrologRequest += cell.y;
                                 pickingPrologRequest += ","
 
-                                if (this.board.selectedCell.pieceType == 3 || this.board.selectedCell.pieceType == 4)
+                                if (this.board.selectedCell.pieceType == 3 ||
+    this.board.selectedCell.pieceType == 4)
                                     pickingPrologRequest += "true)";
                                 else
                                     pickingPrologRequest += "false)";
@@ -412,15 +440,69 @@ class Game extends CGFscene {
         }
     }*/
 
+    getPrologRequest(requestString, onSuccess, onError, port) {
+        var requestPort = port || 8081;
+        var request = new XMLHttpRequest();
+        var board = this.board;
+        var game = this;
+        var linear = this.linear;
+
+        request.open('GET', 'http://localhost:' + requestPort + '/' + requestString,
+            true);
+
+        request.onload = onSuccess || function (data) {
+            var response = data.target.response;
+
+            if (requestString == "start") {
+                console.log("'start'. Reply: " + response);
+
+                board.create(response);
+            } else if (requestString.includes("movePiece")) {
+                console.log("'movePiece'. Reply: " + response);
+
+                board.recreate(response);
+
+                if (game.activeGameMode == 2) game.botPlaying = true;
+            } else if (requestString.includes("botMove")) {
+                console.log("'botMove'. Reply: " + response);
+
+                game.botSelectedSymbol = response.charAt(0)
+
+                if (response.charAt(3) == '-') {
+                    game.botSelectedIndex = response.charAt(2);
+                    game.botSelectedDirection = response.charAt(4);
+                } else {
+                    game.botSelectedIndex = response.charAt(2) + response.charAt(3);
+                    game.botSelectedDirection = response.charAt(5);
+                }
+
+            } else if (requestString.includes("checkGameOver")) {
+                console.log("'Winner'. Reply: " + response);
+
+                game.winner = response;
+            }
+        };
+
+        request.onerror = onError || function () {
+            console.log("error");
+        };
+
+        request.setRequestHeader(
+            'Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.send();
+    };
+
     display() {
 
         var winner = this.board.winner();
 
-        if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3 && winner == 'No')
+        if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3 &&
+            winner == 'No')
             this.logPicking();
 
         if (this.botPlaying) {
-            if (this.selectedMoveAnimation == undefined && this.removedMoveAnimation == undefined) {
+            if (this.selectedMoveAnimation == undefined &&
+                this.removedMoveAnimation == undefined) {
                 this.botPlay("pieceSelection");
                 this.botPlaying = false;
             }
@@ -437,78 +519,30 @@ class Game extends CGFscene {
         this.updateProjectionMatrix();
         this.loadIdentity();
 
-        // Apply transformations corresponding to the camera position relative to the origin
+        // Apply transformations corresponding to the camera position relative to
+        // the origin
         this.applyViewMatrix();
+
+        this.pushMatrix();
 
         // Update all lights used
         this.lights[0].update();
 
+        this.rotate(Math.PI / 2.0, 1, 0, 0);
+
         if (this.gameStarted) {
             this.board.display();
-
-            if (!this.isPlayingMovie)
-                this.timer.display();
+            if (!this.isPlayingMovie) this.timer.display();
         }
 
-        if (this.activeStyle == "Room")
+        if (this.activeStyle == "Room") {
             this.room.display();
-        else if (this.activeStyle == "AE")
+        } else if (this.activeStyle == "AE") {
             this.AE.display();
-        else if (this.activeStyle == "FEUP")
+        } else if (this.activeStyle == "FEUP") {
             this.beach.display();
+        }
+
+        this.popMatrix();
     };
-
-    getPrologRequest(requestString, onSuccess, onError, port) {
-
-        var requestPort = port || 8081
-        var request = new XMLHttpRequest();
-        var board = this.board;
-        var game = this;
-        var linear = this.linear;
-    
-        request.open('GET', 'http://localhost:' + requestPort + '/' + requestString, true);
-    
-        request.onload = onSuccess ||
-            function (data) {
-                var response = data.target.response;
-    
-                if (requestString == "start") {
-                    console.log("'start'. Reply: " + response);
-    
-                    board.create(response);
-                } else if (requestString.includes("movePiece")) {
-                    console.log("'movePiece'. Reply: " + response);
-    
-                    board.recreate(response);
-    
-                    if (game.activeGameMode == 2)
-                        game.botPlaying = true;
-                } else if (requestString.includes("botMove")) {
-                    console.log("'botMove'. Reply: " + response);
-    
-                    game.botSelectedSymbol = response.charAt(0)
-    
-                    if (response.charAt(3) == '-') {
-                        game.botSelectedIndex = response.charAt(2);
-                        game.botSelectedDirection = response.charAt(4);
-                    } else {
-                        game.botSelectedIndex = response.charAt(2) + response.charAt(3);
-                        game.botSelectedDirection = response.charAt(5);
-                    }
-    
-                } else if (requestString.includes("checkGameOver")) {
-                    console.log("'Winner'. Reply: " + response);
-    
-                    game.winner = response;
-                }
-            };
-    
-        request.onerror = onError || function () {
-            console.log("error");
-        };
-    
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        request.send();
-    };
-
 }
