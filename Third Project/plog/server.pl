@@ -124,7 +124,7 @@ parse_input(botMove(Board, Player, Difficulty), Symbol-Index-Direction) :-
 	choose_move(Board, Player, Move, Difficulty, ValidMoves),
 	Move = [Symbol | RestOfPlay],
 	RestOfPlay = [Index | EndOfPlay],
-	EndOfPlay = [Direction | End].
+	EndOfPlay = [Direction | _].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

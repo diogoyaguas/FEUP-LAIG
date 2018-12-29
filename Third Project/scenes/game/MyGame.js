@@ -38,10 +38,12 @@ class Game extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.board = new MyBoard(this);
+        //this.clock = new MyClock(this);
         this.room = new MyRoom(this);
+        this.AE = new MyAE(this);
 
         this.activeCamera = "Front";
-        this.activeStyle = "Room";
+        this.activeStyle = "AE";
         this.gameMode = "Human vs Human";
         this.botType = "Easy";
 
@@ -51,7 +53,7 @@ class Game extends CGFscene {
         this.changedOnce = false;
         this.isPlayingMovie = false;
 
-        // this.getPrologRequest('start');
+        this.getPrologRequest('start');
 
         this.setPickEnabled(true);
 
@@ -88,6 +90,8 @@ class Game extends CGFscene {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(8, 35, 50),
             vec3.fromValues(8, -10, -10));
 
+        this.interface.setActiveCamera(this.camera);
+
         this.setGlobalAmbientLight(0.1, 0.1, 0.1, 1.0);
         this.gl.clearColor(0.075, 0.125, 0.150, 1.0);
 
@@ -120,6 +124,14 @@ class Game extends CGFscene {
         this.tableTex = new CGFappearance(this);
         this.tableTex.setAmbient(1, 1, 1, 1);
         this.tableTex.loadTexture('scenes/images/wood-texture.jpg');
+
+        this.superbockTex = new CGFappearance(this);
+        this.superbockTex.setAmbient(1, 1, 1, 1);
+        this.superbockTex.loadTexture('scenes/images/superbock-texture.jpg');
+
+        this.windowTex = new CGFappearance(this);
+        this.windowTex.setAmbient(1, 1, 1, 1);
+        this.windowTex.loadTexture('scenes/images/window-texture.jpg');
 
         this.wallTex = new CGFappearance(this);
         this.wallTex.setAmbient(1, 1, 1, 1);
@@ -532,7 +544,7 @@ class Game extends CGFscene {
 
         if (this.gameStarted) {
             this.board.display();
-            if (!this.isPlayingMovie) this.timer.display();
+            //if (!this.isPlayingMovie) this.clock.display();
         }
 
         if (this.activeStyle == "Room") {

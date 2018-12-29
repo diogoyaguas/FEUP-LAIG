@@ -62,12 +62,16 @@ serialInclude([
   'scenes/primitives/MyBoardPrimitive.js',
   'scenes/primitives/MyRectangle.js',
   'scenes/primitives/MyRoom.js',
+  'scenes/primitives/MyAE.js',
   'scenes/primitives/MySphere.js',
   'scenes/primitives/MyTriangle.js',
   'scenes/primitives/MyQuad.js',
   'scenes/primitives/MyCube.js',
+  'scenes/primitives/MyClock.js',
   'scenes/animation/Animation.js',
   'scenes/animation/CircularAnimation.js',
+  'scenes/objs/CGFOBJModel.js',
+  'scenes/objs/CGFResourceReader.js',
 
   main =
   function () {
