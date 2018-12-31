@@ -141,6 +141,10 @@ class Game extends CGFscene {
         this.clockTex.setAmbient(1, 1, 1, 1);
         this.clockTex.loadTexture('scenes/images/silver-texture.jpg');
 
+        this.pinkTex = new CGFappearance(this);
+        this.pinkTex.setAmbient(1, 1, 1, 1);
+        this.pinkTex.loadTexture('scenes/images/pink-texture.jpg');
+
     };
 
     /**
@@ -525,9 +529,8 @@ class Game extends CGFscene {
         // Clear image and depth buffer every time we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-        this.gl.enable(this.gl.DEPTH_TEST);
 
-        // Initialize Model-View matrix as identity (no transformation
+        // Initialize Model-View matrix as identity (no transformation)
         this.updateProjectionMatrix();
         this.loadIdentity();
 
@@ -535,10 +538,11 @@ class Game extends CGFscene {
         // the origin
         this.applyViewMatrix();
 
-        this.pushMatrix();
-
         // Update all lights used
         this.lights[0].update();
+        this.lights[1].update();
+
+        this.pushMatrix();
 
         this.rotate(Math.PI / 2.0, 1, 0, 0);
 
@@ -547,6 +551,7 @@ class Game extends CGFscene {
             //if (!this.isPlayingMovie) this.clock.display();
         }
 
+        
         if (this.activeStyle == "Room") {
             this.room.display();
         } else if (this.activeStyle == "AE") {

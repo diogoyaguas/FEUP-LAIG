@@ -40,8 +40,8 @@ class MyAE extends CGFobject {
         this.scene.pushMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(7, -5, 0);
-        this.scene.scale(12.5, 2.5, 7.5);
+        this.scene.translate(7, -5, -2);
+        this.scene.scale(12.5, 2.5, 4);
         this.roomAppearance.setTexture(this.scene.clockTex.texture);
         this.roomAppearance.apply();
         this.clock.display();
@@ -60,28 +60,31 @@ class MyAE extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.scene.translate(-10, -7, -12);
-        this.scene.scale(40, 50, 0);
-        this.roomAppearance.setTexture(this.scene.windowTex.texture);
+        this.scene.translate(-1, -7, -12);
+        this.scene.scale(40, 40, 0);
+        this.roomAppearance.setTexture(this.scene.pinkTex.texture);
         this.roomAppearance.apply();
+        this.wall.setSAndT(2, 2);
         this.wall.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-        this.scene.translate(-12, -10, -6);
-        this.scene.scale(40, 50, 0);
+        this.scene.translate(-12, 0, -6);
+        this.scene.scale(40, 40, 0);
         this.roomAppearance.setTexture(this.scene.windowTex.texture);
         this.roomAppearance.apply();
+        this.wall.setSAndT(1, 1);
         this.wall.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI, 0, 0, 1);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.scene.translate(-5, -33, -28);
-        this.scene.scale(50, 40, 0);
-        this.roomAppearance.setTexture(this.scene.windowTex.texture);
+        this.scene.translate(-1, -33, -28);
+        this.scene.scale(40, 40, 0);
+        this.roomAppearance.setTexture(this.scene.pinkTex.texture);
+        this.wall.setSAndT(2, 2);
         this.roomAppearance.apply();
         this.wall.display();
         this.scene.popMatrix();
