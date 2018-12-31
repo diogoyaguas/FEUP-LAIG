@@ -41,9 +41,10 @@ class Game extends CGFscene {
         //this.clock = new MyClock(this);
         this.room = new MyRoom(this);
         this.AE = new MyAE(this);
+        this.FEUP = new MyFEUP(this);
 
         this.activeCamera = "Front";
-        this.activeStyle = "AE";
+        this.activeStyle = "FEUP";
         this.gameMode = "Human vs Human";
         this.botType = "Easy";
 
@@ -144,6 +145,14 @@ class Game extends CGFscene {
         this.pinkTex = new CGFappearance(this);
         this.pinkTex.setAmbient(1, 1, 1, 1);
         this.pinkTex.loadTexture('scenes/images/pink-texture.jpg');
+
+        this.FEUPTex = new CGFappearance(this);
+        this.FEUPTex.setAmbient(1, 1, 1, 1);
+        this.FEUPTex.loadTexture('scenes/images/feup-texture.jpg');
+
+        this.greyTex = new CGFappearance(this);
+        this.greyTex.setAmbient(1, 1, 1, 1);
+        this.greyTex.loadTexture('scenes/images/grey-texture.jpg');
 
     };
 
@@ -550,14 +559,13 @@ class Game extends CGFscene {
             this.board.display();
             //if (!this.isPlayingMovie) this.clock.display();
         }
-
-        
+ 
         if (this.activeStyle == "Room") {
             this.room.display();
         } else if (this.activeStyle == "AE") {
             this.AE.display();
         } else if (this.activeStyle == "FEUP") {
-            this.beach.display();
+            this.FEUP.display();
         }
 
         this.popMatrix();

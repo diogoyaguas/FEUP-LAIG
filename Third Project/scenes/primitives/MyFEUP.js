@@ -1,17 +1,17 @@
 /**
- * MyAE
+ * MyFEUP
  * @constructor
  */
 /**
- * Creates a AE
+ * Creates a room
  * 
- * @class MyAE
+ * @class MyFEUP
  * @extends {CGFobject}
  */
-class MyAE extends CGFobject {
+class MyFEUP extends CGFobject {
 
     /**
-     * Creates an instance of MyAE.
+     * Creates an instance of MyFEUP.
      * @param {any} scene 
      * 
      */
@@ -50,42 +50,21 @@ class MyAE extends CGFobject {
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.scene.rotate(Math.PI, 0, 0, 1);
-        this.scene.translate(-12, -33, -0.1);
-        this.scene.scale(40, 40, 0);
-        this.roomAppearance.setTexture(this.scene.superbockTex.texture);
+        this.scene.translate(-27.5, -33, -0.1);
+        this.scene.scale(70, 40, 0);
+        this.roomAppearance.setTexture(this.scene.greyTex.texture);
         this.roomAppearance.apply();
         this.table.setSAndT(1, 1);
         this.table.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.scene.translate(-1, -7, -12);
-        this.scene.scale(40, 40, 0);
-        this.roomAppearance.setTexture(this.scene.pinkTex.texture);
-        this.roomAppearance.apply();
-        this.wall.setSAndT(2, 2);
-        this.wall.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-        this.scene.translate(-12, 0, -6);
-        this.scene.scale(40, 40, 0);
-        this.roomAppearance.setTexture(this.scene.windowTex.texture);
+        this.scene.translate(-27.5, 0, -6);
+        this.scene.scale(70, 40, 0);
+        this.roomAppearance.setTexture(this.scene.FEUPTex.texture);
         this.roomAppearance.apply();
         this.wall.setSAndT(1, 1);
-        this.wall.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.rotate(Math.PI, 0, 0, 1);
-        this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.scene.translate(-1, -33, -28);
-        this.scene.scale(40, 40, 0);
-        this.roomAppearance.setTexture(this.scene.pinkTex.texture);
-        this.wall.setSAndT(2, 2);
-        this.roomAppearance.apply();
         this.wall.display();
         this.scene.popMatrix();
 

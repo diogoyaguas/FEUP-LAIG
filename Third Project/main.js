@@ -63,6 +63,7 @@ serialInclude([
   'scenes/primitives/MyRectangle.js',
   'scenes/primitives/MyRoom.js',
   'scenes/primitives/MyAE.js',
+  'scenes/primitives/MyFEUP.js',
   'scenes/primitives/MySphere.js',
   'scenes/primitives/MyTriangle.js',
   'scenes/primitives/MyQuad.js',
