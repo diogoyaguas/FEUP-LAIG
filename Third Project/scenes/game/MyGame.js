@@ -44,7 +44,7 @@ class Game extends CGFscene {
         this.FEUP = new MyFEUP(this);
 
         this.activeCamera = "Front";
-        this.activeStyle = "FEUP";
+        this.activeStyle = "Room";
         this.gameMode = "Human vs Human";
         this.botType = "Easy";
 
@@ -153,6 +153,10 @@ class Game extends CGFscene {
         this.greyTex = new CGFappearance(this);
         this.greyTex.setAmbient(1, 1, 1, 1);
         this.greyTex.loadTexture('scenes/images/grey-texture.jpg');
+
+        this.boardTex = new CGFappearance(this);
+        this.boardTex.setAmbient(1, 1, 1, 1);
+        this.boardTex.loadTexture('scenes/images/board-texture.png');
 
     };
 
@@ -287,8 +291,6 @@ class Game extends CGFscene {
 
     /*botPlay(botState) {
         if (botState == "selection") {
-            this.board.prologBoard =
-    this.board.rotatePrologBoard(this.board.prologBoard);
 
             if (this.activeGameMode == 3 && this.activeBot == 1)
                 var botSelectionRequest = "secondSelection(";
@@ -397,8 +399,8 @@ class Game extends CGFscene {
         }
     };*/
 
-    /*logPicking() {
-        if (this.pickMode == false) {
+    logPicking() {
+        if (!this.pickMode) {
             if (this.pickResults != null && this.pickResults.length > 0) {
                 for (var i = 0; i < this.pickResults.length; i++) {
                     var obj = this.pickResults[i][0];
@@ -410,8 +412,7 @@ class Game extends CGFscene {
 
                         var cell = this.board.getCell(objId);
 
-                        if (this.board.selectedCell == null && cell.pieceType !=
-    0) {
+                        if (this.board.selectedCell == null && cell.pieceType != 0) {
                             var pickingPrologRequest = "validatePieceSelection(";
                             pickingPrologRequest += this.activePlayer;
                             pickingPrologRequest += ","
@@ -434,8 +435,7 @@ class Game extends CGFscene {
                                 this.board.selectedCell = null;
                                 this.board.possibleCells = [];
                             } else {
-                                var pickingPrologRequest =
-    "validateDestinySelection(";
+                                var pickingPrologRequest = "validateDestinySelection(";
                                 pickingPrologRequest += this.activePlayer;
                                 pickingPrologRequest += ","
                                 pickingPrologRequest += this.board.prologBoard;
@@ -449,8 +449,7 @@ class Game extends CGFscene {
                                 pickingPrologRequest += cell.y;
                                 pickingPrologRequest += ","
 
-                                if (this.board.selectedCell.pieceType == 3 ||
-    this.board.selectedCell.pieceType == 4)
+                                if (this.board.selectedCell.pieceType == 3 || this.board.selectedCell.pieceType == 4)
                                     pickingPrologRequest += "true)";
                                 else
                                     pickingPrologRequest += "false)";
@@ -463,7 +462,7 @@ class Game extends CGFscene {
                 this.pickResults.splice(0, this.pickResults.length);
             }
         }
-    }*/
+    }
 
     getPrologRequest(requestString, onSuccess, onError, port) {
         var requestPort = port || 8081;
@@ -519,15 +518,13 @@ class Game extends CGFscene {
 
     display() {
 
-        var winner = this.board.winner();
+        var winner;
 
-        if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3 &&
-            winner == 'No')
+        if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3 && winner == 'No')
             this.logPicking();
 
         if (this.botPlaying) {
-            if (this.selectedMoveAnimation == undefined &&
-                this.removedMoveAnimation == undefined) {
+            if (this.selectedMoveAnimation == undefined) {
                 this.botPlay("pieceSelection");
                 this.botPlaying = false;
             }
@@ -559,7 +556,7 @@ class Game extends CGFscene {
             this.board.display();
             //if (!this.isPlayingMovie) this.clock.display();
         }
- 
+
         if (this.activeStyle == "Room") {
             this.room.display();
         } else if (this.activeStyle == "AE") {
