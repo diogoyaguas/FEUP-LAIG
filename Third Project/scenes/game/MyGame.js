@@ -408,13 +408,10 @@ class Game extends CGFscene {
                         var customId = this.pickResults[i][1];				
                         console.log("Picked object: " + obj + ", with pick id " + customId);
                     }
-                    if(this.pickMode)
-                    this.obj[i+57].display();
                 }
                 this.pickResults.splice(0,this.pickResults.length);
             }		
         }
-
     }
 
     getPrologRequest(requestString, onSuccess, onError, port) {

@@ -91,7 +91,8 @@ class MyBoard {
             this.scene.translate(-1.1+i*1.1, -0.9, -0.03);
             this.scene.rotate(-Math.PI/2,1,0,0);
             this.scene.registerForPick(i+1, this.pickingLetters[i]);
-            this.pickingLetters[i].plane.display();
+            if(this.scene.pickMode == true)
+                this.pickingLetters[i].plane.display();
             this.scene.popMatrix();
         }
 
@@ -102,7 +103,8 @@ class MyBoard {
             this.scene.translate(-1.1+i*1.1, 16.8, -0.03);
             this.scene.rotate(-Math.PI/2,1,0,0);
             this.scene.registerForPick(i+1, this.pickingLetters[i]);
-            this.pickingLetters[i].plane.display();
+            if(this.scene.pickMode == true)
+                this.pickingLetters[i].plane.display();
             this.scene.popMatrix();
         }
 
@@ -113,7 +115,8 @@ class MyBoard {
             this.scene.translate(-20+i*1.1, -1.8, -0.1);
             this.scene.rotate(-Math.PI/2,1,0,0);
             this.scene.registerForPick(i + 1, this.pickingNumbers[i]);
-            this.pickingNumbers[i].plane.display();
+            if(this.scene.pickMode == true)
+                this.pickingNumbers[i].plane.display();
             this.scene.popMatrix();
         }
 
@@ -124,12 +127,11 @@ class MyBoard {
             this.scene.translate(-20+i*1.1, 15.8, -0.1);
             this.scene.rotate(-Math.PI/2,1,0,0);
             this.scene.registerForPick(i + 1, this.pickingNumbers[i]);
-            this.pickingNumbers[i].plane.display();
+            if(this.scene.pickMode == true)
+                this.pickingNumbers[i].plane.display();
             this.scene.popMatrix();
         }
-/*
-        
-*/
+
         this.board.display();
 
     };
