@@ -47,7 +47,7 @@ class MyBoard {
                 var y = j + 1;
                 var pieceType = prologBoard.charAt(counter);
 
-                this.cells[i][j] = new Cell(new CGFplane(this.scene), x, y, pieceType, counter + 1);
+                this.cells[i][j] = new Cell(null, x, y, pieceType, counter + 1);
 
                 counter++;
             }
@@ -61,15 +61,6 @@ class MyBoard {
     display() {
 
         this.board.display();
-
-        this.scene.pushMatrix();
-        this.scene.rotate(Math.PI, 1, 0, 0);
-        this.scene.translate(-2.5, -17.5, 0);
-        this.scene.scale(19, 19, 19);
-        for (var i = 0; i < 19; i++) {
-            for (var j = 0; j < 19; j++) {}
-        }
-        this.scene.popMatrix();
 
     };
 
