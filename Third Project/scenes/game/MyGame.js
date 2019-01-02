@@ -31,7 +31,8 @@ class Game extends CGFscene {
 
         this.enableTextures(true);
 
-        this.gl.clearDepth(100.0);
+       this.gl.clearDepth(100.0);
+
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
@@ -77,6 +78,8 @@ class Game extends CGFscene {
         this.botSelectedColumn;
         this.botPlaying;
         this.botInPlay = false;
+
+        
 
     };
 
@@ -395,68 +398,23 @@ class Game extends CGFscene {
     };*/
 
     logPicking() {
-        if (!this.pickMode) {
+        
+        if (this.pickMode == false) {
             if (this.pickResults != null && this.pickResults.length > 0) {
-                for (var i = 0; i < this.pickResults.length; i++) {
+                for (var i=0; i< this.pickResults.length; i++) {
                     var obj = this.pickResults[i][0];
-                    if (obj) {
-                        var objId = this.pickResults[i][1];
-
-                        if (objId > 38)
-                            objId -= 38;
-
-                        var cell = this.board.getCell(objId);
-
-                        if (this.board.selectedCell == null && cell.pieceType != 0) {
-                            var pickingPrologRequest = "validatePieceSelection(";
-                            pickingPrologRequest += this.activePlayer;
-                            pickingPrologRequest += ","
-                            pickingPrologRequest += this.board.prologBoard;
-                            pickingPrologRequest += ","
-                            pickingPrologRequest += cell.x;
-                            pickingPrologRequest += ","
-                            pickingPrologRequest += cell.y;
-                            pickingPrologRequest += ","
-
-                            if (cell.pieceType == 3 || cell.pieceType == 4)
-                                pickingPrologRequest += "true)";
-                            else
-                                pickingPrologRequest += "false)";
-
-                            this.getPrologRequest(pickingPrologRequest);
-
-                        } else if (this.board.selectedCell != null) {
-                            if (this.board.selectedCell == cell) {
-                                this.board.selectedCell = null;
-                                this.board.possibleCells = [];
-                            } else {
-                                var pickingPrologRequest = "validateDestinySelection(";
-                                pickingPrologRequest += this.activePlayer;
-                                pickingPrologRequest += ","
-                                pickingPrologRequest += this.board.prologBoard;
-                                pickingPrologRequest += ","
-                                pickingPrologRequest += this.board.selectedCell.x;
-                                pickingPrologRequest += ","
-                                pickingPrologRequest += cell.x;
-                                pickingPrologRequest += ","
-                                pickingPrologRequest += this.board.selectedCell.y;
-                                pickingPrologRequest += ","
-                                pickingPrologRequest += cell.y;
-                                pickingPrologRequest += ","
-
-                                if (this.board.selectedCell.pieceType == 3 || this.board.selectedCell.pieceType == 4)
-                                    pickingPrologRequest += "true)";
-                                else
-                                    pickingPrologRequest += "false)";
-
-                                this.getPrologRequest(pickingPrologRequest);
-                            }
-                        }
+                    if (obj)
+                    {
+                        var customId = this.pickResults[i][1];				
+                        console.log("Picked object: " + obj + ", with pick id " + customId);
                     }
+                    if(this.pickMode)
+                    this.obj[i+57].display();
                 }
-                this.pickResults.splice(0, this.pickResults.length);
-            }
+                this.pickResults.splice(0,this.pickResults.length);
+            }		
         }
+
     }
 
     getPrologRequest(requestString, onSuccess, onError, port) {
@@ -515,22 +473,21 @@ class Game extends CGFscene {
 
         var winner;
 
-        if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3 && winner == 'No')
-            this.logPicking();
-
+        this.logPicking();
+/*
         if (this.botPlaying) {
             if (this.selectedMoveAnimation == undefined) {
                 this.botPlay("pieceSelection");
                 this.botPlaying = false;
             }
-        }
+        }*/
 
         this.clearPickRegistration();
 
         // Clear image and depth buffer every time we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-
+        this.gl.enable(this.gl.DEPTH_TEST);
         // Initialize Model-View matrix as identity (no transformation)
         this.updateProjectionMatrix();
         this.loadIdentity();
@@ -543,7 +500,6 @@ class Game extends CGFscene {
         this.lights[0].update();
         this.lights[1].update();
 
-        this.pushMatrix();
 
         this.rotate(Math.PI / 2.0, 1, 0, 0);
 
@@ -560,6 +516,7 @@ class Game extends CGFscene {
             this.FEUP.display();
         }
 
-        this.popMatrix();
     };
+    
+
 }

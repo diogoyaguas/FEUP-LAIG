@@ -15,6 +15,9 @@ class MyBoard {
 
         this.cells = [19];
 
+        this.pickingLetters = [19];
+        this.pickingNumbers = [19];
+
         for (var i = 0; i < 19; i++) {
 
             this.cells[i] = [19];
@@ -47,29 +50,87 @@ class MyBoard {
                 var y = j + 1;
                 var pieceType = prologBoard.charAt(counter);
 
-                this.cells[i][j] = new Cell(new CGFplane(this.scene), x, y, pieceType, counter + 1);
+                this.cells[i][j] = new Cell(null, x, y, pieceType, counter + 1);
 
                 counter++;
             }
         }
 
+        counter = 0;
+
+        for (var j = 0; j < 19; j++) {
+            var x = 0;
+            var y = j + 1;
+
+            this.pickingNumbers[j] = new Cell(new CGFplane(this.scene), x, y, null, counter + 1);
+
+            counter++;
+        }
+
+        counter = 0;
+
+        for (var i = 0; i < 19; i++) {
+            var x = i + 1;
+            var y = 0;
+
+            this.pickingLetters[i] = new Cell(new CGFplane(this.scene), x, y, null, counter + 1);
+
+            counter++;
+        }
+
+
         this.cellsCreated = true;
 
-        console.log(this.cells);
+
     }
 
     display() {
-
-        this.board.display();
-
-        this.scene.pushMatrix();
-        this.scene.rotate(Math.PI, 1, 0, 0);
-        this.scene.translate(-2.5, -17.5, 0);
-        this.scene.scale(19, 19, 19);
         for (var i = 0; i < 19; i++) {
-            for (var j = 0; j < 19; j++) {}
+            this.scene.pushMatrix();
+            this.scene.scale(0.8, 1, 2);
+            this.scene.translate(-1.1+i*1.1, -0.9, -0.03);
+            this.scene.rotate(-Math.PI/2,1,0,0);
+            this.scene.registerForPick(i+1, this.pickingLetters[i]);
+            this.pickingLetters[i].plane.display();
+            this.scene.popMatrix();
         }
-        this.scene.popMatrix();
+
+
+        for (var i = 0; i < 19; i++) {
+            this.scene.pushMatrix();
+            this.scene.scale(0.8, 1, 2);
+            this.scene.translate(-1.1+i*1.1, 16.8, -0.03);
+            this.scene.rotate(-Math.PI/2,1,0,0);
+            this.scene.registerForPick(i+1, this.pickingLetters[i]);
+            this.pickingLetters[i].plane.display();
+            this.scene.popMatrix();
+        }
+
+        for (var i = 0; i < 19; i++) {
+            this.scene.pushMatrix();
+            this.scene.scale(1, 0.8, 1);
+            this.scene.rotate(-Math.PI/2,0,0,1);
+            this.scene.translate(-20+i*1.1, -1.8, -0.1);
+            this.scene.rotate(-Math.PI/2,1,0,0);
+            this.scene.registerForPick(i + 1, this.pickingNumbers[i]);
+            this.pickingNumbers[i].plane.display();
+            this.scene.popMatrix();
+        }
+
+        for (var i = 0; i < 19; i++) {
+            this.scene.pushMatrix();
+            this.scene.scale(1, 0.8, 1);
+            this.scene.rotate(-Math.PI/2,0,0,1);
+            this.scene.translate(-20+i*1.1, 15.8, -0.1);
+            this.scene.rotate(-Math.PI/2,1,0,0);
+            this.scene.registerForPick(i + 1, this.pickingNumbers[i]);
+            this.pickingNumbers[i].plane.display();
+            this.scene.popMatrix();
+        }
+/*
+        
+*/
+        this.board.display();
 
     };
 
@@ -95,6 +156,7 @@ class MyBoard {
                 counter++;
             }
         }
+
 
         if (this.scene.activeGameMode == 3)
             this.cellsCreated = true;

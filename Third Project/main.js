@@ -89,6 +89,7 @@ serialInclude([
     myInterface.addGameOptions();
     myInterface.addVisualOptions();
 
+    
     // start
     app.run();
   }
