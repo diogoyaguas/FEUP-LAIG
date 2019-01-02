@@ -21,8 +21,7 @@ class Game extends CGFscene {
     };
 
     /**
-     * Initializes the scene, setting some WebGL defaults, initializing the camera
-     * and the axis.
+     * Initializes the scene, setting some WebGL defaults
      * @param {CGFApplication} application
      */
     init(application) {
@@ -82,7 +81,7 @@ class Game extends CGFscene {
     };
 
     /**
-     * Initializes the scene's default camera, lights and axis.
+     * Initializes the scene's default camera, lights, axis and textures.
      */
     initDefaults() {
 
@@ -164,37 +163,35 @@ class Game extends CGFscene {
      * Animate change of view
      */
     updateViews() {
-        var speedOne = 0.1;
-        var speedTwo = 0.12;
-        var speedThree = 0.04;
+        var speed = 0.1;
         var increase = 3;
 
         if (this.activeCamera == "Top") {
             if (this.camera.position[1] < 60)
-                this.camera.position[1] += speedOne * increase;
+                this.camera.position[1] += speed * increase;
 
             if (this.camera.position[2] > 20)
-                this.camera.position[2] -= speedTwo * increase;
+                this.camera.position[2] -= speed * increase;
 
             if (this.camera.target[1] > -35)
-                this.camera.target[1] -= speedOne * increase;
+                this.camera.target[1] -= speed * increase;
 
             if (this.camera.target[2] < 0)
-                this.camera.target[2] += speedThree * increase;
+                this.camera.target[2] += speed * increase;
 
             this.changedOnce = true;
         } else if (this.activeCamera == "Front" && this.changedOnce) {
             if (this.camera.position[1] > 35)
-                this.camera.position[1] -= speedOne * increase;
+                this.camera.position[1] -= speed * increase;
 
             if (this.camera.position[2] < 50)
-                this.camera.position[2] += speedTwo * increase;
+                this.camera.position[2] += speed * increase;
 
             if (this.camera.target[1] < -10)
-                this.camera.target[1] += speedOne * increase;
+                this.camera.target[1] += speed * increase;
 
             if (this.camera.target[2] > -10)
-                this.camera.target[2] -= speedThree * increase;
+                this.camera.target[2] -= speed * increase;
 
             this.changedOnce = true;
         }
@@ -249,14 +246,12 @@ class Game extends CGFscene {
     undo() {
         if (this.activeGameMode == 1) {
             if (this.backupPlays.length > 0) {
-                this.board.undoAnimation = new CircularAnimation(
-                    this, "BoardRotation", [0, 0, 0], 0, 0, 180, 1);
+                this.board.undoAnimation = new CircularAnimation(this, "BoardRotation", [0, 0, 0], 0, 0, 180, 1);
 
                 var selcoords = this.selCoords[this.selCoords.length - 1];
                 var finalselcoords = [selcoords, [0, 0, 0]];
 
-                this.board.backAnimation = new LinearAnimation(
-                    this, "id", this.board.animationSpeed, finalselcoords);
+                this.board.backAnimation = new LinearAnimation(this, "id", this.board.animationSpeed, finalselcoords);
 
                 if (this.activePlayer == 1)
                     this.activePlayer = 2;

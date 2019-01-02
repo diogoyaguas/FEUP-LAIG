@@ -4,8 +4,8 @@
  * @class Cell
  */
 class Cell {
-  constructor(plane, x, y, pieceType) {
-    this.num;
+  constructor(plane, x, y, pieceType, num) {
+    this.num = num;
     this.plane = plane;
     this.x = x;
     this.y = y;

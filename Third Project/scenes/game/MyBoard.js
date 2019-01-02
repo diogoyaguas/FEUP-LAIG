@@ -31,7 +31,6 @@ class MyBoard {
 
         this.board = new MyBoardPrimitive(this.scene);
 
-        this.circular = new CircularAnimation(this.scene, "BoardRotation", [0, 0, 0], 0, 0, 180, 3);
         this.undoAnimation = undefined;
         this.returnAnimation = undefined;
 
@@ -48,22 +47,15 @@ class MyBoard {
                 var y = j + 1;
                 var pieceType = prologBoard.charAt(counter);
 
-                this.cells[j][i] = new Cell(new CGFplane(this.scene), x, y, pieceType);
+                this.cells[i][j] = new Cell(new CGFplane(this.scene), x, y, pieceType, counter + 1);
 
-                counter++;
-            }
-        }
-
-        counter = 0;
-
-        for (var i = 0; i < 19; i++) {
-            for (var j = 0; j < 19; j++) {
-                this.cells[i][j].num = counter + 1;
                 counter++;
             }
         }
 
         this.cellsCreated = true;
+
+        console.log(this.cells);
     }
 
     display() {
@@ -75,8 +67,7 @@ class MyBoard {
         this.scene.translate(-2.5, -17.5, 0);
         this.scene.scale(19, 19, 19);
         for (var i = 0; i < 19; i++) {
-            for (var j = 0; j < 19; j++) {
-            }
+            for (var j = 0; j < 19; j++) {}
         }
         this.scene.popMatrix();
 
@@ -86,7 +77,7 @@ class MyBoard {
 
         this.newCells = [19];
 
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < 19; i++) {
             this.newCells[i] = [19];
         }
 
@@ -99,17 +90,8 @@ class MyBoard {
                 var y = j + 1;
                 var pieceType = prologBoard.charAt(counter);
 
-                this.newCells[j][i] = new Cell(new CGFplane(this.scene), x, y, pieceType);
+                this.newCells[i][j] = new Cell(new CGFplane(this.scene), x, y, pieceType, counter + 1);
 
-                counter++;
-            }
-        }
-
-        counter = 0;
-
-        for (var i = 0; i < 19; i++) {
-            for (var j = 0; j < 19; j++) {
-                this.newCells[i][j].num = counter + 1;
                 counter++;
             }
         }
