@@ -73,6 +73,7 @@ serialInclude([
   'scenes/animation/CircularAnimation.js',
   'scenes/objs/CGFOBJModel.js',
   'scenes/objs/CGFResourceReader.js',
+  'scenes/primitives/Piece.js',
 
   main =
   function () {
