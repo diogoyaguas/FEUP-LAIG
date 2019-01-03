@@ -48,7 +48,7 @@ check_last_element_and_add_play(Line, Moves, Index, Symbol, Player, NewMoves) :-
 check_last_element_and_add_play(_, Moves, _, _, _, NewMoves) :-
     NewMoves = Moves.
 
-% Checks the last element in a column/line and if it is a player's piece, checks if the second to last one is empty or not
+% Checks the last element in a column/line and if it is a player's piece, checks if the second to last one is 0 or not
 check_last_element(Line) :-
     get_last_element(Line, LastElement),
     LastElement = empty, !.

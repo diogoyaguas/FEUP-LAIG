@@ -107,16 +107,16 @@ print_header_line(_).
 
 % Initial board
 parse_input(start, Board) :- 
-	table(Board).
+	table(Table),
 	replace_piece(10, 10, 'b', Table, Board).
 
 % Validate Line/Column picked
 parse_input(validateMove(Board, Player, Symbol, Index, Direction), Validity) :-
 	Move = [Symbol, Index, Direction, Player],
-	valid_moves(Player, Board, ValidMoves),
+	valid_moves(Board, Player, ValidMoves),
 	(
-		member(Move, ValidMoves), Validity = "true";
-		Validity = "false"	
+		member(Move, ValidMoves), Validity = true;
+		Validity = false	
 	).
 	
 % Move piece

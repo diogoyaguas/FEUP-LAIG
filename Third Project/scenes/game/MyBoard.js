@@ -42,7 +42,7 @@ class MyBoard {
 
     create(prologBoard) {
 
-        this.prologBoard = prologBoard;
+        this.prologBoard = prologBoard.replace(/0/g, "empty");
         prologBoard = prologBoard.replace(/[,]|[#[]|]/g, "");
 
         var counter = 0;
@@ -90,7 +90,7 @@ class MyBoard {
             this.newCells[i] = [19];
         }
 
-        this.prologBoard = prologBoard;
+        this.prologBoard = prologBoard.replace(/0/g, "empty");
         prologBoard = prologBoard.replace(/[,]|[#[]|]/g, "");
 
         var counter = 0;
@@ -130,13 +130,12 @@ class MyBoard {
             this.cellsCreated = true;
     };
 
-    getCell(number) {
-        for (var i = 0; i < 19; i++) {
-            for (var j = 0; j < 19; j++) {
-                if (this.cells[i][j].num == number)
-                    return this.cells[i][j];
-            }
-        }
+    getCell(symbol, index) {
+
+        if (symbol == "C") {
+            return this.pickingLetters[index - 1];
+        } else if (symbol == "L")
+            return this.pickingNumbers[index - 1];
 
         return -1;
     };
