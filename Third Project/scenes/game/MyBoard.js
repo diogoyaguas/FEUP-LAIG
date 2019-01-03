@@ -135,8 +135,6 @@ class MyBoard {
         this.pickingLetters = this.newPickingLetters;
         this.pickingNumbers = this.newPickingNumbers;
 
-        console.log(this.cells);
-
         if (this.scene.activeGameMode == 3)
             this.cellsCreated = true;
     };
@@ -180,7 +178,6 @@ class MyBoard {
                     this.pickingLetters[i].plane.display();
                 this.scene.popMatrix();
             }
-
 
             for (var i = 0; i < 19; i++) {
                 this.scene.pushMatrix();
@@ -257,6 +254,14 @@ class MyBoard {
             this.scene.activePlayer = 'b';
         else
             this.scene.activePlayer = 'w';
+
+        var pickingPrologRequest = "getValue(";
+        pickingPrologRequest += this.prologBoard;
+        pickingPrologRequest += ",";
+        pickingPrologRequest += this.scene.activePlayer;
+        pickingPrologRequest += ")";
+
+        this.scene.getPrologRequest(pickingPrologRequest);
     };
 
 }

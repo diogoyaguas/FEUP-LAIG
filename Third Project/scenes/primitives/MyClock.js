@@ -89,7 +89,7 @@ class MyClock extends CGFobject {
         this.scene.rotate(Math.PI / 6, 1, 0, 0);
         this.scene.translate(9, 3.25, -1.15);
         this.displayTime(1).apply();
-        ~
+        
         this.time.setSAndT(1, 1);
         this.time.display();
         this.scene.popMatrix();

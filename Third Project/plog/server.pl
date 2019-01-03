@@ -125,6 +125,10 @@ parse_input(movePiece(Board, Player, Symbol, Index, Direction), NewBoard) :-
 	valid_moves(Board, Player, ValidMoves),
 	move(Move, ValidMoves, Board, NewBoard).
 
+% Get value
+parse_input(getValue(Board, Player), Value) :-
+	value(Board, Player, Value).
+
 % Check if its game over
 parse_input(checkGameOver(Board), Winner) :- 
 	game_over(Board, Winner, 0).

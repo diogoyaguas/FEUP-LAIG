@@ -460,6 +460,11 @@ class Game extends CGFscene {
                 board.changePlayers();
 
                 if (game.activeGameMode == 2) game.botPlaying = true;
+            } else if (requestString.includes("getValue")) {
+                console.log("'getValue'. Reply: " + response);
+
+                game.pontuation = response;
+
             } else if (requestString.includes("botMove")) {
                 console.log("'botMove'. Reply: " + response);
 
