@@ -21,196 +21,182 @@ class MyClock extends CGFobject {
 
         this.scene = scene;
 
-        this.redText = new Obj(this.scene, 'Objects/redText.obj');
-        this.blueText = new Obj(this.scene, 'Objects/blueText.obj');
-        this.winnerText = new Obj(this.scene, 'Objects/winnerText.obj');
+        this.screen = new MyRectangle(this.scene, 0, 0, 1, 1);
+        this.playerPoints = new MyRectangle(this.scene, 0, 0, 1, 1);
+        this.time = new MyRectangle(this.scene, 0, 0, 1, 1);
 
-        this.zero = new Obj(this.scene, 'Objects/zero.obj');
-        this.one = new Obj(this.scene, 'Objects/one.obj');
-        this.two = new Obj(this.scene, 'Objects/two.obj');
-        this.three = new Obj(this.scene, 'Objects/three.obj');
-        this.four = new Obj(this.scene, 'Objects/four.obj');
-        this.five = new Obj(this.scene, 'Objects/five.obj');
-        this.six = new Obj(this.scene, 'Objects/six.obj');
-        this.seven = new Obj(this.scene, 'Objects/seven.obj');
-        this.eight = new Obj(this.scene, 'Objects/eight.obj');
-        this.nine = new Obj(this.scene, 'Objects/nine.obj');
+        this.setAppearance();
+
     };
 
+    setAppearance() {
+
+        this.clockAppearance = new CGFappearance(this.scene);
+        this.clockAppearance.setAmbient(1, 1, 1, 1);
+        this.clockAppearance.setSpecular(1, 1, 1, 1);
+        this.clockAppearance.setDiffuse(1, 1, 1, 1);
+        this.clockAppearance.setShininess(true);
+
+    };
 
     display() {
-        var gameOver = this.scene.board.winner();
+
+        var gameOver = "No";
 
         if (gameOver == "No") {
-            this.scene.pushMatrix();
-            this.scene.scale(0.05, 0.05, 0.05);
-            this.scene.rotate(-Math.PI / 3, 1, 0, 0);
-            this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-            this.scene.translate(41, 90, 0);
-
-            if (this.scene.activeGameMode == 1 && this.scene.activePlayer == 1)
-                this.scene.redColor.apply();
-            else if (this.scene.activeGameMode == 1)
-                this.scene.blackColor.apply();
-            else
-                this.scene.redColor.apply();
-
-            this.redText.display();
-            this.scene.popMatrix();
-
-            this.scene.pushMatrix();
-            this.scene.scale(0.05, 0.05, 0.05);
-            this.scene.rotate(-Math.PI / 3, 1, 0, 0);
-            this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-            this.scene.translate(218, 78, 0);
-
-            if (this.scene.activeGameMode == 1 && this.scene.activePlayer == 2)
-                this.scene.blueColor.apply();
-            else if (this.scene.activeGameMode == 1)
-                this.scene.blackColor.apply();
-            else
-                this.scene.blueColor.apply();
-
-            this.blueText.display();
-            this.scene.popMatrix();
-
-            this.displayFirstPieces();
-            this.displaySecondPieces();
             this.displayTimer();
-        } else if (gameOver != "undefined") {
+        } else if (gameOver != undefined) {
             this.displayWinner(gameOver);
         }
+
     };
 
     displayWinner(gameOver) {
+
         this.scene.pushMatrix();
-
-        this.scene.scale(0.05, 0.05, 0.05);
-        this.scene.rotate(-Math.PI / 3, 1, 0, 0);
-        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-        this.scene.translate(105, 90, 0);
-        this.scene.whiteColor.apply();
-        this.winnerText.display();
-
-        if (gameOver == "Blue") {
-            this.scene.translate(25, -40, 0);
-            this.scene.blueColor.apply();
-            this.blueText.display();
-        } else if (gameOver == "Red") {
-            this.scene.translate(30, -25, 0);
-            this.scene.redColor.apply();
-            this.redText.display();
-        }
-
-        this.scene.popMatrix();
-    };
-
-    displayFirstPieces() {
-        this.scene.pushMatrix();
-        this.scene.scale(0.03, 0.03, 0.03);
-        this.scene.rotate(-Math.PI / 3, 1, 0, 0);
-        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-        this.scene.translate(92, 110, 0);
-        this.scene.whiteColor.apply();
-        this.displayDigit(1);
-        this.scene.translate(20, 0, 0);
-        this.displayDigit(2);
-        this.scene.popMatrix();
-    };
-
-    displaySecondPieces() {
-        this.scene.pushMatrix();
-        this.scene.scale(0.03, 0.03, 0.03);
-        this.scene.rotate(-Math.PI / 3, 1, 0, 0);
-        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-        this.scene.translate(400, 110, 0);
-        this.scene.whiteColor.apply();
-        this.displayDigit(3);
-        this.scene.translate(20, 0, 0);
-        this.displayDigit(4);
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.scene.rotate(Math.PI / 6, 1, 0, 0);
+        this.scene.translate(1.5, 2.5, -1.2);
+        this.scene.scale(11, 3, 8);
+        if (gameOver == "White")
+            this.clockAppearance.setTexture(this.scene.whiteWinnerTex.texture);
+        else
+            this.clockAppearance.setTexture(this.scene.blackWinnerTex.texture);
+        this.clockAppearance.apply();
+        this.screen.setSAndT(1, 1);
+        this.screen.display();
         this.scene.popMatrix();
     };
 
     displayTimer() {
+
         this.scene.pushMatrix();
-        this.scene.scale(0.05, 0.05, 0.05);
-        this.scene.rotate(-Math.PI / 3, 1, 0, 0);
-        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-        this.scene.translate(135, 85, 0);
-        this.scene.whiteColor.apply();
-        this.displayDigit(5);
-        this.scene.translate(25, 0, 0);
-        this.displayDigit(6);
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.scene.rotate(Math.PI / 6, 1, 0, 0);
+        this.scene.translate(1.5, 2.5, -1.2);
+        this.scene.scale(11, 3, 8);
+        if (this.scene.activePlayer == 'w')
+            this.clockAppearance.setTexture(this.scene.whiteTurnTex.texture);
+        else if (this.scene.activePlayer == 'b')
+            this.clockAppearance.setTexture(this.scene.blackTurnTex.texture);
+        this.clockAppearance.apply();
+        this.screen.setSAndT(1, 1);
+        this.screen.display();
         this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.scene.rotate(Math.PI / 6, 1, 0, 0);
+        this.scene.translate(9, 3.25, -1.15);
+        this.displayTime(1).apply();
+        ~
+        this.time.setSAndT(1, 1);
+        this.time.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.scene.rotate(Math.PI / 6, 1, 0, 0);
+        this.scene.translate(10, 3.25, -1.15);
+        this.displayTime(2).apply();
+        this.time.setSAndT(1, 1);
+        this.time.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.scene.rotate(Math.PI / 6, 1, 0, 0);
+        this.scene.translate(3, 3.25, -1.15);
+        this.displayPontuation(1).apply();
+        this.time.setSAndT(1, 1);
+        this.time.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.scene.rotate(Math.PI / 6, 1, 0, 0);
+        this.scene.translate(4, 3.25, -1.15);
+        this.displayPontuation(2).apply();
+        this.time.setSAndT(1, 1);
+        this.time.display();
+        this.scene.popMatrix();
+
     };
 
-    displayDigit(number) {
-        if (number == 1)
-            this.getObject(31 - this.scene.board.boardPrimitive.leftoversTwo.length, 1).display();
-        else if (number == 2)
-            this.getObject(31 - this.scene.board.boardPrimitive.leftoversTwo.length, 2).display();
-        else if (number == 3)
-            this.getObject(31 - this.scene.board.boardPrimitive.leftoversOne.length, 1).display();
-        else if (number == 4)
-            this.getObject(31 - this.scene.board.boardPrimitive.leftoversOne.length, 2).display();
-        else if (number == 5) {
-            if (this.scene.isPlayingMovie)
-                this.six.display();
-            else if (this.scene.countdown() > 0)
-                this.getObject(Math.trunc(this.scene.countdown()), 1).display();
-            else
-                this.zero.display();
-        } else if (number == 6) {
-            if (this.scene.isPlayingMovie)
-                this.zero.display();
-            else if (this.scene.countdown() > 0)
-                this.getObject(Math.trunc(this.scene.countdown()), 2).display();
-            else
-                this.zero.display();
+    displayTime(number) {
+
+        switch (number) {
+
+            case 1:
+                if (this.scene.isPlayingMovie)
+                    return this.scene.sixTex;
+                else if (this.scene.countdown() > 0)
+                    return this.getDigit(Math.trunc(this.scene.countdown()), 1);
+                else
+                    return this.scene.zeroTex;
+
+            case 2:
+                if (this.scene.isPlayingMovie)
+                    return this.scene.zeroTex;
+                else if (this.scene.countdown() > 0)
+                    return this.getDigit(Math.trunc(this.scene.countdown()), 2);
+                else
+                    return this.scene.zeroTex;
         }
     };
 
-    getObject(digit, type) {
+    displayPontuation(number) {
+
+        switch (number) {
+
+            case 1:
+
+                if (this.scene.pontuation > 0)
+                    return this.scene.plusTex;
+                else if (this.scene.pontuation < 0)
+                    return this.scene.minusTex;
+                else
+                    return this.scene.zeroTex;
+
+            case 2:
+
+                return this.getDigit(this.scene.pontuation, 2);
+
+        }
+    };
+
+    getDigit(digit, type) {
         var string = digit.toString();
 
         if (string.length == 2 && type == 1)
             string = string.charAt(0);
         else if (string.length == 2 && type == 2)
             string = string.charAt(1);
-        else if (string.length == 1 && type == 1)
-            return this.zero;
+        else if (string.length == 1 && type == 2)
+            string = string.charAt(0);
 
         switch (string) {
             case "0":
-                return this.zero;
-                break;
+                return this.scene.zeroTex;
             case "1":
-                return this.one;
-                break;
+                return this.scene.oneTex;
             case "2":
-                return this.two;
-                break;
+                return this.scene.twoTex;
             case "3":
-                return this.three;
-                break;
+                return this.scene.threeTex;
             case "4":
-                return this.four;
-                break;
+                return this.scene.fourTex;
             case "5":
-                return this.five;
-                break;
+                return this.scene.fiveTex;
             case "6":
-                return this.six;
-                break;
+                return this.scene.sixTex;
             case "7":
-                return this.seven;
-                break;
+                return this.scene.sevenTex;
             case "8":
-                return this.eight;
-                break;
+                return this.scene.eightTex;
             case "9":
-                return this.nine;
-                break;
+                return this.scene.nineTex;
+
         }
     };
 }

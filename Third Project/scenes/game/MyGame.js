@@ -38,7 +38,7 @@ class Game extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.board = new MyBoard(this);
-        // this.clock = new MyClock(this);
+        this.clock = new MyClock(this);
         this.room = new MyRoom(this);
         this.AE = new MyAE(this);
         this.FEUP = new MyFEUP(this);
@@ -49,6 +49,7 @@ class Game extends CGFscene {
         this.botType = "Easy";
 
         this.activePlayer = 'w';
+        this.pontuation;
         this.activeBot = 1;
         this.activeGameMode = 1;
         this.changedOnce = false;
@@ -152,6 +153,75 @@ class Game extends CGFscene {
         this.boardTex = new CGFappearance(this);
         this.boardTex.setAmbient(1, 1, 1, 1);
         this.boardTex.loadTexture('scenes/images/board-texture.png');
+
+        this.screenTex = new CGFappearance(this);
+        this.screenTex.setAmbient(1, 1, 1, 1);
+        this.screenTex.loadTexture('scenes/images/screen-texture.jpg');
+
+        this.whiteWinnerTex = new CGFappearance(this);
+        this.whiteWinnerTex.setAmbient(1, 1, 1, 1);
+        this.whiteWinnerTex.loadTexture('scenes/images/whiteWinner-texture.png');
+
+        this.blackWinnerTex = new CGFappearance(this);
+        this.blackWinnerTex.setAmbient(1, 1, 1, 1);
+        this.blackWinnerTex.loadTexture('scenes/images/blackWinner-texture.png');
+
+        this.whiteTurnTex = new CGFappearance(this);
+        this.whiteTurnTex.setAmbient(1, 1, 1, 1);
+        this.whiteTurnTex.loadTexture('scenes/images/whiteTurn-texture.png');
+
+        this.blackTurnTex = new CGFappearance(this);
+        this.blackTurnTex.setAmbient(1, 1, 1, 1);
+        this.blackTurnTex.loadTexture('scenes/images/blackTurn-texture.png');
+
+        this.zeroTex = new CGFappearance(this);
+        this.zeroTex.setAmbient(1, 1, 1, 1);
+        this.zeroTex.loadTexture('scenes/images/zero-texture.png');
+
+        this.oneTex = new CGFappearance(this);
+        this.oneTex.setAmbient(1, 1, 1, 1);
+        this.oneTex.loadTexture('scenes/images/one-texture.png');
+
+        this.twoTex = new CGFappearance(this);
+        this.twoTex.setAmbient(1, 1, 1, 1);
+        this.twoTex.loadTexture('scenes/images/two-texture.png');
+
+        this.threeTex = new CGFappearance(this);
+        this.threeTex.setAmbient(1, 1, 1, 1);
+        this.threeTex.loadTexture('scenes/images/three-texture.png');
+
+        this.fourTex = new CGFappearance(this);
+        this.fourTex.setAmbient(1, 1, 1, 1);
+        this.fourTex.loadTexture('scenes/images/four-texture.png');
+
+        this.fiveTex = new CGFappearance(this);
+        this.fiveTex.setAmbient(1, 1, 1, 1);
+        this.fiveTex.loadTexture('scenes/images/five-texture.png');
+
+        this.sixTex = new CGFappearance(this);
+        this.sixTex.setAmbient(1, 1, 1, 1);
+        this.sixTex.loadTexture('scenes/images/six-texture.png');
+
+        this.sevenTex = new CGFappearance(this);
+        this.sevenTex.setAmbient(1, 1, 1, 1);
+        this.sevenTex.loadTexture('scenes/images/seven-texture.png');
+
+        this.eightTex = new CGFappearance(this);
+        this.eightTex.setAmbient(1, 1, 1, 1);
+        this.eightTex.loadTexture('scenes/images/eight-texture.png');
+
+        this.nineTex = new CGFappearance(this);
+        this.nineTex.setAmbient(1, 1, 1, 1);
+        this.nineTex.loadTexture('scenes/images/nine-texture.png');
+
+        this.minusTex = new CGFappearance(this);
+        this.minusTex.setAmbient(1, 1, 1, 1);
+        this.minusTex.loadTexture('scenes/images/minus-texture.png');
+
+        this.plusTex = new CGFappearance(this);
+        this.plusTex.setAmbient(1, 1, 1, 1);
+        this.plusTex.loadTexture('scenes/images/plus-texture.png');
+
     };
 
     /**
@@ -165,7 +235,7 @@ class Game extends CGFscene {
             if (this.camera.position[1] < 60)
                 this.camera.position[1] += speed * increase;
 
-            if (this.camera.position[2] > 20)
+            if (this.camera.position[2] > 15)
                 this.camera.position[2] -= speed * increase;
 
             if (this.camera.target[1] > -35)
@@ -214,6 +284,7 @@ class Game extends CGFscene {
     startGame() {
         this.board = new MyBoard(this);
         this.getPrologRequest('start');
+        this.pontuation = 1;
         this.activePlayer = 'w';
         this.activeBot = 'b';
         this.backupPlays = [];
@@ -441,7 +512,7 @@ class Game extends CGFscene {
 
         if (this.gameStarted) {
             this.board.display();
-            // if (!this.isPlayingMovie) this.clock.display();
+            if (!this.isPlayingMovie) this.clock.display();
         }
 
         if (this.activeStyle == "Room") {
