@@ -457,6 +457,7 @@ class Game extends CGFscene {
                 console.log("'movePiece'. Reply: " + response);
 
                 board.recreate(response);
+                board.changePlayers();
 
                 if (game.activeGameMode == 2) game.botPlaying = true;
             } else if (requestString.includes("botMove")) {

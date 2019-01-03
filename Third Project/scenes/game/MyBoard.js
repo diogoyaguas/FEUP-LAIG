@@ -35,8 +35,8 @@ class MyBoard {
 
         this.board = new MyBoardPrimitive(this.scene);
 
-        this.pieceB = new MySphere(this.scene,1, 32, 64);
-        this.pieceW = new MySphere(this.scene,1, 32, 64);
+        this.pieceB = new MySphere(this.scene, 1, 32, 64);
+        this.pieceW = new MySphere(this.scene, 1, 32, 64);
 
         this.undoAnimation = undefined;
         this.returnAnimation = undefined;
@@ -53,7 +53,7 @@ class MyBoard {
         var counter = 0;
         for (var i = 0; i < 19; i++) {
             for (var j = 0; j < 19; j++) {
-                var x = i + 1;
+                var x = 19 - i;
                 var y = j + 1;
                 var pieceType = prologBoard.charAt(counter);
 
@@ -101,9 +101,9 @@ class MyBoard {
         var counter = 0;
         for (var i = 0; i < 19; i++) {
             for (var j = 0; j < 19; j++) {
-                var x = i + 1;
+                var x = 19 - i;
                 var y = j + 1;
-                var pieceType = this.prologBoard.charAt(counter);
+                var pieceType = prologBoard.charAt(counter);
 
                 this.newCells[i][j] = new Cell(new CGFplane(this.scene), x, y, pieceType, counter + 1);
 
@@ -130,6 +130,12 @@ class MyBoard {
 
             counter++;
         }
+
+        this.cells = this.newCells;
+        this.pickingLetters = this.newPickingLetters;
+        this.pickingNumbers = this.newPickingNumbers;
+
+        console.log(this.cells);
 
         if (this.scene.activeGameMode == 3)
             this.cellsCreated = true;
@@ -211,30 +217,46 @@ class MyBoard {
                 this.scene.popMatrix();
             }
 
+            this.scene.clearPickRegistration();
+
+            for (var i = 0; i < 19; i++) {
+                for (var j = 0; j < 19; j++) {
+
+                    var pieceType = this.cells[i][j].pieceType;
+                    var pieceX = this.cells[i][j].x - 1;
+                    var pieceY = this.cells[i][j].y - 1;
+
+                    if (pieceType != 0) {
+
+                        this.scene.pushMatrix();
+                        this.scene.rotate(Math.PI / 2, 1, 0, 0);
+                        this.scene.translate(-0.95 + 0.875 * pieceY, -0.13, -0.1 - 0.875 * pieceX);
+                        this.scene.scale(0.45, 0.2, 0.45);
+                        if (pieceType == 'b') {
+                            this.pieceAppearance.setTexture(this.scene.pieceTex.texture);
+                            this.pieceAppearance.apply();
+                            this.pieceB.display();
+                        } else if (pieceType == 'w') {
+                            this.pieceWhiteAppearance.setTexture(this.scene.pieceWhiteTex.texture);
+                            this.pieceWhiteAppearance.apply();
+                            this.pieceW.display();
+                        }
+
+                        this.scene.popMatrix();
+                        this.board.display();
+                    }
+
+                }
+            }
         }
 
-        this.scene.clearPickRegistration();
-        
-        this.scene.pushMatrix();
-        this.scene.rotate(Math.PI / 2, 1, 0, 0);
-        this.scene.translate(1.75, -0.13, -1);
-        this.scene.scale(0.45, 0.2, 0.45);
-        this.pieceAppearance.setTexture(this.scene.pieceTex.texture);
-        this.pieceAppearance.apply();
-        this.pieceB.display();
-        this.scene.popMatrix();
-        
+    };
 
-        this.scene.pushMatrix();
-        this.scene.rotate(Math.PI / 2, 1, 0, 0);
-        this.scene.translate(0.85, -0.13, -1);
-        this.scene.scale(0.45, 0.2, 0.45);
-        this.pieceWhiteAppearance.setTexture(this.scene.pieceWhiteTex.texture);
-        this.pieceWhiteAppearance.apply();
-        this.pieceW.display();
-        this.scene.popMatrix();
-        this.board.display();
-
+    changePlayers() {
+        if (this.scene.activePlayer == 'w')
+            this.scene.activePlayer = 'b';
+        else
+            this.scene.activePlayer = 'w';
     };
 
 }
