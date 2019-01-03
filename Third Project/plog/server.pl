@@ -122,7 +122,7 @@ parse_input(validateMove(Board, Player, Symbol, Index, Direction), Validity) :-
 % Move piece
 parse_input(movePiece(Board, Player, Symbol, Index, Direction), NewBoard) :-
 	Move = [Symbol, Index, Direction, Player],
-	valid_moves(Player, Board, ValidMoves),
+	valid_moves(Board, Player, ValidMoves),
 	move(Move, ValidMoves, Board, NewBoard).
 
 % Check if its game over
@@ -131,7 +131,7 @@ parse_input(checkGameOver(Board), Winner) :-
 
 % Selection move for bot
 parse_input(botMove(Board, Player, Difficulty), Symbol-Index-Direction) :-
-	valid_moves(Player, Board, ValidMoves),
+	valid_moves(Board, Player, ValidMoves),
 	choose_move(Board, Player, Move, Difficulty, ValidMoves),
 	Move = [Symbol | RestOfPlay],
 	RestOfPlay = [Index | EndOfPlay],
