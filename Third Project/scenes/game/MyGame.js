@@ -222,6 +222,15 @@ class Game extends CGFscene {
         this.plusTex.setAmbient(1, 1, 1, 1);
         this.plusTex.loadTexture('scenes/images/plus-texture.png');
 
+
+        this.pieceTex = new CGFappearance(this);
+        this.pieceTex.setAmbient(1, 1, 1, 1);
+        this.pieceTex.loadTexture('scenes/images/black-texture.jpg');
+        
+        this.pieceWhiteTex = new CGFappearance(this);
+        this.pieceWhiteTex.setAmbient(1, 1, 1, 1);
+        this.pieceWhiteTex.loadTexture('scenes/images/white-texture.jpg');
+        
     };
 
     /**

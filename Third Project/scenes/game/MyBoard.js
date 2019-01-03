@@ -35,8 +35,13 @@ class MyBoard {
 
         this.board = new MyBoardPrimitive(this.scene);
 
+        this.pieceB = new MySphere(this.scene,1, 32, 64);
+        this.pieceW = new MySphere(this.scene,1, 32, 64);
+
         this.undoAnimation = undefined;
         this.returnAnimation = undefined;
+
+        this.setAppearance();
 
     };
 
@@ -140,6 +145,22 @@ class MyBoard {
         return -1;
     };
 
+    setAppearance() {
+
+        this.pieceAppearance = new CGFappearance(this.scene);
+        this.pieceAppearance.setAmbient(1, 1, 1, 1);
+        this.pieceAppearance.setSpecular(1, 1, 1, 1);
+        this.pieceAppearance.setDiffuse(1, 1, 1, 1);
+        this.pieceAppearance.setShininess(true);
+
+        this.pieceWhiteAppearance = new CGFappearance(this.scene);
+        this.pieceWhiteAppearance.setAmbient(1, 1, 1, 1);
+        this.pieceWhiteAppearance.setSpecular(1, 1, 1, 1);
+        this.pieceWhiteAppearance.setDiffuse(1, 1, 1, 1);
+        this.pieceWhiteAppearance.setShininess(true);
+
+    };
+
     display() {
 
         if (this.cellsCreated) {
@@ -193,7 +214,25 @@ class MyBoard {
         }
 
         this.scene.clearPickRegistration();
+        
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
+        this.scene.translate(1.75, -0.13, -1);
+        this.scene.scale(0.45, 0.2, 0.45);
+        this.pieceAppearance.setTexture(this.scene.pieceTex.texture);
+        this.pieceAppearance.apply();
+        this.pieceB.display();
+        this.scene.popMatrix();
+        
 
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
+        this.scene.translate(0.85, -0.13, -1);
+        this.scene.scale(0.45, 0.2, 0.45);
+        this.pieceWhiteAppearance.setTexture(this.scene.pieceWhiteTex.texture);
+        this.pieceWhiteAppearance.apply();
+        this.pieceW.display();
+        this.scene.popMatrix();
         this.board.display();
 
     };
