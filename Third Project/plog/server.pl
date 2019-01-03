@@ -106,7 +106,18 @@ print_header_line(_).
 % Require your Prolog Files here
 
 % Initial board
-parse_input(start, Board) :- table(Board).
+parse_input(start, Board) :- 
+	table(Board).
+	replace_piece(10, 10, 'b', Table, Board).
+
+% Validate Line/Column picked
+parse_input(validateMove(Board, Player, Symbol, Index, Direction), Validity) :-
+	Move = [Symbol, Index, Direction, Player],
+	valid_moves(Player, Board, ValidMoves),
+	(
+		member(Move, ValidMoves), Validity = "true";
+		Validity = "false"	
+	).
 	
 % Move piece
 parse_input(movePiece(Board, Player, Symbol, Index, Direction), NewBoard) :-

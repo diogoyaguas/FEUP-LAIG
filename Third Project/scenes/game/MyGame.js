@@ -31,7 +31,7 @@ class Game extends CGFscene {
 
         this.enableTextures(true);
 
-       this.gl.clearDepth(100.0);
+        this.gl.clearDepth(100.0);
 
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
@@ -48,13 +48,11 @@ class Game extends CGFscene {
         this.gameMode = "Human vs Human";
         this.botType = "Easy";
 
-        this.activePlayer = 1;
+        this.activePlayer = 'w';
         this.activeBot = 1;
         this.activeGameMode = 1;
         this.changedOnce = false;
         this.isPlayingMovie = false;
-
-        this.getPrologRequest('start');
 
         this.setPickEnabled(true);
 
@@ -79,8 +77,6 @@ class Game extends CGFscene {
         this.botPlaying;
         this.botInPlay = false;
 
-        
-
     };
 
     /**
@@ -93,7 +89,7 @@ class Game extends CGFscene {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(8, 35, 50),
             vec3.fromValues(8, -10, -10));
 
-        this.interface.setActiveCamera(this.camera);
+        this.interface.setActiveCamera(null);
 
         this.setGlobalAmbientLight(0.1, 0.1, 0.1, 1.0);
         this.gl.clearColor(0.075, 0.125, 0.150, 1.0);
@@ -223,7 +219,7 @@ class Game extends CGFscene {
     startGame() {
         this.board = new MyBoard(this);
         this.getPrologRequest('start');
-        this.activePlayer = 1;
+        this.activePlayer = 'w';
         this.activeBot = 1;
         this.backupPlays = [];
         this.moviePlays = [];
@@ -256,10 +252,10 @@ class Game extends CGFscene {
 
                 this.board.backAnimation = new LinearAnimation(this, "id", this.board.animationSpeed, finalselcoords);
 
-                if (this.activePlayer == 1)
-                    this.activePlayer = 2;
+                if (this.activePlayer == 'w')
+                    this.activePlayer = 'b';
                 else
-                    this.activePlayer = 1;
+                    this.activePlayer = 'w';
             }
         }
     };
@@ -268,7 +264,7 @@ class Game extends CGFscene {
         if (!this.isPlayingMovie && this.activeGameMode != 3) {
             this.board = new MyBoard(this);
             this.getPrologRequest('start');
-            this.activePlayer = 1;
+            this.activePlayer = 'w';
             this.activeBot = 1;
             this.backupPlays = [];
             this.botInPlay = false;
@@ -287,130 +283,48 @@ class Game extends CGFscene {
         }
     };
 
-    /*botPlay(botState) {
-        if (botState == "selection") {
-
-            if (this.activeGameMode == 3 && this.activeBot == 1)
-                var botSelectionRequest = "secondSelection(";
-            else
-                var botSelectionRequest = "botSelection(";
-
-            botSelectionRequest += this.board.prologBoard;
-            botSelectionRequest += ")";
-
-            this.getPrologRequest(botSelectionRequest);
-        } else if (botState == "pieceDestination") {
-
-            if (this.activeGameMode == 3 && this.activeBot == 1)
-                var botDestinationRequest = "secondDestination(";
-            else
-                var botDestinationRequest = "botDestination(";
-
-            botDestinationRequest += this.board.prologBoard;
-            botDestinationRequest += ",";
-            botDestinationRequest += this.botSelectedLine;
-            botDestinationRequest += ",";
-            botDestinationRequest += this.botSelectedColumn;
-            botDestinationRequest += ")";
-
-            this.getPrologRequest(botDestinationRequest);
-        } else if (botState == "botMovePiece") {
-            if (!this.isPlayingMovie) {
-                var movePrologRequest = "moveBot(";
-                movePrologRequest += this.board.prologBoard;
-                movePrologRequest += ","
-                movePrologRequest += this.botSelectedLine;
-                movePrologRequest += ","
-                movePrologRequest += this.botSelectedColumn;
-                movePrologRequest += ","
-                movePrologRequest += this.botDestinationLine;
-                movePrologRequest += ","
-                movePrologRequest += this.botDestinationColumn;
-                movePrologRequest += ","
-                movePrologRequest += this.roundsWithoutCapture;
-                movePrologRequest += ")"
-
-                this.board.selectedCell = this.board.cells[this.botSelectedColumn
-    - 1][this.botSelectedLine - 1];
-                this.board.destinationCell =
-    this.board.cells[this.botDestinationColumn - 1][this.botDestinationLine - 1];
-
-                this.moviePlays.push(new MoviePlay(this.board.selectedCell.x,
-    this.board.selectedCell.y, this.board.destinationCell.x,
-    this.board.destinationCell.y));
-
-                this.botInPlay = true;
-
-                this.board.pieceMoveAnimation();
-
-                this.board.selectedCell = null;
-
-                this.getPrologRequest(movePrologRequest);
-            } else {
-                if (this.moviePlays.length > 0) {
-                    var lastMove = this.moviePlays[this.moviePlays.length - 1];
-
-                    if (this.incounter % 2 == 0) {
-                        var sx = 9 - lastMove.sx;
-                        var sy = 9 - lastMove.sy;
-                        var dx = 9 - lastMove.dx;
-                        var dy = 9 - lastMove.dy;
-                    } else {
-                        var sx = lastMove.sx;
-                        var sy = lastMove.sy;
-                        var dx = lastMove.dx;
-                        var dy = lastMove.dy;
-                    }
-
-                    var movePrologRequest = "moveBot(";
-                    movePrologRequest += this.board.prologBoard;
-                    movePrologRequest += ","
-                    movePrologRequest += sx;
-                    movePrologRequest += ","
-                    movePrologRequest += sy;
-                    movePrologRequest += ","
-                    movePrologRequest += dx;
-                    movePrologRequest += ","
-                    movePrologRequest += dy;
-                    movePrologRequest += ","
-                    movePrologRequest += this.roundsWithoutCapture;
-                    movePrologRequest += ")"
-
-                    this.board.selectedCell = this.board.cells[sy - 1][sx - 1];
-                    this.board.destinationCell = this.board.cells[dy - 1][dx - 1];
-
-                    this.moviePlays.pop();
-                    this.incounter++;
-
-                    console.log(this.board.selectedCell);
-                    console.log(this.board.destinationCell);
-
-                    this.botInPlay = true;
-
-                    this.board.pieceMoveAnimation();
-
-                    this.board.selectedCell = null;
-
-                    this.getPrologRequest(movePrologRequest);
-                }
-            }
-        }
-    };*/
-
     logPicking() {
-        
+
         if (this.pickMode == false) {
             if (this.pickResults != null && this.pickResults.length > 0) {
-                for (var i=0; i< this.pickResults.length; i++) {
+                for (var i = 0; i < this.pickResults.length; i++) {
                     var obj = this.pickResults[i][0];
-                    if (obj)
-                    {
-                        var customId = this.pickResults[i][1];				
-                        console.log("Picked object: " + obj + ", with pick id " + customId);
+                    if (obj) {
+                        var pickID = this.pickResults[i][1];
+
+                        if (this.board.selectedCell == null) {
+                            var pickingPrologRequest = "validateMove(";
+                            pickingPrologRequest += this.board.prologBoard;
+                            pickingPrologRequest += ","
+                            pickingPrologRequest += this.activePlayer;
+                            pickingPrologRequest += ","
+                            if (pickID < 39)
+                                pickingPrologRequest += 'C';
+                            else
+                                pickingPrologRequest += 'L';
+
+                            pickingPrologRequest += ","
+                            var index = pickID % 19;
+                            if (index == 0) index = 19;
+                            pickingPrologRequest += index;
+                            pickingPrologRequest += ","
+
+                            if (pickID < 20)
+                                pickingPrologRequest += "D)";
+                            else if (pickID >= 20 && pickID < 39)
+                                pickingPrologRequest += "U)";
+                            else if (pickID >= 39 && pickID < 58)
+                                pickingPrologRequest += "R)";
+                            else if (pickID >= 58 && pickID < 77)
+                                pickingPrologRequest += "L)";
+
+                            console.log(pickingPrologRequest);
+
+                        }
                     }
                 }
-                this.pickResults.splice(0,this.pickResults.length);
-            }		
+                this.pickResults.splice(0, this.pickResults.length);
+            }
         }
     }
 
@@ -431,6 +345,16 @@ class Game extends CGFscene {
                 console.log("'start'. Reply: " + response);
 
                 board.create(response);
+            } else if (requestString.includes("validateMove")) {
+                console.log("'validatePieceSelection'. Reply: " + response);
+
+                if (response == "true") {
+                    var x = requestString.charAt(173) - 1;
+                    var y = requestString.charAt(171) - 1;
+
+                    board.selectedCell = board.cells[x][y];
+                    board.getPossibleMoves();
+                }
             } else if (requestString.includes("movePiece")) {
                 console.log("'movePiece'. Reply: " + response);
 
@@ -471,15 +395,13 @@ class Game extends CGFscene {
         var winner;
 
         this.logPicking();
-/*
-        if (this.botPlaying) {
-            if (this.selectedMoveAnimation == undefined) {
-                this.botPlay("pieceSelection");
-                this.botPlaying = false;
-            }
-        }*/
-
-        this.clearPickRegistration();
+        /*
+                if (this.botPlaying) {
+                    if (this.selectedMoveAnimation == undefined) {
+                        this.botPlay("pieceSelection");
+                        this.botPlaying = false;
+                    }
+                }*/
 
         // Clear image and depth buffer every time we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -514,6 +436,6 @@ class Game extends CGFscene {
         }
 
     };
-    
+
 
 }
