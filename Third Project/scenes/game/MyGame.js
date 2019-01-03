@@ -87,7 +87,7 @@ class Game extends CGFscene {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(8, 35, 50),
             vec3.fromValues(8, -10, -10));
 
-        this.interface.setActiveCamera(null);
+        this.interface.setActiveCamera(this.camera);
 
         this.setGlobalAmbientLight(0.1, 0.1, 0.1, 1.0);
         this.gl.clearColor(0.075, 0.125, 0.150, 1.0);

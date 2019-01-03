@@ -40,7 +40,8 @@ class MyRoom extends CGFobject {
         this.scene.pushMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(7, -5, -2);
+        this.scene.rotate(-Math.PI / 3, 1, 0, 0);
+        this.scene.translate(7, -2.5, -4);
         this.scene.scale(12.5, 2.5, 4);
         this.roomAppearance.setTexture(this.scene.clockTex.texture);
         this.roomAppearance.apply();
