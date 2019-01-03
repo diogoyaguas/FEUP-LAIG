@@ -289,32 +289,11 @@ class Game extends CGFscene {
                         var pickID = this.pickResults[i][1];
 
                         if (this.board.selectedCell == null) {
-                            var pickingPrologRequest = "validateMove(";
-                            pickingPrologRequest += this.board.prologBoard;
-                            pickingPrologRequest += ",";
-                            pickingPrologRequest += this.activePlayer;
-                            pickingPrologRequest += ",";
-                            if (pickID < 39)
-                                pickingPrologRequest += "'C'";
-                            else
-                                pickingPrologRequest += "'L'";
-                            pickingPrologRequest += ",";
-                            var index = pickID % 19;
-                            if (index == 0) index = 19;
-                            pickingPrologRequest += index;
-                            pickingPrologRequest += ",";
 
-                            if (pickID < 20)
-                                pickingPrologRequest += "'D')";
-                            else if (pickID >= 20 && pickID < 39)
-                                pickingPrologRequest += "'U')";
-                            else if (pickID >= 39 && pickID < 58)
-                                pickingPrologRequest += "'R')";
-                            else if (pickID >= 58 && pickID < 77)
-                                pickingPrologRequest += "'L')";
+                            this.getPrologRequest(this.pickingPrologRequest("validateMove", pickID));
 
-                            this.getPrologRequest(pickingPrologRequest);
                         } else if (this.board.selectedCell != null) {
+
                             var symbol;
                             if (pickID < 39)
                                 symbol = "C";
@@ -324,39 +303,44 @@ class Game extends CGFscene {
                             var selectedCell = this.board.getCell(symbol, index);
                             if (this.board.selectedCell == selectedCell) {
                                 this.board.selectedCell = null;
-
-                                var pickingPrologRequest = "movePiece(";
-                            pickingPrologRequest += this.board.prologBoard;
-                            pickingPrologRequest += ",";
-                            pickingPrologRequest += this.activePlayer;
-                            pickingPrologRequest += ",";
-                            if (pickID < 39)
-                                pickingPrologRequest += "'C'";
-                            else
-                                pickingPrologRequest += "'L'";
-                            pickingPrologRequest += ",";
-                            var index = pickID % 19;
-                            if (index == 0) index = 19;
-                            pickingPrologRequest += index;
-                            pickingPrologRequest += ",";
-
-                            if (pickID < 20)
-                                pickingPrologRequest += "'D')";
-                            else if (pickID >= 20 && pickID < 39)
-                                pickingPrologRequest += "'U')";
-                            else if (pickID >= 39 && pickID < 58)
-                                pickingPrologRequest += "'R')";
-                            else if (pickID >= 58 && pickID < 77)
-                                pickingPrologRequest += "'L')";
-
-                            this.getPrologRequest(pickingPrologRequest);
-                            }
+                                this.getPrologRequest(this.pickingPrologRequest("movePiece", pickID));
+                            } else this.board.selectedCell = null;
                         }
                     }
                 }
                 this.pickResults.splice(0, this.pickResults.length);
             }
         }
+    }
+
+    pickingPrologRequest(func, pickID) {
+
+        var pickingPrologRequest = func + "(";
+        pickingPrologRequest += this.board.prologBoard;
+        pickingPrologRequest += ",";
+        pickingPrologRequest += this.activePlayer;
+        pickingPrologRequest += ",";
+        if (pickID < 39)
+            pickingPrologRequest += "'C'";
+        else
+            pickingPrologRequest += "'L'";
+        pickingPrologRequest += ",";
+        var index = pickID % 19;
+        if (index == 0) index = 19;
+        pickingPrologRequest += index;
+        pickingPrologRequest += ",";
+
+        if (pickID < 20)
+            pickingPrologRequest += "'U')";
+        else if (pickID >= 20 && pickID < 39)
+            pickingPrologRequest += "'D')";
+        else if (pickID >= 39 && pickID < 58)
+            pickingPrologRequest += "'R')";
+        else if (pickID >= 58 && pickID < 77)
+            pickingPrologRequest += "'L')";
+
+        return pickingPrologRequest;
+
     }
 
     getPrologRequest(requestString, onSuccess, onError, port) {
@@ -380,12 +364,12 @@ class Game extends CGFscene {
                 console.log("'validateMove'. Reply: " + response);
 
                 if (response == "true") {
-                    var symbol = requestString.charAt(2218);
+                    var comma = requestString.indexOf("'");
+                    var symbol = requestString.charAt(comma + 1);
                     var index;
-                    if (requestString.charAt(2222) == ',') {
-                        index = requestString.charAt(2221);
-                    } else index = requestString.charAt(2221) + requestString.charAt(2222);
-                    //var direction = requestString.charAt(2225);
+                    if (requestString.charAt(comma + 5) == ',') {
+                        index = requestString.charAt(comma + 4);
+                    } else index = requestString.charAt(comma + 4) + requestString.charAt(comma + 5);
                     board.selectedCell = board.getCell(symbol, index);
                 }
             } else if (requestString.includes("movePiece")) {
