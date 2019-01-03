@@ -215,7 +215,7 @@ class Game extends CGFscene {
         this.board = new MyBoard(this);
         this.getPrologRequest('start');
         this.activePlayer = 'w';
-        this.activeBot = 1;
+        this.activeBot = 'b';
         this.backupPlays = [];
         this.moviePlays = [];
         this.botInPlay = false;
@@ -304,7 +304,7 @@ class Game extends CGFscene {
                             if (this.board.selectedCell == selectedCell) {
                                 this.board.selectedCell = null;
                                 this.getPrologRequest(this.pickingPrologRequest("movePiece", pickID));
-                            } else this.board.selectedCell = null;
+                            } else this.getPrologRequest(this.pickingPrologRequest("validateMove", pickID));
                         }
                     }
                 }
@@ -409,14 +409,16 @@ class Game extends CGFscene {
     };
 
     display() {
-        this.logPicking();
-        /*
-                if (this.botPlaying) {
-                    if (this.selectedMoveAnimation == undefined) {
-                        this.botPlay("pieceSelection");
-                        this.botPlaying = false;
-                    }
-                }*/
+	
+	    if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3)
+		this.logPicking();
+	
+	    if (this.botPlaying) {
+		if (this.selectedMoveAnimation == undefined && this.removedMoveAnimation == undefined) {
+			this.botPlay("pieceSelection");
+			this.botPlaying = false;
+		}
+	}
 
         // Clear image and depth buffer every time we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
