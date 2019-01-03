@@ -217,8 +217,8 @@ class MyBoard {
         
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
-        this.scene.translate(0.35, -0.13, -0.5);
-        this.scene.scale(0.4, 0.2, 0.4);
+        this.scene.translate(1.75, -0.13, -1);
+        this.scene.scale(0.45, 0.2, 0.45);
         this.pieceAppearance.setTexture(this.scene.pieceTex.texture);
         this.pieceAppearance.apply();
         this.pieceB.display();
@@ -227,8 +227,8 @@ class MyBoard {
 
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
-        this.scene.translate(0.35, -0.13, -2);
-        this.scene.scale(0.4, 0.2, 0.4);
+        this.scene.translate(0.85, -0.13, -1);
+        this.scene.scale(0.45, 0.2, 0.45);
         this.pieceWhiteAppearance.setTexture(this.scene.pieceWhiteTex.texture);
         this.pieceWhiteAppearance.apply();
         this.pieceW.display();
