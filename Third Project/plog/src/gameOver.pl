@@ -1,21 +1,23 @@
 % Goes trough the board, verifying if there are 5 pieces in a row of the same player.
-game_over([[] | []], _) :-
-    false.
+game_over([[] | []], Winner, _) :-
+    Winner = 'undefined'.
 
 % Checks for five equal pieces in a row
 game_over([[Piece | RestOfLine] | RestOfBoard], Winner, PieceIndex) :-
     RestOfLine = [], game_over(RestOfBoard, Winner, 0);
     Piece \= empty, % Only analyses if the current slot is occupied by a player's piece
-    % Horizontal Search
-    check_game_over_horizontal(RestOfLine, Piece, 1), Winner = Piece; 
-    % Vertical Search
-    check_game_over_vertical(RestOfBoard, PieceIndex, Piece, 1), Winner = Piece;
-    % Left Diagonal Search
-    PreviousPieceIndex is PieceIndex - 1, 
-    check_game_over_diagonal_left(RestOfBoard, PreviousPieceIndex, Piece, 1), Winner = Piece;
-    %Right Diagonal Search
-    NextPieceIndex is PieceIndex + 1, 
-    check_game_over_diagonal_right(RestOfBoard, NextPieceIndex, Piece, 1), Winner = Piece.
+    (
+        % Horizontal Search
+        check_game_over_horizontal(RestOfLine, Piece, 1), Winner = Piece; 
+        % Vertical Search
+        check_game_over_vertical(RestOfBoard, PieceIndex, Piece, 1), Winner = Piece;
+        % Left Diagonal Search
+        PreviousPieceIndex is PieceIndex - 1, 
+        check_game_over_diagonal_left(RestOfBoard, PreviousPieceIndex, Piece, 1), Winner = Piece;
+        %Right Diagonal Search
+        NextPieceIndex is PieceIndex + 1, 
+        check_game_over_diagonal_right(RestOfBoard, NextPieceIndex, Piece, 1), Winner = Piece
+    ).
     
 game_over([[_ | RestOfLine] | RestOfBoard], Winner, PieceIndex) :-
     NextIndex is (PieceIndex + 1),

@@ -41,9 +41,9 @@ class MyClock extends CGFobject {
 
     display() {
 
-        var gameOver = "No";
+        var gameOver = this.scene.winner;
 
-        if (gameOver == "No") {
+        if (gameOver == undefined) {
             this.displayTimer();
         } else if (gameOver != undefined) {
             this.displayWinner(gameOver);
@@ -58,7 +58,7 @@ class MyClock extends CGFobject {
         this.scene.rotate(Math.PI / 6, 1, 0, 0);
         this.scene.translate(1.5, 2.5, -1.2);
         this.scene.scale(11, 3, 8);
-        if (gameOver == "White")
+        if (gameOver == "w")
             this.clockAppearance.setTexture(this.scene.whiteWinnerTex.texture);
         else
             this.clockAppearance.setTexture(this.scene.blackWinnerTex.texture);

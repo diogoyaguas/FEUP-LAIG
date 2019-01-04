@@ -222,10 +222,9 @@ class Game extends CGFscene {
         this.plusTex.setAmbient(1, 1, 1, 1);
         this.plusTex.loadTexture('scenes/images/plus-texture.png');
 
-
         this.pieceTex = new CGFappearance(this);
         this.pieceTex.setAmbient(1, 1, 1, 1);
-        this.pieceTex.loadTexture('scenes/images/black-texture.jpg');
+        this.pieceTex.loadTexture('scenes/images/black-texture.png');
         
         this.pieceWhiteTex = new CGFappearance(this);
         this.pieceWhiteTex.setAmbient(1, 1, 1, 1);
@@ -293,7 +292,7 @@ class Game extends CGFscene {
     startGame() {
         this.board = new MyBoard(this);
         this.getPrologRequest('start');
-        this.pontuation = 1;
+        this.pontuation = -1;
         this.activePlayer = 'w';
         this.activeBot = 'b';
         this.backupPlays = [];
@@ -423,6 +422,23 @@ class Game extends CGFscene {
 
     }
 
+    getValuePrologRequest() {
+
+        var pickingPrologRequest = "getValue(";
+        pickingPrologRequest += this.board.prologBoard;
+        pickingPrologRequest += ",";
+        pickingPrologRequest += this.activePlayer;
+        pickingPrologRequest += ")";
+        this.getPrologRequest(pickingPrologRequest);
+    }
+
+    winnerPrologRequest() {
+
+        var pickingPrologRequest = "checkGameOver(";
+        pickingPrologRequest += this.board.prologBoard;
+        pickingPrologRequest += ")";
+        this.getPrologRequest(pickingPrologRequest);
+    }
     getPrologRequest(requestString, onSuccess, onError, port) {
         var requestPort = port || 8081;
         var request = new XMLHttpRequest();
@@ -481,7 +497,9 @@ class Game extends CGFscene {
             } else if (requestString.includes("checkGameOver")) {
                 console.log("'Winner'. Reply: " + response);
 
-                game.winner = response;
+                if(response == 'undefined')
+                game.winner = undefined;
+                else game.winner = response;
             }
         };
 

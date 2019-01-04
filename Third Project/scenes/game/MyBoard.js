@@ -255,13 +255,9 @@ class MyBoard {
         else
             this.scene.activePlayer = 'w';
 
-        var pickingPrologRequest = "getValue(";
-        pickingPrologRequest += this.prologBoard;
-        pickingPrologRequest += ",";
-        pickingPrologRequest += this.scene.activePlayer;
-        pickingPrologRequest += ")";
+        this.scene.getValuePrologRequest();
+        this.scene.winnerPrologRequest();
 
-        this.scene.getPrologRequest(pickingPrologRequest);
     };
 
 }
