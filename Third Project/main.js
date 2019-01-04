@@ -74,6 +74,7 @@ serialInclude([
   'scenes/objs/CGFOBJModel.js',
   'scenes/objs/CGFResourceReader.js',
   'scenes/primitives/Piece.js',
+  'scenes/primitives/MyBox.js',
 
   main =
   function () {
