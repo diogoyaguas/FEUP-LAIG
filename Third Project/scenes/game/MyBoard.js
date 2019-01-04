@@ -248,6 +248,9 @@ class MyBoard {
     };
 
     changePlayers() {
+        
+        this.scene.changingPlayer = true;
+
         if (this.scene.activePlayer == 'w')
             this.scene.activePlayer = 'b';
         else
@@ -256,6 +259,8 @@ class MyBoard {
         this.scene.timePassed = 0;
         this.scene.getValuePrologRequest();
         this.scene.winnerPrologRequest();
+
+        this.scene.changingPlayer = false;
 
     };
 

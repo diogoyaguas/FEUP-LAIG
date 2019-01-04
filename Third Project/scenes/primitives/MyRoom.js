@@ -21,8 +21,6 @@ class MyRoom extends CGFobject {
         this.clock = new MyCube(this.scene);
         this.table = new MyRectangle(this.scene, 0, 0, 1, 1);
         this.wall = new MyRectangle(this.scene, 0, 0, 1, 1);
-        this.box1 = new MyBox(this.scene);
-        this.box2 = new MyBox(this.scene);
 
         this.setAppearance();
     };
@@ -88,22 +86,6 @@ class MyRoom extends CGFobject {
         this.roomAppearance.setTexture(this.scene.wallTex.texture);
         this.roomAppearance.apply();
         this.wall.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(-6, 5, -4);
-        this.scene.scale(5, 5, 4);
-        this.roomAppearance.setTexture(this.scene.clockTex.texture);
-        this.roomAppearance.apply();
-        this.box1.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(20, 5, -4);
-        this.scene.scale(5, 5, 4);
-        this.roomAppearance.setTexture(this.scene.clockTex.texture);
-        this.roomAppearance.apply();
-        this.box2.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();

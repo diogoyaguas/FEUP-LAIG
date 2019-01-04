@@ -134,12 +134,10 @@ parse_input(checkGameOver(Board), Winner) :-
 	game_over(Board, Winner, 0).
 
 % Selection move for bot
-parse_input(botMove(Board, Player, Difficulty), Symbol-Index-Direction) :-
+parse_input(botMove(Board, Player, Difficulty), NewBoard) :-
 	valid_moves(Board, Player, ValidMoves),
 	choose_move(Board, Player, Move, Difficulty, ValidMoves),
-	Move = [Symbol | RestOfPlay],
-	RestOfPlay = [Index | EndOfPlay],
-	EndOfPlay = [Direction | _].
+	move(Move, ValidMoves, Board, NewBoard).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

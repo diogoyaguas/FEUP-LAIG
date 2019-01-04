@@ -3,16 +3,12 @@
 % Choose a bot's move
 choose_move(_, _, Move, 1, ListOfMoves) :-
     random_move(ListOfMoves, Index),
-    nth1(Index, ListOfMoves, Move),
-    nth1(1, Move, Symbol),
-    write_move(Symbol, Move).
+    nth1(Index, ListOfMoves, Move).
 
 choose_move(Board, Player, Move, 2, ListOfMoves) :-
     random_permutation(ListOfMoves, SortedMoves),
     choose_best_play(Board, Player, Move, SortedMoves, [], Index),
-    nth0(Index, SortedMoves, Move),
-    nth1(1, Move, Symbol),
-    write_move(Symbol, Move).
+    nth0(Index, SortedMoves, Move).
 
 % Choose a random move
 random_move(ListOfMoves, Index) :-

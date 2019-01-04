@@ -49,11 +49,12 @@ class Game extends CGFscene {
         this.botType = "Easy";
 
         this.activePlayer = 'w';
-        this.pontuation;
-        this.activeBot = 1;
+        this.pontuation = 0;
+        this.activeBot = 'b';
         this.activeGameMode = 1;
         this.changedOnce = false;
         this.isPlayingMovie = false;
+        this.botPlaying;
 
         this.setPickEnabled(true);
 
@@ -71,12 +72,6 @@ class Game extends CGFscene {
 
         this.gameStarted = false;
         this.changingPlayer = false;
-
-        /// BOT VARIABLES //
-        this.botSelectedLine;
-        this.botSelectedColumn;
-        this.botPlaying;
-        this.botInPlay = false;
     };
 
     /**
@@ -288,12 +283,13 @@ class Game extends CGFscene {
     startGame() {
         this.board = new MyBoard(this);
         this.getPrologRequest('start');
+        this.winner = undefined;
+        this.timePassed = 0;
         this.pontuation = -1;
         this.activePlayer = 'w';
         this.activeBot = 'b';
         this.backupPlays = [];
         this.moviePlays = [];
-        this.botInPlay = false;
         this.botPlaying = false;
         this.isPlayingMovie = false;
         this.lastMoveTime = this.elapsedTime;
@@ -337,13 +333,9 @@ class Game extends CGFscene {
             this.board = new MyBoard(this);
             this.getPrologRequest('start');
             this.activePlayer = 'w';
-            this.activeBot = 1;
+            this.activeBot = 'b';
             this.backupPlays = [];
-            this.botInPlay = false;
-            this.botPlaying = false;
 
-            this.board.selectedCell = null;
-            this.board.destinationCell = null;
             this.selectedMoveAnimation = undefined;
 
             this.activeGameMode = 3;
@@ -420,26 +412,44 @@ class Game extends CGFscene {
 
     getValuePrologRequest() {
 
-        var pickingPrologRequest = "getValue(";
-        pickingPrologRequest += this.board.prologBoard;
-        pickingPrologRequest += ",";
-        pickingPrologRequest += this.activePlayer;
-        pickingPrologRequest += ")";
-        this.getPrologRequest(pickingPrologRequest);
+        var valuePrologRequest = "getValue(";
+        valuePrologRequest += this.board.prologBoard;
+        valuePrologRequest += ",";
+        valuePrologRequest += this.activePlayer;
+        valuePrologRequest += ")";
+        this.getPrologRequest(valuePrologRequest);
     }
 
     winnerPrologRequest() {
 
-        var pickingPrologRequest = "checkGameOver(";
-        pickingPrologRequest += this.board.prologBoard;
-        pickingPrologRequest += ")";
-        this.getPrologRequest(pickingPrologRequest);
+        var winnerPrologRequest = "checkGameOver(";
+        winnerPrologRequest += this.board.prologBoard;
+        winnerPrologRequest += ")";
+        this.getPrologRequest(winnerPrologRequest);
     }
+
+    botMovePrologRequest() {
+
+        var botPrologRequest = "botMove(";
+        botPrologRequest += this.board.prologBoard;
+        botPrologRequest += ",";
+        botPrologRequest += this.activeBot;
+        botPrologRequest += ",";
+        if (this.botType == "Easy")
+            botPrologRequest += 1;
+        else if (this.botType == "Smart")
+            botPrologRequest += 2;
+        botPrologRequest += ")";
+        this.getPrologRequest(botPrologRequest);
+    }
+
     getPrologRequest(requestString, onSuccess, onError, port) {
         var requestPort = port || 8081;
         var request = new XMLHttpRequest();
         var board = this.board;
         var game = this;
+
+        if(requestString == undefined) return;
 
         request.open('GET', 'http://localhost:' + requestPort + '/' + requestString,
             true);
@@ -471,24 +481,19 @@ class Game extends CGFscene {
                 board.recreate(response);
                 board.changePlayers();
 
-                if (game.activeGameMode == 2) game.botPlaying = true;
+                if(game.activeGameMode == 2) game.botPlaying = true;
+
             } else if (requestString.includes("getValue")) {
                 console.log("'getValue'. Reply: " + response);
 
                 game.pontuation = response;
 
             } else if (requestString.includes("botMove")) {
+                response = response.replace(/empty/g, 0);
                 console.log("'botMove'. Reply: " + response);
 
-                game.botSelectedSymbol = response.charAt(0)
-
-                if (response.charAt(3) == '-') {
-                    game.botSelectedIndex = response.charAt(2);
-                    game.botSelectedDirection = response.charAt(4);
-                } else {
-                    game.botSelectedIndex = response.charAt(2) + response.charAt(3);
-                    game.botSelectedDirection = response.charAt(5);
-                }
+                board.recreate(response);
+                board.changePlayers();
 
             } else if (requestString.includes("checkGameOver")) {
                 console.log("'Winner'. Reply: " + response);
@@ -510,14 +515,12 @@ class Game extends CGFscene {
 
     display() {
 
-        if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3 && this.winner == undefined)
+        if (!this.changingPlayer && this.activeGameMode != 3 && !this.botPlaying && this.winner == undefined)
             this.logPicking();
 
-        if (this.botPlaying) {
-            if (this.selectedMoveAnimation == undefined && this.removedMoveAnimation == undefined) {
-                this.botPlay("pieceSelection");
-                this.botPlaying = false;
-            }
+        if (!this.changingPlayer && this.activeGameMode == 2 && this.botPlaying && this.winner == undefined) {
+            this.getPrologRequest(this.botMovePrologRequest());
+            this.botPlaying = false;
         }
 
         // Clear image and depth buffer every time we update the scene
