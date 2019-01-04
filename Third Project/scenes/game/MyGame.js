@@ -58,8 +58,8 @@ class Game extends CGFscene {
         this.setPickEnabled(true);
 
         this.startTime = 0;
+        this.timePassed = 0;
         this.setUpdatePeriod(UPDATE_TIME / 60);
-        this.lastMoveTime = 0;
 
         this.selectedMoveAnimation;
 
@@ -225,11 +225,11 @@ class Game extends CGFscene {
         this.pieceTex = new CGFappearance(this);
         this.pieceTex.setAmbient(1, 1, 1, 1);
         this.pieceTex.loadTexture('scenes/images/black-texture.png');
-        
+
         this.pieceWhiteTex = new CGFappearance(this);
         this.pieceWhiteTex.setAmbient(1, 1, 1, 1);
         this.pieceWhiteTex.loadTexture('scenes/images/white-texture.jpg');
-        
+
     };
 
     /**
@@ -276,17 +276,13 @@ class Game extends CGFscene {
         if (this.lastUpdate == 0) this.lastUpdate = currTime;
 
         this.elapsedTime = (currTime - this.lastUpdate) / 1000;
+        this.timePassed += this.elapsedTime;
 
-        this.lastUpdate = currTime;
         this.updateViews();
     };
 
     countdown() {
-        return 61 - (this.elapsedTime - this.lastMoveTime);
-    };
-
-    setCountdown() {
-        this.lastMoveTime = this.elapsedTime;
+        return 61 - this.timePassed;
     };
 
     startGame() {
@@ -497,8 +493,8 @@ class Game extends CGFscene {
             } else if (requestString.includes("checkGameOver")) {
                 console.log("'Winner'. Reply: " + response);
 
-                if(response == 'undefined')
-                game.winner = undefined;
+                if (response == 'undefined')
+                    game.winner = undefined;
                 else game.winner = response;
             }
         };
@@ -513,16 +509,16 @@ class Game extends CGFscene {
     };
 
     display() {
-	
-	    if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3)
-		this.logPicking();
-	
-	    if (this.botPlaying) {
-		if (this.selectedMoveAnimation == undefined && this.removedMoveAnimation == undefined) {
-			this.botPlay("pieceSelection");
-			this.botPlaying = false;
-		}
-	}
+
+        if (!this.changingPlayer && !this.botPlaying && this.activeGameMode != 3 && this.winner == undefined)
+            this.logPicking();
+
+        if (this.botPlaying) {
+            if (this.selectedMoveAnimation == undefined && this.removedMoveAnimation == undefined) {
+                this.botPlay("pieceSelection");
+                this.botPlaying = false;
+            }
+        }
 
         // Clear image and depth buffer every time we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);

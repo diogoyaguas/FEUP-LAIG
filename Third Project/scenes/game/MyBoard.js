@@ -29,12 +29,10 @@ class MyBoard {
         this.cellsCreated = false;
 
         this.selectedCell = null;
-        this.possibleCells = [];
 
         this.prologBoard = "";
 
         this.board = new MyBoardPrimitive(this.scene);
-
         this.pieceB = new MySphere(this.scene, 1, 32, 64);
         this.pieceW = new MySphere(this.scene, 1, 32, 64);
 
@@ -255,6 +253,7 @@ class MyBoard {
         else
             this.scene.activePlayer = 'w';
 
+        this.scene.timePassed = 0;
         this.scene.getValuePrologRequest();
         this.scene.winnerPrologRequest();
 

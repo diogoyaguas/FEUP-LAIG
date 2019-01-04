@@ -41,6 +41,15 @@ class MyClock extends CGFobject {
 
     display() {
 
+        if (this.scene.countdown() <= 0) {
+
+            if (this.scene.activePlayer == 'w') {
+
+                this.scene.winner = 'b';
+            } else if (this.scene.activePlayer == 'b')
+                this.scene.winner == 'w';
+        }
+
         var gameOver = this.scene.winner;
 
         if (gameOver == undefined) {
@@ -89,7 +98,7 @@ class MyClock extends CGFobject {
         this.scene.rotate(Math.PI / 6, 1, 0, 0);
         this.scene.translate(9, 3.25, -1.15);
         this.displayTime(1).apply();
-        
+
         this.time.setSAndT(1, 1);
         this.time.display();
         this.scene.popMatrix();
@@ -172,6 +181,8 @@ class MyClock extends CGFobject {
             string = string.charAt(0);
         else if (string.length == 2 && type == 2)
             string = string.charAt(1);
+        else if (string.length == 1 && type == 1)
+            return this.scene.zeroTex;
         else if (string.length == 1 && type == 2)
             string = string.charAt(0);
 
