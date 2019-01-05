@@ -406,6 +406,8 @@ class Game extends CGFscene {
                 console.log("'validateMove'. Reply: " + response);
 
                 if (response == "true") {
+                    game.clock.alarmAppearance = game.clock.greenAlarmAppearance;
+                    setTimeout(()=>game.clock.alarmAppearance = game.clock.normalAlarmAppearance, 1000);
                     var comma = requestString.indexOf("'");
                     var symbol = requestString.charAt(comma + 1);
                     var index;
@@ -413,6 +415,9 @@ class Game extends CGFscene {
                         index = requestString.charAt(comma + 4);
                     } else index = requestString.charAt(comma + 4) + requestString.charAt(comma + 5);
                     board.selectedCell = board.getCell(symbol, index);
+                } else if(response == "false") {
+                    game.clock.alarmAppearance = game.clock.redAlarmAppearance;
+                    setTimeout(()=>game.clock.alarmAppearance = game.clock.normalAlarmAppearance, 1000);
                 }
             } else if (requestString.includes("movePiece")) {
                 response = response.replace(/empty/g, 0);

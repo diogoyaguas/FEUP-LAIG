@@ -24,6 +24,7 @@ class MyClock extends CGFobject {
         this.screen = new MyRectangle(this.scene, 0, 0, 1, 1);
         this.playerPoints = new MyRectangle(this.scene, 0, 0, 1, 1);
         this.time = new MyRectangle(this.scene, 0, 0, 1, 1);
+        this.alarm = new MySphere(this.scene, 1, 32, 32);
 
         this.setAppearance();
 
@@ -35,7 +36,28 @@ class MyClock extends CGFobject {
         this.clockAppearance.setAmbient(1, 1, 1, 1);
         this.clockAppearance.setSpecular(1, 1, 1, 1);
         this.clockAppearance.setDiffuse(1, 1, 1, 1);
-        this.clockAppearance.setShininess(true);
+        this.clockAppearance.setShininess(1);
+
+        this.normalAlarmAppearance = new CGFappearance(this.scene);
+        this.normalAlarmAppearance.setAmbient(1, 1, 1, 1);
+        this.normalAlarmAppearance.setSpecular(1, 1, 1, 1);
+        this.normalAlarmAppearance.setDiffuse(1, 1, 1, 1);
+        this.normalAlarmAppearance.setShininess(1);
+
+        this.redAlarmAppearance = new CGFappearance(this.scene);
+        this.redAlarmAppearance.setAmbient(1, 0, 0, 1);
+        this.redAlarmAppearance.setSpecular(1, 0, 0, 1);
+        this.redAlarmAppearance.setDiffuse(1, 0, 0, 1);
+        this.redAlarmAppearance.setShininess(1);
+
+        this.greenAlarmAppearance = new CGFappearance(this.scene);
+        this.greenAlarmAppearance.setAmbient(0, 1, 0, 1);
+        this.greenAlarmAppearance.setSpecular(0, 1, 0, 1);
+        this.greenAlarmAppearance.setDiffuse(0, 1, 0, 1);
+        this.greenAlarmAppearance.setShininess(1);
+
+        this.alarmAppearance = this.normalAlarmAppearance;
+        
 
     };
 
@@ -128,6 +150,13 @@ class MyClock extends CGFobject {
         this.displayPontuation(2).apply();
         this.time.setSAndT(1, 1);
         this.time.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(11.35, -5, -1.35);
+        this.scene.scale(0.25, 0.25, 0.25);
+        this.alarmAppearance.apply();
+        this.alarm.display();
         this.scene.popMatrix();
 
     };
