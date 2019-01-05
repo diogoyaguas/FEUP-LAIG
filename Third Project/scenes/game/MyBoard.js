@@ -36,9 +36,6 @@ class MyBoard {
         this.pieceB = new MySphere(this.scene, 1, 32, 64);
         this.pieceW = new MySphere(this.scene, 1, 32, 64);
 
-        this.undoAnimation = undefined;
-        this.returnAnimation = undefined;
-
         this.setAppearance();
 
     };
@@ -251,16 +248,14 @@ class MyBoard {
         
         this.scene.changingPlayer = true;
 
-        if (this.scene.activePlayer == 'w')
-            this.scene.activePlayer = 'b';
-        else
-            this.scene.activePlayer = 'w';
-
         this.scene.timePassed = 0;
         this.scene.getValuePrologRequest();
         this.scene.winnerPrologRequest();
 
-        this.scene.changingPlayer = false;
+        if (this.scene.activePlayer == 'w')
+            this.scene.activePlayer = 'b';
+        else
+            this.scene.activePlayer = 'w';
 
     };
 

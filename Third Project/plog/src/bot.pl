@@ -2,10 +2,14 @@
 
 % Choose a bot's move
 choose_move(_, _, Move, 1, ListOfMoves) :-
+    random(5, 15, Time),
+    sleep(Time),
     random_move(ListOfMoves, Index),
     nth1(Index, ListOfMoves, Move).
 
 choose_move(Board, Player, Move, 2, ListOfMoves) :-
+    random(5, 15, Time),
+    sleep(Time),
     random_permutation(ListOfMoves, SortedMoves),
     choose_best_play(Board, Player, Move, SortedMoves, [], Index),
     nth0(Index, SortedMoves, Move).

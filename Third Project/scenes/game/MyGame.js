@@ -11,13 +11,8 @@ class Game extends CGFscene {
     constructor(myInterface) {
         super();
 
-        this.texture = null;
-        this.appearance = null;
-        this.surfaces = [];
-        this.translations = [];
-        this.lastUpdate = 0;
-
         this.interface = myInterface;
+        this.lastUpdate = 0;
     };
 
     /**
@@ -32,7 +27,6 @@ class Game extends CGFscene {
         this.enableTextures(true);
 
         this.gl.clearDepth(100.0);
-
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
@@ -50,10 +44,8 @@ class Game extends CGFscene {
 
         this.activePlayer = 'w';
         this.pontuation = 0;
-        this.activeBot = 'b';
         this.activeGameMode = 1;
         this.changedOnce = false;
-        this.isPlayingMovie = false;
         this.botPlaying;
 
         this.setPickEnabled(true);
@@ -61,14 +53,6 @@ class Game extends CGFscene {
         this.startTime = 0;
         this.timePassed = 0;
         this.setUpdatePeriod(UPDATE_TIME / 60);
-
-        this.selectedMoveAnimation;
-
-        this.backupCoords = [];
-        this.selCoords = [];
-        this.backupPlays = [];
-        this.moviePlays = [];
-        this.incounter = 0;
 
         this.gameStarted = false;
         this.changingPlayer = false;
@@ -287,14 +271,8 @@ class Game extends CGFscene {
         this.timePassed = 0;
         this.pontuation = -1;
         this.activePlayer = 'w';
-        this.activeBot = 'b';
-        this.backupPlays = [];
-        this.moviePlays = [];
         this.botPlaying = false;
-        this.isPlayingMovie = false;
-        this.lastMoveTime = this.elapsedTime;
-
-        this.selectedMoveAnimation = undefined;
+        this.gameStarted = false;
 
         if (this.gameMode == "Human vs Human")
             this.activeGameMode = 1;
@@ -302,49 +280,9 @@ class Game extends CGFscene {
             this.activeGameMode = 2;
         else if (this.gameMode == "Bot vs Bot") {
             this.activeGameMode = 3;
-            this.first = true;
+            this.botPlaying = true;
         }
 
-        this.gameStarted = true;
-    };
-
-    undo() {
-        if (this.activeGameMode == 1) {
-            if (this.backupPlays.length > 0) {
-                this.board.undoAnimation = new CircularAnimation(
-                    this, "BoardRotation", [0, 0, 0], 0, 0, 180, 1);
-
-                var selcoords = this.selCoords[this.selCoords.length - 1];
-                var finalselcoords = [selcoords, [0, 0, 0]];
-
-                this.board.backAnimation = new LinearAnimation(
-                    this, "id", this.board.animationSpeed, finalselcoords);
-
-                if (this.activePlayer == 'w')
-                    this.activePlayer = 'b';
-                else
-                    this.activePlayer = 'w';
-            }
-        }
-    };
-
-    playMovie() {
-        if (!this.isPlayingMovie && this.activeGameMode != 3) {
-            this.board = new MyBoard(this);
-            this.getPrologRequest('start');
-            this.activePlayer = 'w';
-            this.activeBot = 'b';
-            this.backupPlays = [];
-
-            this.selectedMoveAnimation = undefined;
-
-            this.activeGameMode = 3;
-            this.isPlayingMovie = true;
-            this.moviePlays.reverse();
-        } else {
-            this.isPlayingMovie = false;
-            this.startGame();
-        }
     };
 
     logPicking() {
@@ -353,6 +291,7 @@ class Game extends CGFscene {
                 for (var i = 0; i < this.pickResults.length; i++) {
                     var obj = this.pickResults[i][0];
                     if (obj) {
+
                         var pickID = this.pickResults[i][1];
 
                         if (this.board.selectedCell == null) {
@@ -368,6 +307,7 @@ class Game extends CGFscene {
                                 symbol = "L";
                             var index = pickID % 19;
                             var selectedCell = this.board.getCell(symbol, index);
+
                             if (this.board.selectedCell == selectedCell) {
                                 this.board.selectedCell = null;
                                 this.getPrologRequest(this.pickingPrologRequest("movePiece", pickID));
@@ -433,7 +373,7 @@ class Game extends CGFscene {
         var botPrologRequest = "botMove(";
         botPrologRequest += this.board.prologBoard;
         botPrologRequest += ",";
-        botPrologRequest += this.activeBot;
+        botPrologRequest += this.activePlayer;
         botPrologRequest += ",";
         if (this.botType == "Easy")
             botPrologRequest += 1;
@@ -449,7 +389,7 @@ class Game extends CGFscene {
         var board = this.board;
         var game = this;
 
-        if(requestString == undefined) return;
+        if (requestString == undefined) return;
 
         request.open('GET', 'http://localhost:' + requestPort + '/' + requestString,
             true);
@@ -459,8 +399,8 @@ class Game extends CGFscene {
 
             if (requestString == "start") {
                 console.log("'start'. Reply: " + response);
-
                 board.create(response);
+                game.gameStarted = true;
 
             } else if (requestString.includes("validateMove")) {
                 console.log("'validateMove'. Reply: " + response);
@@ -481,7 +421,7 @@ class Game extends CGFscene {
                 board.recreate(response);
                 board.changePlayers();
 
-                if(game.activeGameMode == 2) game.botPlaying = true;
+                if (game.activeGameMode == 2 && game.winner == undefined) game.botPlaying = true;
 
             } else if (requestString.includes("getValue")) {
                 console.log("'getValue'. Reply: " + response);
@@ -495,12 +435,16 @@ class Game extends CGFscene {
                 board.recreate(response);
                 board.changePlayers();
 
+                if (game.activeGameMode == 3) game.botPlaying = true;
+
             } else if (requestString.includes("checkGameOver")) {
                 console.log("'Winner'. Reply: " + response);
 
                 if (response == 'undefined')
                     game.winner = undefined;
                 else game.winner = response;
+
+                game.changingPlayer = false;
             }
         };
 
@@ -515,12 +459,16 @@ class Game extends CGFscene {
 
     display() {
 
-        if (!this.changingPlayer && this.activeGameMode != 3 && !this.botPlaying && this.winner == undefined)
-            this.logPicking();
+        if (this.gameStarted && !this.changingPlayer && this.winner == undefined) {
 
-        if (!this.changingPlayer && this.activeGameMode == 2 && this.botPlaying && this.winner == undefined) {
-            this.getPrologRequest(this.botMovePrologRequest());
-            this.botPlaying = false;
+            if (this.activeGameMode != 3 && !this.botPlaying)
+                this.logPicking();
+
+            if (this.activeGameMode != 1 && this.botPlaying) {
+                this.getPrologRequest(this.botMovePrologRequest());
+                this.botPlaying = false;
+            }
+
         }
 
         // Clear image and depth buffer every time we update the scene
@@ -539,12 +487,11 @@ class Game extends CGFscene {
         this.lights[0].update();
         this.lights[1].update();
 
-
-        this.rotate(Math.PI / 2.0, 1, 0, 0);
+        this.rotate(Math.PI / 2, 1, 0, 0);
 
         if (this.gameStarted) {
             this.board.display();
-            if (!this.isPlayingMovie) this.clock.display();
+            this.clock.display();
         }
 
         if (this.activeStyle == "Room") {
