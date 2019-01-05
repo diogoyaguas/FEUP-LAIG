@@ -57,8 +57,6 @@ serialInclude([
   'scenes/game/MyBoard.js',
   'scenes/game/MyCell.js',
   'scenes/game/MyMove.js',
-  'scenes/game/MyMoviePlay.js',
-  'scenes/game/MyPlay.js',
   'scenes/primitives/MyBoardPrimitive.js',
   'scenes/primitives/MyRectangle.js',
   'scenes/primitives/MyRoom.js',
@@ -69,11 +67,9 @@ serialInclude([
   'scenes/primitives/MyQuad.js',
   'scenes/primitives/MyCube.js',
   'scenes/primitives/MyClock.js',
+  'scenes/primitives/Piece.js',
   'scenes/animation/Animation.js',
   'scenes/animation/CircularAnimation.js',
-  'scenes/objs/CGFOBJModel.js',
-  'scenes/objs/CGFResourceReader.js',
-  'scenes/primitives/Piece.js',
 
   main =
   function () {

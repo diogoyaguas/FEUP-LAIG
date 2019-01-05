@@ -50,6 +50,10 @@ class Game extends CGFscene {
 
         this.setPickEnabled(true);
 
+        this.backupMoves = [];
+        this.allMoves = [];
+        this.moviePlaying = false;
+
         this.startTime = 0;
         this.timePassed = 0;
         this.setUpdatePeriod(UPDATE_TIME / 60);
@@ -272,6 +276,10 @@ class Game extends CGFscene {
         this.pontuation = -1;
         this.activePlayer = 'w';
         this.botPlaying = false;
+        this.backupMoves = [];
+        this.allMoves = [];
+        this.firstUndo = false;
+        this.moviePlaying = false;
         this.gameStarted = false;
 
         if (this.gameMode == "Human vs Human")
@@ -284,6 +292,44 @@ class Game extends CGFscene {
         }
 
     };
+
+    undo() {
+
+        if (this.activeGameMode == 1) {
+
+            if (this.backupMoves.length > 1) {
+
+                if (this.firstUndo) {
+
+                    this.backupMoves.pop();
+                    this.board.recreate(this.backupMoves[this.backupMoves.length-1]);
+                    console.log(this.backupMoves);
+                    this.firstUndo = false;
+                    this.board.changePlayers();
+                }
+
+            }
+        }
+    }
+
+    playMovie() {
+
+        if (!this.moviePlaying) {
+            this.board = new MyBoard(this);
+            this.getPrologRequest('start');
+            this.winner = undefined;
+            this.timePassed = 5;
+            this.lastTime = 0;
+            this.pontuation = -1;
+            this.activePlayer = 'w';
+            this.botPlaying = false;
+            this.moviePlaying = true;
+            this.allMoves.reverse();
+        } else {
+            this.moviePlaying = false;
+            this.startGame();
+        }
+    }
 
     logPicking() {
         if (this.pickMode == false) {
@@ -400,6 +446,8 @@ class Game extends CGFscene {
             if (requestString == "start") {
                 console.log("'start'. Reply: " + response);
                 board.create(response);
+                game.allMoves.push(response);
+                game.backupMoves.push(response);
                 game.gameStarted = true;
 
             } else if (requestString.includes("validateMove")) {
@@ -407,7 +455,7 @@ class Game extends CGFscene {
 
                 if (response == "true") {
                     game.clock.alarmAppearance = game.clock.greenAlarmAppearance;
-                    setTimeout(()=>game.clock.alarmAppearance = game.clock.normalAlarmAppearance, 1000);
+                    setTimeout(() => game.clock.alarmAppearance = game.clock.normalAlarmAppearance, 1000);
                     var comma = requestString.indexOf("'");
                     var symbol = requestString.charAt(comma + 1);
                     var index;
@@ -415,16 +463,19 @@ class Game extends CGFscene {
                         index = requestString.charAt(comma + 4);
                     } else index = requestString.charAt(comma + 4) + requestString.charAt(comma + 5);
                     board.selectedCell = board.getCell(symbol, index);
-                } else if(response == "false") {
+                } else if (response == "false") {
                     game.clock.alarmAppearance = game.clock.redAlarmAppearance;
-                    setTimeout(()=>game.clock.alarmAppearance = game.clock.normalAlarmAppearance, 1000);
+                    setTimeout(() => game.clock.alarmAppearance = game.clock.normalAlarmAppearance, 1000);
                 }
             } else if (requestString.includes("movePiece")) {
                 response = response.replace(/empty/g, 0);
                 console.log("'movePiece'. Reply: " + response);
 
                 board.recreate(response);
+                game.allMoves.push(response);
+                game.backupMoves.push(response);
                 board.changePlayers();
+                game.firstUndo = true;
 
                 if (game.activeGameMode == 2 && game.winner == undefined) game.botPlaying = true;
 
@@ -476,6 +527,14 @@ class Game extends CGFscene {
 
         }
 
+        if (this.moviePlaying && Math.round(this.timePassed) % 5 == 0 && Math.round(this.timePassed) != this.lastTime) {
+
+            this.lastTime = Math.round(this.timePassed);
+            if (this.allMoves.length != 0) {
+                this.board.recreate(this.allMoves.pop());
+            }
+        }
+
         // Clear image and depth buffer every time we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -496,7 +555,9 @@ class Game extends CGFscene {
 
         if (this.gameStarted) {
             this.board.display();
-            this.clock.display();
+            if (!this.moviePlaying) {
+                this.clock.display();
+            }
         }
 
         if (this.activeStyle == "Room") {
