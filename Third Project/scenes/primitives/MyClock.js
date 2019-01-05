@@ -57,7 +57,7 @@ class MyClock extends CGFobject {
         this.greenAlarmAppearance.setShininess(1);
 
         this.alarmAppearance = this.normalAlarmAppearance;
-        
+
 
     };
 
@@ -65,15 +65,15 @@ class MyClock extends CGFobject {
 
         if (this.scene.countdown() <= 0) {
 
-            if (this.scene.activePlayer == 'w') {
+            console.log(this.scene.activePlayer);
 
+            if (this.scene.activePlayer == 'b') {
+                this.scene.winner = 'w';
+            } else if (this.scene.activePlayer == 'w')
                 this.scene.winner = 'b';
-            } else if (this.scene.activePlayer == 'b')
-                this.scene.winner == 'w';
         }
 
         var gameOver = this.scene.winner;
-
         if (gameOver == undefined) {
             this.displayTimer();
         } else if (gameOver != undefined) {

@@ -303,7 +303,6 @@ class Game extends CGFscene {
 
                     this.backupMoves.pop();
                     this.board.recreate(this.backupMoves[this.backupMoves.length-1]);
-                    console.log(this.backupMoves);
                     this.firstUndo = false;
                     this.board.changePlayers();
                 }
