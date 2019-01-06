@@ -71,6 +71,8 @@ serialInclude([
   'scenes/animation/Animation.js',
   'scenes/animation/CircularAnimation.js',
   'scenes/primitives/MyBox.js',
+  'scenes/animation/LinearAnimation.js',
+
   main =
   function () {
     // Standard application, scene and interface setup

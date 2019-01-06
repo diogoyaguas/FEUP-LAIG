@@ -23,8 +23,6 @@ class MyBoard {
         }
 
         this.newCells = [];
-        this.newPickingLetters = [];
-        this.newPickingNumbers = [];
 
         this.cellsCreated = false;
 
@@ -107,29 +105,7 @@ class MyBoard {
             }
         }
 
-        counter = 0;
-        for (var j = 0; j < 19; j++) {
-            var x = 0;
-            var y = j + 1;
-
-            this.newPickingNumbers[j] = new Cell(new CGFplane(this.scene), x, y, null, counter + 1);
-
-            counter++;
-        }
-
-        counter = 0;
-        for (var i = 0; i < 19; i++) {
-            var x = i + 1;
-            var y = 0;
-
-            this.newPickingLetters[i] = new Cell(new CGFplane(this.scene), x, y, null, counter + 1);
-
-            counter++;
-        }
-
         this.cells = this.newCells;
-        this.pickingLetters = this.newPickingLetters;
-        this.pickingNumbers = this.newPickingNumbers;
 
         if (this.scene.activeGameMode == 3)
             this.cellsCreated = true;
@@ -246,7 +222,7 @@ class MyBoard {
     };
 
     changePlayers() {
-        
+
         this.scene.changingPlayer = true;
 
         if (this.scene.activePlayer == 'w')
