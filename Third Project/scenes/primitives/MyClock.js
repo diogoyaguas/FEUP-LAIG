@@ -65,8 +65,6 @@ class MyClock extends CGFobject {
 
         if (this.scene.countdown() <= 0) {
 
-            console.log(this.scene.activePlayer);
-
             if (this.scene.activePlayer == 'b') {
                 this.scene.winner = 'w';
             } else if (this.scene.activePlayer == 'w')
@@ -74,6 +72,7 @@ class MyClock extends CGFobject {
         }
 
         var gameOver = this.scene.winner;
+        
         if (gameOver == undefined) {
             this.displayTimer();
         } else if (gameOver != undefined) {

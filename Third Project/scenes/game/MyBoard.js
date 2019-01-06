@@ -29,6 +29,7 @@ class MyBoard {
         this.cellsCreated = false;
 
         this.selectedCell = null;
+        this.direction = null;
 
         this.prologBoard = "";
 
@@ -248,14 +249,14 @@ class MyBoard {
         
         this.scene.changingPlayer = true;
 
-        this.scene.timePassed = 0;
-        this.scene.getValuePrologRequest();
-        this.scene.winnerPrologRequest();
-
         if (this.scene.activePlayer == 'w')
             this.scene.activePlayer = 'b';
         else
             this.scene.activePlayer = 'w';
+
+        this.scene.timePassed = 0;
+        this.scene.getValuePrologRequest();
+        this.scene.winnerPrologRequest();
 
     };
 

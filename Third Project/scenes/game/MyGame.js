@@ -302,7 +302,7 @@ class Game extends CGFscene {
                 if (this.firstUndo) {
 
                     this.backupMoves.pop();
-                    this.board.recreate(this.backupMoves[this.backupMoves.length-1]);
+                    this.board.recreate(this.backupMoves[this.backupMoves.length - 1]);
                     this.firstUndo = false;
                     this.board.changePlayers();
                 }
@@ -351,9 +351,20 @@ class Game extends CGFscene {
                             else
                                 symbol = "L";
                             var index = pickID % 19;
+                            var direction;
+
                             var selectedCell = this.board.getCell(symbol, index);
 
-                            if (this.board.selectedCell == selectedCell) {
+                            if (pickID < 20)
+                                direction = 'U';
+                            else if (pickID >= 20 && pickID < 39)
+                                direction = 'D';
+                            else if (pickID >= 39 && pickID < 58)
+                                direction = 'R';
+                            else if (pickID >= 58 && pickID < 77)
+                                direction = 'L';
+
+                            if (this.board.selectedCell == selectedCell && this.board.direction == direction) {
                                 this.board.selectedCell = null;
                                 this.getPrologRequest(this.pickingPrologRequest("movePiece", pickID));
                             } else this.getPrologRequest(this.pickingPrologRequest("validateMove", pickID));
@@ -453,15 +464,26 @@ class Game extends CGFscene {
                 console.log("'validateMove'. Reply: " + response);
 
                 if (response == "true") {
+
                     game.clock.alarmAppearance = game.clock.greenAlarmAppearance;
                     setTimeout(() => game.clock.alarmAppearance = game.clock.normalAlarmAppearance, 1000);
+
                     var comma = requestString.indexOf("'");
                     var symbol = requestString.charAt(comma + 1);
                     var index;
+                    var direction;
+
                     if (requestString.charAt(comma + 5) == ',') {
                         index = requestString.charAt(comma + 4);
-                    } else index = requestString.charAt(comma + 4) + requestString.charAt(comma + 5);
+                        direction = requestString.charAt(comma + 7);
+                    } else {
+                        index = requestString.charAt(comma + 4) + requestString.charAt(comma + 5);
+                        direction = requestString.charAt(comma + 8);
+                    }
+
                     board.selectedCell = board.getCell(symbol, index);
+                    board.direction = direction;
+
                 } else if (response == "false") {
                     game.clock.alarmAppearance = game.clock.redAlarmAppearance;
                     setTimeout(() => game.clock.alarmAppearance = game.clock.normalAlarmAppearance, 1000);
@@ -487,10 +509,13 @@ class Game extends CGFscene {
                 response = response.replace(/empty/g, 0);
                 console.log("'botMove'. Reply: " + response);
 
-                board.recreate(response);
-                board.changePlayers();
+                if (game.winner == undefined) {
 
-                if (game.activeGameMode == 3) game.botPlaying = true;
+                    board.recreate(response);
+                    board.changePlayers();
+
+                    if (game.activeGameMode == 3) game.botPlaying = true;
+                }
 
             } else if (requestString.includes("checkGameOver")) {
                 console.log("'Winner'. Reply: " + response);
