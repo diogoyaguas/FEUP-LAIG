@@ -23,8 +23,7 @@ class MyBoard {
         }
 
         this.newCells = [];
-        this.newPickingLetters = [];
-        this.newPickingNumbers = [];
+        this.oldCells = [];
 
         this.cellsCreated = false;
 
@@ -36,6 +35,9 @@ class MyBoard {
         this.board = new MyBoardPrimitive(this.scene);
         this.pieceB = new MySphere(this.scene, 1, 32, 64);
         this.pieceW = new MySphere(this.scene, 1, 32, 64);
+
+        this.firstAnimation = true;
+        this.firstX = -25;
 
         this.setAppearance();
 
@@ -107,29 +109,21 @@ class MyBoard {
             }
         }
 
-        counter = 0;
-        for (var j = 0; j < 19; j++) {
-            var x = 0;
-            var y = j + 1;
-
-            this.newPickingNumbers[j] = new Cell(new CGFplane(this.scene), x, y, null, counter + 1);
-
-            counter++;
-        }
-
-        counter = 0;
         for (var i = 0; i < 19; i++) {
-            var x = i + 1;
-            var y = 0;
+            for (var j = 0; j < 19; j++) {
 
-            this.newPickingLetters[i] = new Cell(new CGFplane(this.scene), x, y, null, counter + 1);
+                var oldPiece = this.cells[i][j].pieceType;
+                var newPiece = this.newCells[i][j].pieceType;
 
-            counter++;
+                if (oldPiece != newPiece) {
+
+                    this.newCells.push(this.newCells[i][j]);
+                    this.oldCells.push(this.cells[i][j]);
+                }
+            }
         }
 
         this.cells = this.newCells;
-        this.pickingLetters = this.newPickingLetters;
-        this.pickingNumbers = this.newPickingNumbers;
 
         if (this.scene.activeGameMode == 3)
             this.cellsCreated = true;
@@ -221,21 +215,50 @@ class MyBoard {
 
                     if (pieceType != 0) {
 
-                        this.scene.pushMatrix();
-                        this.scene.rotate(Math.PI / 2, 1, 0, 0);
-                        this.scene.translate(-0.95 + 0.875 * pieceY, -0.13, -0.1 - 0.875 * pieceX);
-                        this.scene.scale(0.45, 0.2, 0.45);
-                        if (pieceType == 'b') {
+                        if (this.firstAnimation) {
+
+                            this.scene.changingPlayer = true;
+                            this.scene.timePassed = 1;
+
+                            var finalX = -0.1 - 0.875 * pieceX;
+
+                            if(this.firstX < finalX) {
+
+                                this.firstX += 0.1;
+                            } else {
+
+                                this.firstAnimation = false;
+                                this.scene.changingPlayer = false;
+                                this.firstX = -25
+                            }
+
+                            this.scene.pushMatrix();
+                            this.scene.rotate(Math.PI / 2, 1, 0, 0);
+                            this.scene.translate(-0.95 + 0.875 * pieceY, -0.13, this.firstX);
+                            this.scene.scale(0.45, 0.2, 0.45);
                             this.pieceAppearance.setTexture(this.scene.pieceTex.texture);
                             this.pieceAppearance.apply();
                             this.pieceB.display();
-                        } else if (pieceType == 'w') {
-                            this.pieceWhiteAppearance.setTexture(this.scene.pieceWhiteTex.texture);
-                            this.pieceWhiteAppearance.apply();
-                            this.pieceW.display();
-                        }
+                            this.scene.popMatrix();
 
-                        this.scene.popMatrix();
+                        } else {
+
+                            this.scene.pushMatrix();
+                            this.scene.rotate(Math.PI / 2, 1, 0, 0);
+                            this.scene.translate(-0.95 + 0.875 * pieceY, -0.13, -0.1 - 0.875 * pieceX);
+                            this.scene.scale(0.45, 0.2, 0.45);
+                            if (pieceType == 'b') {
+                                this.pieceAppearance.setTexture(this.scene.pieceTex.texture);
+                                this.pieceAppearance.apply();
+                                this.pieceB.display();
+                            } else if (pieceType == 'w') {
+                                this.pieceWhiteAppearance.setTexture(this.scene.pieceWhiteTex.texture);
+                                this.pieceWhiteAppearance.apply();
+                                this.pieceW.display();
+                            }
+
+                            this.scene.popMatrix();
+                        }
                         this.board.display();
                     }
 
@@ -246,7 +269,7 @@ class MyBoard {
     };
 
     changePlayers() {
-        
+
         this.scene.changingPlayer = true;
 
         if (this.scene.activePlayer == 'w')
