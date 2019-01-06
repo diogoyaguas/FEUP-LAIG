@@ -213,6 +213,18 @@ class Game extends CGFscene {
         this.pieceWhiteTex.setAmbient(1, 1, 1, 1);
         this.pieceWhiteTex.loadTexture('scenes/images/white-texture.jpg');
 
+        this.blackBoxTex = new CGFappearance(this);
+        this.blackBoxTex.setAmbient(1, 1, 1, 1);
+        this.blackBoxTex.loadTexture('scenes/images/black-pieces.jpg');
+
+        this.whiteBoxTex = new CGFappearance(this);
+        this.whiteBoxTex.setAmbient(1, 1, 1, 1);
+        this.whiteBoxTex.loadTexture('scenes/images/white-pieces.jpg');
+
+        this.box = new CGFappearance(this);
+        this.box.setAmbient(1, 1, 1, 1);
+        this.box.loadTexture('scenes/images/wood3.jpg');
+
     };
 
     /**
