@@ -508,6 +508,7 @@ class Game extends CGFscene {
                 game.allMoves.push(response);
                 game.backupMoves.push(response);
                 board.changePlayers();
+                console.log(board.auxCells);
                 game.firstUndo = true;
 
                 if (game.activeGameMode == 2 && game.winner == undefined) game.botPlaying = true;
@@ -563,7 +564,7 @@ class Game extends CGFscene {
 
         }
 
-        if (this.moviePlaying && Math.round(this.timePassed) % 5 == 0 && Math.round(this.timePassed) != this.lastTime) {
+        if (this.moviePlaying && Math.round(this.timePassed) % 2 == 0 && Math.round(this.timePassed) != this.lastTime) {
 
             this.lastTime = Math.round(this.timePassed);
             if (this.allMoves.length != 0) {

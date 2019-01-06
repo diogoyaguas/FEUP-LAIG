@@ -23,6 +23,7 @@ class MyBoard {
         }
 
         this.newCells = [];
+        this.oldCells = [];
 
         this.cellsCreated = false;
 
@@ -34,6 +35,9 @@ class MyBoard {
         this.board = new MyBoardPrimitive(this.scene);
         this.pieceB = new MySphere(this.scene, 1, 32, 64);
         this.pieceW = new MySphere(this.scene, 1, 32, 64);
+
+        this.firstAnimation = true;
+        this.firstX = -25;
 
         this.setAppearance();
 
@@ -102,6 +106,20 @@ class MyBoard {
                 this.newCells[i][j] = new Cell(new CGFplane(this.scene), x, y, pieceType, counter + 1);
 
                 counter++;
+            }
+        }
+
+        for (var i = 0; i < 19; i++) {
+            for (var j = 0; j < 19; j++) {
+
+                var oldPiece = this.cells[i][j].pieceType;
+                var newPiece = this.newCells[i][j].pieceType;
+
+                if (oldPiece != newPiece) {
+
+                    this.newCells.push(this.newCells[i][j]);
+                    this.oldCells.push(this.cells[i][j]);
+                }
             }
         }
 
@@ -197,21 +215,50 @@ class MyBoard {
 
                     if (pieceType != 0) {
 
-                        this.scene.pushMatrix();
-                        this.scene.rotate(Math.PI / 2, 1, 0, 0);
-                        this.scene.translate(-0.95 + 0.875 * pieceY, -0.13, -0.1 - 0.875 * pieceX);
-                        this.scene.scale(0.45, 0.2, 0.45);
-                        if (pieceType == 'b') {
+                        if (this.firstAnimation) {
+
+                            this.scene.changingPlayer = true;
+                            this.scene.timePassed = 1;
+
+                            var finalX = -0.1 - 0.875 * pieceX;
+
+                            if(this.firstX < finalX) {
+
+                                this.firstX += 0.1;
+                            } else {
+
+                                this.firstAnimation = false;
+                                this.scene.changingPlayer = false;
+                                this.firstX = -25
+                            }
+
+                            this.scene.pushMatrix();
+                            this.scene.rotate(Math.PI / 2, 1, 0, 0);
+                            this.scene.translate(-0.95 + 0.875 * pieceY, -0.13, this.firstX);
+                            this.scene.scale(0.45, 0.2, 0.45);
                             this.pieceAppearance.setTexture(this.scene.pieceTex.texture);
                             this.pieceAppearance.apply();
                             this.pieceB.display();
-                        } else if (pieceType == 'w') {
-                            this.pieceWhiteAppearance.setTexture(this.scene.pieceWhiteTex.texture);
-                            this.pieceWhiteAppearance.apply();
-                            this.pieceW.display();
-                        }
+                            this.scene.popMatrix();
 
-                        this.scene.popMatrix();
+                        } else {
+
+                            this.scene.pushMatrix();
+                            this.scene.rotate(Math.PI / 2, 1, 0, 0);
+                            this.scene.translate(-0.95 + 0.875 * pieceY, -0.13, -0.1 - 0.875 * pieceX);
+                            this.scene.scale(0.45, 0.2, 0.45);
+                            if (pieceType == 'b') {
+                                this.pieceAppearance.setTexture(this.scene.pieceTex.texture);
+                                this.pieceAppearance.apply();
+                                this.pieceB.display();
+                            } else if (pieceType == 'w') {
+                                this.pieceWhiteAppearance.setTexture(this.scene.pieceWhiteTex.texture);
+                                this.pieceWhiteAppearance.apply();
+                                this.pieceW.display();
+                            }
+
+                            this.scene.popMatrix();
+                        }
                         this.board.display();
                     }
 
