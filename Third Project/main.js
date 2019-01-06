@@ -56,7 +56,6 @@ serialInclude([
   'scenes/game/MyGame.js',
   'scenes/game/MyBoard.js',
   'scenes/game/MyCell.js',
-  'scenes/game/MyMove.js',
   'scenes/primitives/MyBoardPrimitive.js',
   'scenes/primitives/MyRectangle.js',
   'scenes/primitives/MyRoom.js',
@@ -68,10 +67,12 @@ serialInclude([
   'scenes/primitives/MyCube.js',
   'scenes/primitives/MyClock.js',
   'scenes/primitives/Piece.js',
-  'scenes/animation/Animation.js',
-  'scenes/animation/CircularAnimation.js',
+  'scenes/primitives/Container.js',
+  'scenes/primitives/MyCylinder.js',
+  'scenes/primitives/MyCylinderSide.js',
+  'scenes/primitives/MyCylinderTop.js',
+  'scenes/primitives/MyTorus.js',
   'scenes/primitives/MyBox.js',
-  'scenes/animation/LinearAnimation.js',
 
   main =
   function () {

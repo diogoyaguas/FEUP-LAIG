@@ -229,7 +229,6 @@ class MyBoard {
 
                                 this.firstAnimation = false;
                                 this.scene.changingPlayer = false;
-                                this.firstX = -25
                             }
 
                             this.scene.pushMatrix();
@@ -242,6 +241,8 @@ class MyBoard {
                             this.scene.popMatrix();
 
                         } else {
+
+                            this.firstX = -25;
 
                             this.scene.pushMatrix();
                             this.scene.rotate(Math.PI / 2, 1, 0, 0);
