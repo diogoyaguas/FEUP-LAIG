@@ -321,6 +321,7 @@ class Game extends CGFscene {
 
                 if (this.firstUndo) {
 
+                    this.allMoves.push(this.allMoves[this.allMoves.length-2]);
                     this.backupMoves.pop();
                     this.board.recreate(this.backupMoves[this.backupMoves.length - 1]);
                     this.firstUndo = false;
