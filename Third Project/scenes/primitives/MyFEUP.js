@@ -1,6 +1,7 @@
 /**
  * MyFEUP
- * @constructor
+ * @construc
+ * 
  */
 /**
  * Creates a room
@@ -21,7 +22,9 @@ class MyFEUP extends CGFobject {
         this.clock = new MyCube(this.scene);
         this.table = new MyRectangle(this.scene, 0, 0, 1, 1);
         this.wall = new MyRectangle(this.scene, 0, 0, 1, 1);
-
+        this.cyl1 = new MyCylinder(this.scene,0.5,0.5,1,32,64);
+        this.cyl2 = new MyCylinder(this.scene,0.5,0.5,1,32,64);
+        
         this.setAppearance();
     };
 
@@ -67,6 +70,23 @@ class MyFEUP extends CGFobject {
         this.roomAppearance.apply();
         this.wall.setSAndT(1, 1);
         this.wall.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(-6, 7.8, 0);
+        this.scene.scale(5, 5, 4);
+        this.roomAppearance.setTexture(this.scene.blackBoxTex.texture);
+        this.roomAppearance.apply();
+        this.cyl1.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(20, 7.8, 0);
+        this.scene.scale(5, 5, 4);
+        this.roomAppearance.setTexture(this.scene.whiteBoxTex
+            .texture);
+        this.roomAppearance.apply();
+        this.cyl2.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();

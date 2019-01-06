@@ -21,7 +21,9 @@ class MyAE extends CGFobject {
         this.clock = new MyCube(this.scene);
         this.table = new MyRectangle(this.scene, 0, 0, 1, 1);
         this.wall = new MyRectangle(this.scene, 0, 0, 1, 1);
-
+        this.cyl1 = new Container(this.scene,0.5,0.5,1,32,64);
+        this.cyl2 = new Container(this.scene,0.5,0.5,1,32,64);
+       
         this.setAppearance();
     };
 
@@ -88,6 +90,22 @@ class MyAE extends CGFobject {
         this.wall.setSAndT(2, 2);
         this.roomAppearance.apply();
         this.wall.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(-6, 7.8, -1);
+        this.scene.scale(5, 5, 4);
+        this.roomAppearance.setTexture(this.scene.blackBoxTex.texture);
+        this.roomAppearance.apply();
+        this.cyl1.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(20, 7.8, -1);
+        this.scene.scale(5, 5, 4);
+        this.roomAppearance.setTexture(this.scene.whiteBoxTex.texture);
+        this.roomAppearance.apply();
+        this.cyl2.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();

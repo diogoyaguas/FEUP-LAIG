@@ -225,6 +225,14 @@ class Game extends CGFscene {
         this.box.setAmbient(1, 1, 1, 1);
         this.box.loadTexture('scenes/images/wood3.jpg');
 
+        this.barrelTex = new CGFappearance(this);
+        this.barrelTex.setAmbient(1, 1, 1, 1);
+        this.barrelTex.loadTexture('scenes/images/metal-texture.jpg');
+
+        this.cylTex = new CGFappearance(this);
+        this.cylTex.setAmbient(1, 1, 1, 1);
+        this.cylTex.loadTexture('scenes/images/aefeup.png');
+
     };
 
     /**
