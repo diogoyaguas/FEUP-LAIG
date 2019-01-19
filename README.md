@@ -12,6 +12,6 @@ Inês Rodrigues Roque de Lacerda Marques
 
 ### Grades
 
-First Project: 15.9<br>
-Second Project: 18.5<br>
-Third Project: 
+* First Project: 15.9
+* Second Project: 18.5
+* Third Project: 
