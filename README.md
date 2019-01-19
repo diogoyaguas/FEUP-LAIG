@@ -11,3 +11,7 @@ Inês Rodrigues Roque de Lacerda Marques
 * E-Mail: up201605542@fe.up.pt
 
 ### Grades
+
+First Project: 15.9
+Second Project: 18.5
+Third Project: 
