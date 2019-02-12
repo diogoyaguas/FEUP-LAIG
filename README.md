@@ -14,4 +14,4 @@ Inês Rodrigues Roque de Lacerda Marques
 
 * First Project: 15.9
 * Second Project: 18.5
-* Third Project: 
+* Third Project: 17.2
